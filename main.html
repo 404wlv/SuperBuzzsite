@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SuperBuzz 0.1</title>
+
+  <!-- Tailwind CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body class="bg-gradient-to-br from-purple-600 to-blue-500 h-screen flex items-center justify-center">
+
+  <!-- Buttons -->
+  <div class="space-x-4">
+    <button id="open-login"
+      class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
+      Login
+    </button>
+
+    <button id="open-signup"
+      class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
+      Sign Up
+    </button>
+  </div>
+
+
+  <!-- LOGIN MODAL -->
+  <div id="login-modal"
+       class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
+
+    <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative animate-scale">
+      <button class="absolute top-3 right-3 text-gray-500"
+              data-close="login-modal">✖</button>
+
+      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+      <input id="login-email"
+             type="email"
+             placeholder="University Email"
+             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+
+      <input id="login-password"
+             type="password"
+             placeholder="Password"
+             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+
+      <button id="login-submit"
+              class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+        Login
+      </button>
+    </div>
+  </div>
+
+
+  <!-- SIGNUP MODAL -->
+  <div id="signup-modal"
+       class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
+
+    <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative">
+      <button class="absolute top-3 right-3 text-gray-500"
+              data-close="signup-modal">✖</button>
+
+      <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+
+      <input id="signup-email"
+             type="email"
+             placeholder="University Email"
+             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <input id="signup-password"
+             type="password"
+             placeholder="Password"
+             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+      <button id="signup-submit"
+              class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+        Create Account
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ERROR POPUP -->
+  <div id="popup"
+       class="fixed bottom-6 right-6 bg-white px-6 py-4 rounded-xl shadow-2xl hidden">
+    <div class="flex justify-between items-center gap-4">
+      <p id="popup-message" class="text-sm"></p>
+      <button id="close-popup">✖</button>
+    </div>
+  </div>
+
+
+<script src="main.js"></script>
+</body>
+</html>
