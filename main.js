@@ -1,7 +1,6 @@
 // =============================
 // MODAL CONTROL
 // =============================
-
 function toggleModal(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
@@ -19,11 +18,9 @@ document.querySelectorAll("[data-close]")
     });
   });
 
-
 // =============================
 // POPUP SYSTEM
 // =============================
-
 function showPopup(message) {
   const popup = document.getElementById("popup");
   document.getElementById("popup-message").innerText = message;
@@ -35,24 +32,19 @@ document.getElementById("close-popup")
     document.getElementById("popup").classList.add("hidden");
   });
 
-
 // =============================
 // VALIDATION
 // =============================
-
 function validPassword(password) {
   const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
   return regex.test(password);
 }
 
-
 // =============================
 // LOGIN
 // =============================
-
 document.getElementById("login-submit")
   .addEventListener("click", () => {
-
     const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
 
@@ -66,17 +58,17 @@ document.getElementById("login-submit")
       return;
     }
 
-    showPopup("Login request ready for backend.");
+    // ======= LOGIN SUCCESS =======
+    showPopup("Login successful!");
+    document.getElementById("auth-ui").classList.add("hidden");
+    document.getElementById("homepage").classList.remove("hidden");
   });
-
 
 // =============================
 // SIGNUP
 // =============================
-
 document.getElementById("signup-submit")
   .addEventListener("click", () => {
-
     const email = document.getElementById("signup-email").value;
     const password = document.getElementById("signup-password").value;
 
@@ -90,5 +82,8 @@ document.getElementById("signup-submit")
       return;
     }
 
-    showPopup("Signup request ready for backend.");
+    // ======= SIGNUP SUCCESS =======
+    showPopup("Signup successful!");
+    document.getElementById("auth-ui").classList.add("hidden");
+    document.getElementById("homepage").classList.remove("hidden");
   });

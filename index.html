@@ -6,79 +6,80 @@
 
   <!-- Tailwind CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 <body class="bg-gradient-to-br from-purple-600 to-blue-500 h-screen flex items-center justify-center">
 
-  <!-- Buttons -->
-  <div class="space-x-4">
-    <button id="open-login"
-      class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
-      Login
-    </button>
+  <!-- AUTH UI (login/signup buttons and modals) -->
+  <div id="auth-ui" class="flex flex-col items-center justify-center h-screen space-y-4">
 
-    <button id="open-signup"
-      class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
-      Sign Up
-    </button>
-  </div>
-
-
-  <!-- LOGIN MODAL -->
-  <div id="login-modal"
-       class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
-
-    <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative animate-scale">
-      <button class="absolute top-3 right-3 text-gray-500"
-              data-close="login-modal">✖</button>
-
-      <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
-
-      <input id="login-email"
-             type="email"
-             placeholder="University Email"
-             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-
-      <input id="login-password"
-             type="password"
-             placeholder="Password"
-             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
-
-      <button id="login-submit"
-              class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+    <!-- Buttons -->
+    <div class="space-x-4">
+      <button id="open-login"
+        class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
         Login
       </button>
-    </div>
-  </div>
 
-
-  <!-- SIGNUP MODAL -->
-  <div id="signup-modal"
-       class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
-
-    <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative">
-      <button class="absolute top-3 right-3 text-gray-500"
-              data-close="signup-modal">✖</button>
-
-      <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-
-      <input id="signup-email"
-             type="email"
-             placeholder="University Email"
-             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-      <input id="signup-password"
-             type="password"
-             placeholder="Password"
-             class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-      <button id="signup-submit"
-              class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-        Create Account
+      <button id="open-signup"
+        class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
+        Sign Up
       </button>
     </div>
-  </div>
 
+    <!-- LOGIN MODAL -->
+    <div id="login-modal"
+         class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
+
+      <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative animate-scale">
+        <button class="absolute top-3 right-3 text-gray-500"
+                data-close="login-modal">✖</button>
+
+        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+
+        <input id="login-email"
+               type="email"
+               placeholder="University Email"
+               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+
+        <input id="login-password"
+               type="password"
+               placeholder="Password"
+               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+
+        <button id="login-submit"
+                class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+          Login
+        </button>
+      </div>
+    </div>
+
+    <!-- SIGNUP MODAL -->
+    <div id="signup-modal"
+         class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
+
+      <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative">
+        <button class="absolute top-3 right-3 text-gray-500"
+                data-close="signup-modal">✖</button>
+
+        <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+
+        <input id="signup-email"
+               type="email"
+               placeholder="University Email"
+               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <input id="signup-password"
+               type="password"
+               placeholder="Password"
+               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
+
+        <button id="signup-submit"
+                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
+          Create Account
+        </button>
+      </div>
+    </div>
+
+  </div>
 
   <!-- ERROR POPUP -->
   <div id="popup"
@@ -89,7 +90,58 @@
     </div>
   </div>
 
+  <!-- HOME PAGE (hidden by default) -->
+  <div id="homepage" class="hidden flex h-screen w-full">
+    
+    <!-- Left Panel -->
+    <div class="w-20 bg-white rounded-l-2xl shadow-lg flex flex-col items-center py-6 space-y-4">
+      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
+                    shadow-md hover:scale-110 transition-transform duration-200">A</button>
+      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
+                    shadow-md hover:scale-110 transition-transform duration-200">B</button>
+      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
+                    shadow-md hover:scale-110 transition-transform duration-200">C</button>
+    </div>
+
+    <!-- Right Panel -->
+    <div class="flex-1 flex flex-col bg-white rounded-r-2xl shadow-lg p-6">
+      <!-- Header -->
+      <h1 class="text-3xl font-bold mb-4">SuperBuzz</h1>
+
+      <!-- Chatbox -->
+      <div class="flex-1 bg-gray-50 rounded-2xl p-4 overflow-y-auto space-y-4">
+        
+        <!-- Bot message -->
+        <div class="flex items-start space-x-2">
+          <span class="text-purple-600 font-bold cursor-pointer hover:text-purple-800">AI Bot</span>
+          <div class="bg-white p-3 rounded-2xl shadow-sm max-w-xs">
+            Hello! I am your AI assistant. Ask me anything!
+          </div>
+        </div>
+
+        <!-- User message example -->
+        <div class="flex items-start space-x-2 justify-end">
+          <div class="bg-purple-600 text-white p-3 rounded-2xl shadow-sm max-w-xs">
+            Hi! I have a question.
+          </div>
+          <span class="text-gray-700 font-bold cursor-pointer hover:text-purple-500">You</span>
+        </div>
+
+      </div>
+
+      <!-- Input -->
+      <div class="mt-4 flex">
+        <input class="flex-1 border rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
+              placeholder="Type a message...">
+        <button class="ml-2 bg-purple-600 text-white px-4 py-2 rounded-2xl hover:bg-purple-700 transition">
+          Send
+        </button>
+      </div>
+    </div>
+
+  </div>
 
 <script src="main.js"></script>
+
 </body>
 </html>
