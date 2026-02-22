@@ -1,0 +1,31 @@
+.modal {
+  @apply fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center;
+}
+
+.card {
+  @apply bg-[#1e293b] w-80 p-8 rounded-2xl shadow-2xl border border-[#334155] relative;
+}
+
+.input-dark {
+  @apply w-full mb-4 px-4 py-2 bg-[#0f172a] border border-[#334155]
+         rounded-lg focus:outline-none focus:ring-2
+         focus:ring-[#2563eb] text-white placeholder-gray-400;
+}
+
+.btn-primary {
+  @apply w-full bg-[#2563eb] py-2 rounded-lg
+         hover:bg-blue-700 transition font-semibold;
+}
+
+.btn-yellow {
+  @apply w-full bg-[#facc15] text-black py-2
+         rounded-lg hover:bg-yellow-400 transition font-semibold;
+}
+
+.title-yellow {
+  @apply text-2xl font-bold mb-6 text-center text-[#facc15];
+}
+
+.close-btn {
+  @apply absolute top-3 right-3 text-gray-400 cursor-pointer;
+}
