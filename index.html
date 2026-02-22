@@ -15,23 +15,10 @@
   <div id="login-modal"
        class="absolute inset-0 flex-initial flex items-center justify-center">
 
-    <div class="relative flex">
-
-      <!-- Side Buttons -->
-      <div class="flex flex-auto justify-center gap-4 mr-4">
-        <button id="login-to-signup"
-          class="w-24 h-14 rounded-2xl bg-fuchsia-800 text-gray hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
-          Signup
-        </button>
-
-        <button id="forgot-password-btn"
-          class="w-40 h-14 rounded-2xl bg-fuchsia-800 text-gray hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
-          Forgot Password
-        </button>
-      </div>
+    <div class="min-h-screen flex items-center justify-center px-4">
 
       <!-- Login Card -->
-      <div class="bg-fuchsia-200 w-full p-20 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
 
         <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
           Login
@@ -40,17 +27,29 @@
         <input id="login-email"
           type="email"
           placeholder="University Email"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
 
         <input id="login-password"
           type="password"
           placeholder="Password"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
 
         <button id="login-submit"
-          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          class="btn-primary w-full bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
           Login
         </button>
+
+        <div class="flex flex-col sm:flex-row justify-center gap-6 mb-6 sm:mb-0">
+          <button id="login-to-signup"
+            class="w-full sm:w-24 rounded-2xl bg-fuchsia-800 text-gray hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
+            Signup
+          </button>
+
+          <button id="forgot-password-btn"
+            class="w-full sm:w-40 rounded-2xl bg-fuchsia-800 text-gray hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
+            Forgot Password
+          </button>
+        </div>
 
       </div>
     </div>
@@ -61,10 +60,10 @@
   <div id="signup-modal"
        class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
 
-    <div class="relative flex">
+    <div class="relative flex flex-col sm:flex-row gap-6">
 
       <!-- Signup Card -->
-      <div class="bg-fuchsia-200 w-full p-20 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
 
         <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
           Signup
@@ -73,15 +72,15 @@
         <input id="signup-email"
           type="email"
           placeholder="University Email"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
 
         <input id="signup-password"
           type="password"
           placeholder="Password"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
 
         <button id="signup-submit"
-          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          class="btn-primary w-full sm:w-40 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
           Signup
         </button>
 
@@ -94,9 +93,9 @@
   <div id="forgot-modal"
        class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
 
-    <div class="relative flex">
+    <div class="relative flex flex-col sm:flex-row gap-6">
 
-      <div class="bg-fuchsia-200 w-full p-20 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
         <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
           Forgot Password
         </h2>
@@ -119,7 +118,7 @@
       </div>
    
 
-      <div class="bg-fuchsia-200 w-full p-20 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
         <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
           Input Code to Reset
         </h2>
@@ -143,28 +142,30 @@
   <!--  RESET PASSWORD  -->
   <div id="reset-modal" 
     class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
-    <div class="relative flex">
+    <div class="relative flex flex-col sm:flex-row gap-6">
 
-      <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
-        Reset Password
-      </h2>
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
 
-      <input id="new-password"
-          type="password"
-          placeholder="New Password"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+        <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+          Reset Password
+        </h2>
 
-      <input id="re-enter-password"
-          type="password"
-          placeholder="Re-enter New Password"
-          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+        <input id="new-password"
+            type="password"
+            placeholder="New Password"
+            class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+        <input id="re-enter-password"
+            type="password"
+            placeholder="Re-enter New Password"
+            class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
 
 
-      <button id="reset-submit"
-          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
-          Submit
-      </button>
-
+        <button id="reset-submit"
+            class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+            Submit
+        </button>
+      </div>
     </div>
   </div>
 
