@@ -59,17 +59,33 @@
 
   <!-- SIGNUP -->
   <div id="signup-modal"
-       class="modal hidden absolute inset-0 flex items-center justify-center">
+       class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
 
-    <div class="card blue-gray-500 w-200 p-10 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
-      <button data-close="signup-modal" class="close-btn rounded-full w-8 h-8 flex items-center justify-center bg-blue-gray-500 text-white hover:scale-110 transition border border-[#334155] gap-8 mr-4">✖</button>
+    <div class="relative flex">
 
-      <h2 class="title-yellow gap-6 mr-2">Create Account</h2>
+      <!-- Login Card -->
+      <div class="bg-fuchsia-200 w-full p-20 rounded-2xl shadow-2xl border border-[#334155] gap-6 mr-4">
 
-      <input id="signup-email" type="email" placeholder="University Email" class="input-dark">
-      <input id="signup-password" type="password" placeholder="Password" class="input-dark">
+        <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+          Signup
+        </h2>
 
-      <button id="signup-submit" class="btn-primary btn-primary w-32 p-2 bg-blue-gray-500 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">Sign Up</button>
+        <input id="signup-email"
+          type="email"
+          placeholder="University Email"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+        <input id="signup-password"
+          type="password"
+          placeholder="Password"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+        <button id="signup-submit"
+          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Signup
+        </button>
+
+      </div>
     </div>
   </div>
 
