@@ -91,49 +91,77 @@
 
 
   <!-- FORGOT PASSWORD -->
-  <div id="forgot-modal" class="modal hidden">
-    <div class="card">
-      <button data-close="forgot-modal" class="close-btn">✖</button>
+  <div id="forgot-modal"
+       class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
 
-      <h2 class="title-yellow">Reset Password</h2>
+    <div class="relative flex">
 
-      <input id="forgot-email" type="email" placeholder="University Email" class="input-dark">
+      <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+        Forgot Password
+      </h2>
 
-      <button id="forgot-submit" class="btn-yellow">
-        Send Reset Code
+      <input id="forgot-email"
+          type="email"
+          placeholder="University Email"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+      <button id="forgot-submit"
+          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Send Verification Code to Login
       </button>
+
+      <button id="forgot-reset"
+          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Reset Password
+      </button>
+
+    </div>
+
+    <div class="relative flex">
+      <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+        Input Code to Reset
+      </h2>
+
+      <input id="verification-code"
+          type="text"
+          placeholder="Verification Code"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+      <button id="verify-code-submit"
+          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Submit
+      </button>
+
     </div>
   </div>
 
-
-  <!--  VERIFICATION CODE -->
-  <div id="verify-modal" class="modal hidden">
-    <div class="card">
-      <button data-close="verify-modal" class="close-btn">✖</button>
-
-      <h2 class="title-yellow">Enter Code</h2>
-
-      <input id="verify-code" type="text" maxlength="4" placeholder="4-digit code" class="input-dark">
-
-      <button id="verify-submit" class="btn-primary">
-        Verify
-      </button>
-    </div>
-  </div>
 
 
   <!--  RESET PASSWORD  -->
-  <div id="reset-modal" class="modal hidden">
-    <div class="card">
-      <button data-close="reset-modal" class="close-btn">✖</button>
+  <div id="reset-modal" 
+    class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
+    <div class="relative flex">
 
-      <h2 class="title-yellow">New Password</h2>
-
-      <input id="new-password" type="password" placeholder="New Password" class="input-dark">
-
-      <button id="reset-submit" class="btn-primary">
+      <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
         Reset Password
+      </h2>
+
+      <input id="new-password"
+          type="password"
+          placeholder="New Password"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+      <input id="re-enter-password"
+          type="password"
+          placeholder="Re-enter New Password"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+
+      <button id="reset-submit"
+          class="btn-primary w-full p-2 bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Submit
       </button>
+
     </div>
   </div>
 
