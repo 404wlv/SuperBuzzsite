@@ -1,89 +1,100 @@
-// =============================
-// MODAL CONTROL
-// =============================
+// whatever modal id is passed, toggle its visibility
 function toggleModal(id) {
   document.getElementById(id).classList.toggle("hidden");
 }
 
-document.getElementById("open-login")
-  .addEventListener("click", () => toggleModal("login-modal"));
-
-document.getElementById("open-signup")
-  .addEventListener("click", () => toggleModal("signup-modal"));
-
-document.querySelectorAll("[data-close]")
-  .forEach(btn => {
-    btn.addEventListener("click", () => {
-      toggleModal(btn.dataset.close);
-    });
-  });
-
-// =============================
-// POPUP SYSTEM
-// =============================
-function showPopup(message) {
-  const popup = document.getElementById("popup");
-  document.getElementById("popup-message").innerText = message;
-  popup.classList.remove("hidden");
+function validUniversityEmail(email) {
+  return email.endsWith(".ac.uk");
 }
 
-document.getElementById("close-popup")
-  .addEventListener("click", () => {
-    document.getElementById("popup").classList.add("hidden");
-  });
-
-// =============================
-// VALIDATION
-// =============================
 function validPassword(password) {
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
-  return regex.test(password);
+  return password.length >= 8;
 }
 
-// =============================
+// close buttons for all modals
+document.querySelectorAll("[data-close]").forEach(btn => {
+  btn.addEventListener("click", () => {
+    toggleModal(btn.getAttribute("data-close"));
+  });
+});
+
 // LOGIN
-// =============================
-document.getElementById("login-submit")
+document.getElementById("login-submit").addEventListener("click", () => {
+
+  const email = document.getElementById("login-email").value;
+  const password = document.getElementById("login-password").value;
+
+  if (!validUniversityEmail(email)) {
+    alert("Use university email (.ac.uk)");
+    return;
+  }
+
+  if (!validPassword(password)) {
+    alert("Password must be at least 8 characters");
+    return;
+  }
+
+  // SUCCESS → Show Main App
+  document.getElementById("login-modal").classList.add("hidden");
+  document.getElementById("main-app").classList.remove("hidden");
+});
+
+
+// login side buttons
+document.getElementById("login-to-signup")
   .addEventListener("click", () => {
-    const email = document.getElementById("login-email").value;
-    const password = document.getElementById("login-password").value;
-
-    if (!email.endsWith("@wlv.ac.uk")) {
-      showPopup("Use your university email.");
-      return;
-    }
-
-    if (!validPassword(password)) {
-      showPopup("Password must contain letter, number, special character and be 8+ chars.");
-      return;
-    }
-
-    // ======= LOGIN SUCCESS =======
-    showPopup("Login successful!");
-    document.getElementById("auth-ui").classList.add("hidden");
-    document.getElementById("homepage").classList.remove("hidden");
+    toggleModal("login-modal");
+    toggleModal("signup-modal");
   });
 
-// =============================
-// SIGNUP
-// =============================
-document.getElementById("signup-submit")
+document.getElementById("forgot-password-btn")
   .addEventListener("click", () => {
-    const email = document.getElementById("signup-email").value;
-    const password = document.getElementById("signup-password").value;
+    toggleModal("login-modal");
+    toggleModal("forgot-modal");
+  });
 
-    if (!email.endsWith("@wlv.ac.uk")) {
-      showPopup("Use your university email.");
+
+// Forgot
+document.getElementById("forgot-submit")
+  .addEventListener("click", () => {
+
+    const email = document.getElementById("forgot-email").value;
+
+    if (!validUniversityEmail(email)) {
+      alert("Use university email");
       return;
     }
 
-    if (!validPassword(password)) {
-      showPopup("Password must contain letter, number, special character and be 8+ chars.");
+    toggleModal("forgot-modal");
+    toggleModal("verify-modal");
+  });
+
+
+document.getElementById("verify-submit")
+  .addEventListener("click", () => {
+
+    const code = document.getElementById("verify-code").value;
+
+    if (code.length !== 4 || isNaN(code)) {
+      alert("Enter valid 4 digit code");
       return;
     }
 
-    // ======= SIGNUP SUCCESS =======
-    showPopup("Signup successful!");
-    document.getElementById("auth-ui").classList.add("hidden");
-    document.getElementById("homepage").classList.remove("hidden");
+    toggleModal("verify-modal");
+    toggleModal("reset-modal");
+  });
+
+
+document.getElementById("reset-submit")
+  .addEventListener("click", () => {
+
+    const newPassword = document.getElementById("new-password").value;
+
+    if (!validPassword(newPassword)) {
+      alert("Password must be 8+ characters");
+      return;
+    }
+
+    alert("Password reset ready for backend.");
+    toggleModal("reset-modal");
   });

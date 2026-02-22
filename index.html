@@ -1,147 +1,153 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>SuperBuzz 0.1</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SuperBuzz</title>
 
-  <!-- Tailwind CDN -->
+  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
+
+  <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gradient-to-br from-purple-600 to-blue-500 h-screen flex items-center justify-center">
 
-  <!-- AUTH UI (login/signup buttons and modals) -->
-  <div id="auth-ui" class="flex flex-col items-center justify-center h-screen space-y-4">
+<body class="bg-[#0f172a] text-white">
 
-    <!-- Buttons -->
-    <div class="space-x-4">
-      <button id="open-login"
-        class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
-        Login
-      </button>
+  <!--  LOGIN -->
+  <div id="login-modal"
+       class="fixed inset-0 flex items-center justify-center">
 
-      <button id="open-signup"
-        class="px-6 py-3 bg-white rounded-full font-semibold shadow-lg hover:scale-105 transition">
-        Sign Up
-      </button>
-    </div>
+    <div class="relative flex">
 
-    <!-- LOGIN MODAL -->
-    <div id="login-modal"
-         class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
+      <!-- Side Buttons -->
+      <div class="flex flex-col justify-center gap-4 mr-4">
+        <button id="login-to-signup"
+          class="w-14 h-14 rounded-full bg-[#2563eb] hover:scale-110 transition shadow-xl font-bold">
+          S
+        </button>
 
-      <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative animate-scale">
-        <button class="absolute top-3 right-3 text-gray-500"
-                data-close="login-modal">✖</button>
+        <button id="forgot-password-btn"
+          class="w-14 h-14 rounded-full bg-[#facc15] text-black hover:scale-110 transition shadow-xl font-bold">
+          ?
+        </button>
+      </div>
 
-        <h2 class="text-2xl font-bold mb-6 text-center">Login</h2>
+      <!-- Login Card -->
+      <div class="bg-[#1e293b] w-80 p-8 rounded-2xl shadow-2xl border border-[#334155]">
+
+        <h2 class="text-2xl font-bold mb-6 text-center text-[#facc15]">
+          SuperBuzz Login
+        </h2>
 
         <input id="login-email"
-               type="email"
-               placeholder="University Email"
-               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+          type="email"
+          placeholder="University Email"
+          class="input-dark">
 
         <input id="login-password"
-               type="password"
-               placeholder="Password"
-               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500">
+          type="password"
+          placeholder="Password"
+          class="input-dark">
 
         <button id="login-submit"
-                class="w-full bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition">
+          class="btn-primary">
           Login
         </button>
+
       </div>
-    </div>
-
-    <!-- SIGNUP MODAL -->
-    <div id="signup-modal"
-         class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center">
-
-      <div class="bg-white w-80 p-8 rounded-2xl shadow-2xl relative">
-        <button class="absolute top-3 right-3 text-gray-500"
-                data-close="signup-modal">✖</button>
-
-        <h2 class="text-2xl font-bold mb-6 text-center">Sign Up</h2>
-
-        <input id="signup-email"
-               type="email"
-               placeholder="University Email"
-               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-        <input id="signup-password"
-               type="password"
-               placeholder="Password"
-               class="w-full mb-4 px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500">
-
-        <button id="signup-submit"
-                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition">
-          Create Account
-        </button>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- ERROR POPUP -->
-  <div id="popup"
-       class="fixed bottom-6 right-6 bg-white px-6 py-4 rounded-xl shadow-2xl hidden">
-    <div class="flex justify-between items-center gap-4">
-      <p id="popup-message" class="text-sm"></p>
-      <button id="close-popup">✖</button>
     </div>
   </div>
 
-  <!-- HOME PAGE (hidden by default) -->
-  <div id="homepage" class="hidden flex h-screen w-full">
-    
-    <!-- Left Panel -->
-    <div class="w-20 bg-white rounded-l-2xl shadow-lg flex flex-col items-center py-6 space-y-4">
-      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
-                    shadow-md hover:scale-110 transition-transform duration-200">A</button>
-      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
-                    shadow-md hover:scale-110 transition-transform duration-200">B</button>
-      <button class="w-12 h-12 bg-purple-500 text-white rounded-full flex items-center justify-center
-                    shadow-md hover:scale-110 transition-transform duration-200">C</button>
+
+  <!-- SIGNUP -->
+  <div id="signup-modal"
+       class="modal hidden">
+
+    <div class="card">
+      <button data-close="signup-modal" class="close-btn">✖</button>
+
+      <h2 class="title-yellow">Create Account</h2>
+
+      <input id="signup-email" type="email" placeholder="University Email" class="input-dark">
+      <input id="signup-password" type="password" placeholder="Password" class="input-dark">
+
+      <button id="signup-submit" class="btn-primary">Sign Up</button>
     </div>
-
-    <!-- Right Panel -->
-    <div class="flex-1 flex flex-col bg-white rounded-r-2xl shadow-lg p-6">
-      <!-- Header -->
-      <h1 class="text-3xl font-bold mb-4">SuperBuzz</h1>
-
-      <!-- Chatbox -->
-      <div class="flex-1 bg-gray-50 rounded-2xl p-4 overflow-y-auto space-y-4">
-        
-        <!-- Bot message -->
-        <div class="flex items-start space-x-2">
-          <span class="text-purple-600 font-bold cursor-pointer hover:text-purple-800">AI Bot</span>
-          <div class="bg-white p-3 rounded-2xl shadow-sm max-w-xs">
-            Hello! I am your AI assistant. Ask me anything!
-          </div>
-        </div>
-
-        <!-- User message example -->
-        <div class="flex items-start space-x-2 justify-end">
-          <div class="bg-purple-600 text-white p-3 rounded-2xl shadow-sm max-w-xs">
-            Hi! I have a question.
-          </div>
-          <span class="text-gray-700 font-bold cursor-pointer hover:text-purple-500">You</span>
-        </div>
-
-      </div>
-
-      <!-- Input -->
-      <div class="mt-4 flex">
-        <input class="flex-1 border rounded-2xl px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500"
-              placeholder="Type a message...">
-        <button class="ml-2 bg-purple-600 text-white px-4 py-2 rounded-2xl hover:bg-purple-700 transition">
-          Send
-        </button>
-      </div>
-    </div>
-
   </div>
 
-<script src="main.js"></script>
 
+  <!-- FORGOT PASSWORD -->
+  <div id="forgot-modal" class="modal hidden">
+    <div class="card">
+      <button data-close="forgot-modal" class="close-btn">✖</button>
+
+      <h2 class="title-yellow">Reset Password</h2>
+
+      <input id="forgot-email" type="email" placeholder="University Email" class="input-dark">
+
+      <button id="forgot-submit" class="btn-yellow">
+        Send Reset Code
+      </button>
+    </div>
+  </div>
+
+
+  <!--  VERIFICATION CODE -->
+  <div id="verify-modal" class="modal hidden">
+    <div class="card">
+      <button data-close="verify-modal" class="close-btn">✖</button>
+
+      <h2 class="title-yellow">Enter Code</h2>
+
+      <input id="verify-code" type="text" maxlength="4" placeholder="4-digit code" class="input-dark">
+
+      <button id="verify-submit" class="btn-primary">
+        Verify
+      </button>
+    </div>
+  </div>
+
+
+  <!--  RESET PASSWORD  -->
+  <div id="reset-modal" class="modal hidden">
+    <div class="card">
+      <button data-close="reset-modal" class="close-btn">✖</button>
+
+      <h2 class="title-yellow">New Password</h2>
+
+      <input id="new-password" type="password" placeholder="New Password" class="input-dark">
+
+      <button id="reset-submit" class="btn-primary">
+        Reset Password
+      </button>
+    </div>
+  </div>
+
+
+  <!-- ================= MAIN APP (Hidden Until Login) ================= -->
+  <div id="main-app"
+       class="hidden h-screen flex">
+
+    <!-- Sidebar -->
+    <div class="w-60 bg-[#1e293b] p-6 border-r border-[#334155]">
+      <h2 class="text-xl font-bold text-[#facc15] mb-6">SuperBuzz</h2>
+      <p class="text-gray-400">Home</p>
+      <p class="text-gray-400 mt-3">Leaderboard</p>
+      <p class="text-gray-400 mt-3">Profile</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 p-10">
+      <h1 class="text-3xl font-bold text-[#2563eb]">
+        Welcome to SuperBuzz 🚀
+      </h1>
+      <p class="text-gray-400 mt-4">
+        You are now logged in.
+      </p>
+    </div>
+  </div>
+
+
+  <script src="main.js"></script>
 </body>
 </html>
