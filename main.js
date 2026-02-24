@@ -114,7 +114,7 @@ document.getElementById("verify-code-submit")
     //{
       //alert("Invalid verification code");
     //}
-    
+
   });
 
 
@@ -133,7 +133,7 @@ document.getElementById("reset-submit")
     hide("reset-modal");
     show("login-modal");
   });
-
+// for later use -> ✖
 document.getElementById("chat-toggle")
   .addEventListener("click", () => {
       const element = document.getElementById("chatbox");
@@ -147,3 +147,24 @@ document.getElementById("chat-toggle")
         hide("chatbox")
       }
   });
+
+
+document.getElementById("home-button")
+  .addEventListener("click", () => {
+    if (!document.getElementById("main-app").classList.contains("hidden")) {
+      show("main-app");
+    }
+  });
+
+document.getElementById("sidebar-toggle")
+  .addEventListener("click", () => {
+    if (!document.getElementById("sidebar").classList.contains("hidden")) 
+    {
+      hide("sidebar");
+    } 
+    else 
+    {
+      show("sidebar");
+    }
+  });
+
