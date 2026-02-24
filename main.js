@@ -114,6 +114,7 @@ document.getElementById("verify-code-submit")
     //{
       //alert("Invalid verification code");
     //}
+    
   });
 
 
@@ -132,4 +133,17 @@ document.getElementById("reset-submit")
     hide("reset-modal");
     show("login-modal");
   });
-  
+
+document.getElementById("chat-toggle")
+  .addEventListener("click", () => {
+      const element = document.getElementById("chatbox");
+
+      if (element.classList.contains("hidden")) 
+      {
+        show("chatbox")
+      } 
+      else 
+      {
+        hide("chatbox")
+      }
+  });
