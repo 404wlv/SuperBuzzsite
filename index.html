@@ -172,7 +172,7 @@
 
   <!-- HomePage -->
   <div id="main-app"
-       class="hidden h-screen flex">
+       class="modal hidden flex flex-col md:flex-row h-screen">
 
     <!-- Sidebar -->
     <div class="w-60 bg-fuchsia-900 p-5 border-r border-[#334155]">
@@ -180,13 +180,32 @@
       
     </div>
 
-    <!-- Main Content -->
+    <!-- Main Content (events displayed) -->
     <div class="">
       
     </div>
 
     <!-- Chat box -->
+     <div id="chatbox"
+         class="fixed right-6 bottom-6 bg-fuchsia-200 w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-4 hidden">
 
+        <h3 class="text-2xl font-bold text-fuchsia-800">ChatBox</h3>
+
+        <div class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800">
+        <!-- messages go here -->
+        </div>
+
+        <input type="text"
+            placeholder="Type a message..."
+            class="p-3 rounded-xl border border-[#334155] text-gray-800 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 w-full">
+
+      </div>
+
+      <!-- Chat Button -->
+      <button id="chat-toggle"
+        class="fixed right-6 bottom-6 bg-fuchsia-800 text-white px-4 py-3 rounded-full shadow-xl hover:scale-110 transition"> 
+        Chat Now
+      </button>
 
   </div>
 
