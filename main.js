@@ -132,3 +132,8 @@ document.getElementById("reset-submit")
     hide("reset-modal");
     show("login-modal");
   });
+
+document.getElementById("chat-toggle")
+  .addEventListener("click", () => {
+      show("chatbox");
+  });
