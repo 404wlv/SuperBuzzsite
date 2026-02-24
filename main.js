@@ -135,5 +135,14 @@ document.getElementById("reset-submit")
 
 document.getElementById("chat-toggle")
   .addEventListener("click", () => {
-      show("chatbox");
+      const element = document.getElementById("chatbox");
+
+      if (element.classList.contains("hidden")) 
+      {
+        show("chatbox")
+      } 
+      else 
+      {
+        hide("chatbox")
+      }
   });
