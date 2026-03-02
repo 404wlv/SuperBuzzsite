@@ -157,3 +157,8 @@ document.getElementById("bus-timings")
     .addEventListener("click", () => {
         show("bus-modal");
     });
+
+document.getElementById("gym-timings")
+    .addEventListener("click", () => {
+        show("gym-modal");
+    });
