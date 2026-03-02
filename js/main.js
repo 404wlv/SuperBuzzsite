@@ -146,12 +146,6 @@ document.getElementById("chat-toggle")
     });
 
 
-document.getElementById("home-button")
-    .addEventListener("click", () => {
-        if (!document.getElementById("main-app").classList.contains("hidden")) {
-            show("main-app");
-        }
-    });
 
 document.getElementById("sidebar-toggle")
     .addEventListener("click", () => {
