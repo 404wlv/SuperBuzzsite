@@ -163,3 +163,7 @@ document.getElementById("sidebar-toggle")
         }
     });
 
+document.getElementById("bus-timings")
+    .addEventListener("click", () => {
+        show("bus-modal");
+    });
