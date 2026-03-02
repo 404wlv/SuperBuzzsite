@@ -165,6 +165,5 @@ document.getElementById("sidebar-toggle")
 
 document.getElementById("bus-timings")
     .addEventListener("click", () => {
-        hide("main-app");
         show("bus-modal");
     });
