@@ -174,47 +174,26 @@
 
 
   <!-- HomePage -->
-  <div id="app-shell" class="hidden h-screen flex">
+  <div id="main-app"
+       class="modal hidden flex flex-col md:flex-row h-screen">
 
+    <h2 class="text-4xl font-bold p-6 text-center text-fuchsia-800">
+      SuperBuzz
+    </h2>
 
-    <!-- Sidebar -->
-    <div id="sidebar" class="hidden w-60 bg-fuchsia-900 p-5 border-r border-[#334155]">
-      
-      <button id="profile-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-        Profile
-      </button>
-      
-      <button id="bus-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-        Bus Timings
-      </button>
+    <button id="sidebar-toggle"
+      class="fixed top-6 left-6 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
+      ᯓ
+    </button>
 
-      <button id="map-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-        Map
-      </button>
-
-      <button id="library-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-        Library
-      </button>
-
-      <button id="weather-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-        🌤
-      </button>
-    </div>
-
-    <!-- Main Content (events displayed) -->
-    <div class="flex-1 relative bg-fuchsia-300">
-      <button id="sidebar-toggle"
-        class="absolute top-6 right-6 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
-        ᯓ
-      </button>
-
-      <button id="add-event-button"
+    <button id="add-event-button"
         class="fixed bottom-6 left-6 bg-fuchsia-700 py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">
         + Create Event
       </button> 
 
-
+      <button id="home-button" class="text-7xl top-6 left-6 font-bold text-fuchsia-800 mb-6 hover:scale-110 transition">SuperBuzz</button>
     </div>
+      
 
     <!-- Chat box -->
      <div id="chatbox"
@@ -238,15 +217,33 @@
         Chat Now
       </button>
 
+      <!-- Sidebar -->
+    <div id="sidebar" 
+      class="fixed top-0 left-0 h-full w-60 bg-fuchsia-900 p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
+      
+      <button id="profile-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+        Profile
+      </button>
+      
+      <button id="bus-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+        Bus Timings
+      </button>
+
+      <button id="map-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+        Map
+      </button>
+
+      <button id="library-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+        Library
+      </button>
+
+      <button id="weather-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+        🌤
+      </button>
+    </div>
   </div>
 
-  <!-- Profile -->
   
-
-  <!-- Add Event -->
-
-
-  <!-- Check Train/bus timings -->
 
 
   <!-- Map -->
