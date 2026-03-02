@@ -149,12 +149,8 @@ document.getElementById("chat-toggle")
 
 document.getElementById("sidebar-toggle")
     .addEventListener("click", () => {
-        if (!document.getElementById("sidebar").classList.contains("hidden")) {
-            hide("sidebar");
-        }
-        else {
-            show("sidebar");
-        }
+        const sidebar = document.getElementById("sidebar");
+        sidebar.classList.toggle("-translate-x-full");
     });
 
 document.getElementById("bus-timings")
