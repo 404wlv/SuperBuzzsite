@@ -162,3 +162,8 @@ document.getElementById("gym-timings")
     .addEventListener("click", () => {
         show("gym-modal");
     });
+
+document.getElementById("library-timings")
+    .addEventListener("click", () => {
+        show("library-modal");
+    });
