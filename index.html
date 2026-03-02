@@ -212,7 +212,6 @@
         </div>
       </div>
     </div>
-      
 
     <!-- Chat box -->
      <div id="chatbox"
@@ -256,8 +255,8 @@
           Map
         </button>
 
-        <button id="library-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
-          Library
+        <button id="library-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
+          Library Timings
         </button>
 
         <button id="weather-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
@@ -277,6 +276,28 @@
 
 
   <!-- Library -->
+   <div id="library-modal" 
+      class="modal hidden flex-initial flex justify-center">
+      <div class="relative flex flex-col sm:flex-row gap-6">
+
+        <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
+
+          <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+            Library Timings
+          </h2>
+
+          <h3>Next Library Sessions:</h3>
+          <ul class="list-disc list-inside text-fuchsia-800"> 
+
+            <li>Study Room 1: 5:00 PM</li>
+            <li>Study Room 2: 6:30 PM</li>
+            <li>Computer Lab: 7:00 PM</li>
+          </ul>
+        
+
+        </div>
+      </div>
+    </div>
 
    
   <!-- Weather for clothes? -->
