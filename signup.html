@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-fuchsia-300 text-white">
+     <!-- SIGNUP -->
+  <div id="signup-modal"
+       class="modal absolute inset-0 flex-initial flex items-center justify-center">
+
+    <div class="relative flex flex-col sm:flex-row gap-6">
+
+      <!-- Signup Card -->
+      <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
+ <button onclick="window.location.href='index.html'"
+    class="mb-4 text-fuchsia-800 font-bold">
+    ← Back
+  </button>
+        <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+          Signup
+        </h2>
+
+        <input id="signup-email"
+          type="email"
+          placeholder="University Email"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+        <input id="signup-password"
+          type="password"
+          placeholder="Password"
+          class="fuchsia-100 text-fuchsia-800 placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-blue-500 w-full">
+
+        <button id="signup-submit"
+          class="btn-primary w-full bg-fuchsia-800 hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+          Signup
+        </button>
+
+      </div>
+    </div>
+  </div>
+</body>
+</html>
