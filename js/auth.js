@@ -1,4 +1,4 @@
-import { supabase } from "./supabaseClient";
+import { supabase } from "./supabaseClient.js";
 
 const allowedDomain = "@wlv.ac.uk";
 
@@ -31,6 +31,8 @@ export async function signup(email, password) {
         email,
         password
     })
+    console.log("Signup response:", data)
+    console.log("Signup error:", error)
     if (error) {
         alert(error.message)
     } else {

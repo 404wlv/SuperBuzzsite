@@ -1,5 +1,6 @@
 /////testing
 import { supabase } from "./supabaseClient.js"
+import { signup } from "./auth.js"
 
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession()
@@ -77,25 +78,34 @@ document.getElementById("forgot-password-btn")
     });
 
 
-// Signup
+///// Signup
 document.getElementById("signup-submit")
-    .addEventListener("click", () => {
+    .addEventListener("click", async () => {
         const email = document.getElementById("signup-email").value;
         const password = document.getElementById("signup-password").value;
 
-        if (!validUniversityEmail(email)) {
-            alert("Use university email");
-            return;
-        }
-        else if (!validPassword(password)) {
-            alert("Password must be 8+ characters, include uppercase + lowercase letters and numbers");
-            return;
-        }
-
-        alert("Signup ready for backend.");
-        hide("signup-modal");
-        show("main-app");
+        await signup(email, password);
     });
+// document.getElementById("signup-submit")
+//     .addEventListener("click", () => {
+//         const email = document.getElementById("signup-email").value;
+//         const password = document.getElementById("signup-password").value;
+
+//         if (!validUniversityEmail(email)) {
+//             alert("Use university email");
+//             return;
+//         }
+//         else if (!validPassword(password)) {
+//             alert("Password must be 8+ characters, include uppercase + lowercase letters and numbers");
+//             return;
+//         }
+
+//         alert("Signup ready for backend.");
+//         hide("signup-modal");
+//         show("main-app");
+//     });
+
+
 
 
 // Forgot
