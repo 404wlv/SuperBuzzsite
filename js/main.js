@@ -1,3 +1,20 @@
+/////testing
+import { supabase } from "./supabaseClient.js"
+
+async function testConnection() {
+    const { data, error } = await supabase.auth.getSession()
+
+    if (error) {
+        console.log("Error connecting:", error)
+    } else {
+        console.log("Supabase connected successfully")
+    }
+}
+
+testConnection()
+
+
+
 // whatever modal id is passed, toggle its visibility
 function hide(id) {
     document.getElementById(id).classList.toggle("hidden");
