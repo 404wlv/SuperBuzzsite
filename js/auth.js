@@ -36,8 +36,10 @@ export async function signup(email, password) {
     console.log("Signup error:", error)
     if (error) {
         alert(error.message)
+        return false;
     } else {
         alert("Signup successful! Check your email for verification/")
+        return true;
     }
 }
 
@@ -50,6 +52,7 @@ export async function login(email, password) {
     })
     if (error) {
         alert(error.message)
+        return false;
     } else {
         return true;
     }
@@ -69,8 +72,10 @@ export async function sendResetEmail(email) {
     })
     if (error) {
         alert(error.message)
+        return false;
     } else {
         alert("Password reset email sent.")
+        return true;
     }
 }
 
@@ -82,8 +87,10 @@ export async function updatePassword(newPassword) {
     })
     if (error) {
         alert(error.message)
+        return false;
     } else {
         alert("Password updated successfully.")
+        return true;
     }
 }
 
