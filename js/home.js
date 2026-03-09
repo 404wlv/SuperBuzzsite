@@ -1,6 +1,5 @@
 /////testing
 import { supabase } from "./supabaseClient.js"
-import { signup } from "./auth.js"
 
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession()
@@ -25,15 +24,6 @@ function show(id) {
     document.getElementById(id).classList.remove("hidden");
 }
 
-// simple validation functions for email and password
-function validUniversityEmail(email) {
-    return email.endsWith("@wlv.ac.uk");
-}
-
-function validPassword(password) {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
-    return regex.test(password);
-}
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -45,133 +35,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // LOGIN
-    const loginBtn = document.getElementById("login-submit");
-
-    loginBtn.addEventListener("click", () => {
-
-        const email = document.getElementById("login-email").value;
-        const password = document.getElementById("login-password").value;
-
-        if (!validUniversityEmail(email)) {
-            alert("Use university email!");
-            return;
-        }
-
-        if (!validPassword(password)) {
-            alert("Password must be at least 8 characters, include uppercase + lowercase letters and numbers");
-            return;
-        }
-
-        // SUCCESS → Show Main App
-        hide("login-modal");
-        show("main-app");
-    });
-
-
-    // login side buttons
-    const signupBtn = document.getElementById("login-to-signup");
-    signupBtn
-        .addEventListener("click", () => {
-            hide("login-modal");
-            show("signup-modal");
-        });
-
-    const forgotPasswordBtn = document.getElementById("forgot-password-btn");
-    forgotPasswordBtn
-        .addEventListener("click", () => {
-            hide("login-modal");
-            show("forgot-modal");
-        });
-
-
-    // Signup
-    const signupBtn2 = document.getElementById("signup-submit");
-    signupBtn2
-        .addEventListener("click", async () => {
-            const email = document.getElementById("signup-email").value;
-            const password = document.getElementById("signup-password").value;
-
-            await signup(email, password);
-        });
-
-    const backBtn = document.getElementById("back");
-    backBtn
-        .addEventListener("click", () => {
-            hide("signup-modal");
-            show("login-modal");
-        });
-
-
-    // Forgot
-    const forgotSubmitBtn = document.getElementById("forgot-submit");
-    forgotSubmitBtn
-        .addEventListener("click", () => {
-            hide("forgot-modal");
-            document.getElementById("reset-modal").classList.remove("hidden");
-        });
-
-    const forgotSubmitBtn2 = document.getElementById("forgot-submit");
-    forgotSubmitBtn2
-        .addEventListener("click", () => {
-
-            const email = document.getElementById("forgot-email").value;
-
-            if (!validUniversityEmail(email)) {
-                alert("Use university email");
-                return;
-            }
-        });
-
-    const backBtn2 = document.getElementById("back2");
-    backBtn2
-        .addEventListener("click", () => {
-            hide("forgot-modal");
-            show("login-modal");
-        });
-
-
-    const verifyCodeBtn = document.getElementById("verify-code-submit");
-    verifyCodeBtn
-        .addEventListener("click", () => {
-
-            //code should be generated and emailed in real app -> backend work needed
-
-            //if (code === ) 
-            //{
-            //hide("forgot-modal");
-            //show("main-app");
-            //} 
-            //else 
-            //{
-            //alert("Invalid verification code");
-            //}
-
-        });
-
-
-    const resetSubmitBtn = document.getElementById("reset-submit");
-    resetSubmitBtn
-        .addEventListener("click", () => {
-
-            const newPassword = document.getElementById("new-password").value;
-
-            if (!validPassword(newPassword)) {
-                alert("Password must be 8+ characters");
-                return;
-            }
-
-            alert("Password reset ready for backend.");
-            hide("reset-modal");
-            show("login-modal");
-        });
-
-    const backBtn3 = document.getElementById("back3");
-    backBtn3
-        .addEventListener("click", () => {
-            hide("reset-modal");
-            show("login-modal");
-        });
 
     // for later use -> ✖
 

@@ -99,16 +99,27 @@ export async function checkSession() {
 
 
 function showMainApp() {
-    document.getElementById("login-modal").classList.add("hidden")
-    document.getElementById("signup-modal").classList.add("hidden")
-    document.getElementById("forgot-modal").classList.add("hidden")
-    document.getElementById("reset-modal").classList.add("hidden")
-    document.getElementById("main-app").classList.remove("hidden")
+    hide("login-modal")
+    hide("signup-modal")
+    hide("forgot-modal")
+    hide("reset-modal")
+    show("main-app")
 
 }
 
 
 //stuff from main.js that should be here
+
+
+// whatever modal id is passed, toggle its visibility
+function hide(id) {
+    document.getElementById(id).classList.add("hidden");
+}
+
+function show(id) {
+    document.getElementById(id).classList.remove("hidden");
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     // Login
     const loginBtn = document.getElementById("login-submit");
