@@ -18,7 +18,7 @@ testConnection()
 
 // whatever modal id is passed, toggle its visibility
 function hide(id) {
-    document.getElementById(id).classList.toggle("hidden");
+    document.getElementById(id).classList.add("hidden");
 }
 
 function show(id) {
@@ -92,6 +92,13 @@ signupBtn2
         await signup(email, password);
     });
 
+const backBtn = document.getElementById("back");
+backBtn
+    .addEventListener("click", () => {
+        hide("signup-modal");
+        show("login-modal");
+    });
+
 
 // Forgot
 const forgotSubmitBtn = document.getElementById("forgot-submit");
@@ -112,6 +119,14 @@ forgotSubmitBtn2
             return;
         }
     });
+
+const backBtn2 = document.getElementById("back2");
+backBtn2
+    .addEventListener("click", () => {
+        hide("forgot-modal");
+        show("login-modal");
+    });
+
 
 const verifyCodeBtn = document.getElementById("verify-code-submit");
 verifyCodeBtn
@@ -144,6 +159,13 @@ resetSubmitBtn
         }
 
         alert("Password reset ready for backend.");
+        hide("reset-modal");
+        show("login-modal");
+    });
+
+const backBtn3 = document.getElementById("back3");
+backBtn3
+    .addEventListener("click", () => {
         hide("reset-modal");
         show("login-modal");
     });
