@@ -11,7 +11,8 @@ function validateUniversityEmail(email) {
 
 ///password validation
 function validatePassword(password) {
-    return password.length >= 8
+    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+    return regex.test(password);
 }
 
 

@@ -43,7 +43,9 @@ document.querySelectorAll("[data-close]").forEach(btn => {
 });
 
 // LOGIN
-document.getElementById("login-submit").addEventListener("click", () => {
+const loginBtn = document.getElementById("login-submit");
+
+loginBtn.addEventListener("click", () => {
 
     const email = document.getElementById("login-email").value;
     const password = document.getElementById("login-password").value;
@@ -65,57 +67,42 @@ document.getElementById("login-submit").addEventListener("click", () => {
 
 
 // login side buttons
-document.getElementById("login-to-signup")
+const signupBtn = document.getElementById("login-to-signup");
+signupBtn
     .addEventListener("click", () => {
         hide("login-modal");
         show("signup-modal");
     });
 
-document.getElementById("forgot-password-btn")
+const forgotPasswordBtn = document.getElementById("forgot-password-btn");
+forgotPasswordBtn
     .addEventListener("click", () => {
         hide("login-modal");
         show("forgot-modal");
     });
 
 
-///// Signup
-document.getElementById("signup-submit")
+// Signup
+const signupBtn2 = document.getElementById("signup-submit");
+signupBtn2
     .addEventListener("click", async () => {
         const email = document.getElementById("signup-email").value;
         const password = document.getElementById("signup-password").value;
 
         await signup(email, password);
     });
-// document.getElementById("signup-submit")
-//     .addEventListener("click", () => {
-//         const email = document.getElementById("signup-email").value;
-//         const password = document.getElementById("signup-password").value;
-
-//         if (!validUniversityEmail(email)) {
-//             alert("Use university email");
-//             return;
-//         }
-//         else if (!validPassword(password)) {
-//             alert("Password must be 8+ characters, include uppercase + lowercase letters and numbers");
-//             return;
-//         }
-
-//         alert("Signup ready for backend.");
-//         hide("signup-modal");
-//         show("main-app");
-//     });
-
-
 
 
 // Forgot
-document.getElementById("forgot-reset")
+const forgotSubmitBtn = document.getElementById("forgot-submit");
+forgotSubmitBtn
     .addEventListener("click", () => {
         hide("forgot-modal");
         document.getElementById("reset-modal").classList.remove("hidden");
     });
 
-document.getElementById("forgot-submit")
+const forgotSubmitBtn2 = document.getElementById("forgot-submit");
+forgotSubmitBtn2
     .addEventListener("click", () => {
 
         const email = document.getElementById("forgot-email").value;
@@ -126,7 +113,8 @@ document.getElementById("forgot-submit")
         }
     });
 
-document.getElementById("verify-code-submit")
+const verifyCodeBtn = document.getElementById("verify-code-submit");
+verifyCodeBtn
     .addEventListener("click", () => {
 
         //code should be generated and emailed in real app -> backend work needed
@@ -144,8 +132,8 @@ document.getElementById("verify-code-submit")
     });
 
 
-
-document.getElementById("reset-submit")
+const resetSubmitBtn = document.getElementById("reset-submit");
+resetSubmitBtn
     .addEventListener("click", () => {
 
         const newPassword = document.getElementById("new-password").value;
@@ -159,8 +147,12 @@ document.getElementById("reset-submit")
         hide("reset-modal");
         show("login-modal");
     });
+
 // for later use -> ✖
-document.getElementById("chat-toggle")
+
+//sidebar and chatbox toggles
+const chatToggleBtn = document.getElementById("chat-toggle");
+chatToggleBtn
     .addEventListener("click", () => {
         const element = document.getElementById("chatbox");
 
@@ -174,23 +166,30 @@ document.getElementById("chat-toggle")
 
 
 
-document.getElementById("sidebar-toggle")
+const sidebarToggleBtn = document.getElementById("sidebar-toggle");
+sidebarToggleBtn
     .addEventListener("click", () => {
         const sidebar = document.getElementById("sidebar");
         sidebar.classList.toggle("-translate-x-full");
     });
 
-document.getElementById("bus-timings")
+
+
+// bus, gym, library modals
+const busBtn = document.getElementById("bus-timings");    
+busBtn
     .addEventListener("click", () => {
         show("bus-modal");
     });
 
-document.getElementById("gym-timings")
+const gymBtn = document.getElementById("gym-timings");
+gymBtn
     .addEventListener("click", () => {
         show("gym-modal");
     });
 
-document.getElementById("library-timings")
+const libraryBtn = document.getElementById("library-timings");
+libraryBtn
     .addEventListener("click", () => {
         show("library-modal");
     });
