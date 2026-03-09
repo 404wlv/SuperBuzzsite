@@ -1,84 +1,62 @@
-/////testing
-import { supabase } from "./supabaseClient.js"
+import { supabase } from "./supabaseClient.js";
 
 async function testConnection() {
-    const { data, error } = await supabase.auth.getSession()
+    const { data, error } = await supabase.auth.getSession();
 
     if (error) {
-        console.log("Error connecting:", error)
+        console.log("Error connecting:", error);
     } else {
-        console.log("Supabase connected successfully")
+        console.log("Supabase connected successfully");
     }
 }
 
-testConnection()
+testConnection();
 
-
-
-// whatever modal id is passed, toggle its visibility
 function hide(id) {
-    document.getElementById(id).classList.add("hidden");
+    const el = document.getElementById(id);
+    if (el) el.classList.add("hidden");
 }
-
 function show(id) {
-    document.getElementById(id).classList.remove("hidden");
+    const el = document.getElementById(id);
+    if (el) el.classList.remove("hidden");
 }
-
-
+function toggle(id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle("hidden");
+}
 
 document.addEventListener("DOMContentLoaded", () => {
-    
-    // close buttons for all modals -> need improvements 
+
     document.querySelectorAll("[data-close]").forEach(btn => {
         btn.addEventListener("click", () => {
-            hide(btn.getAttribute("data-close"));
+            const target = btn.getAttribute("data-close");
+            hide(target);
         });
     });
 
-
-    // for later use -> ✖
-
-    //sidebar and chatbox toggles
     const chatToggleBtn = document.getElementById("chat-toggle");
-    chatToggleBtn
-        .addEventListener("click", () => {
-            const element = document.getElementById("chatbox");
-
-            if (element.classList.contains("hidden")) {
-                show("chatbox")
-            }
-            else {
-                hide("chatbox")
-            }
-        });
-
-
+    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => toggle("chatbox"));
 
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
-    sidebarToggleBtn
-        .addEventListener("click", () => {
+    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) sidebar.classList.toggle("-translate-x-full");
+    });
+
+    const sidebarBackBtn = document.getElementById("sidebar-back");
+    if (sidebarBackBtn) {
+        sidebarBackBtn.addEventListener("click", () => {
             const sidebar = document.getElementById("sidebar");
-            sidebar.classList.toggle("-translate-x-full");
+            if (sidebar) sidebar.classList.add("-translate-x-full");
         });
+    }
 
-
-
-    // bus, gym, library modals
-    const busBtn = document.getElementById("bus-timings");    
-    busBtn
-        .addEventListener("click", () => {
-            show("bus-modal");
-        });
+    const busBtn = document.getElementById("bus-timings");
+    if (busBtn) busBtn.addEventListener("click", () => show("bus-modal"));
 
     const gymBtn = document.getElementById("gym-timings");
-    gymBtn
-        .addEventListener("click", () => {
-            show("gym-modal");
-        });
+    if (gymBtn) gymBtn.addEventListener("click", () => show("gym-modal"));
 
     const libraryBtn = document.getElementById("library-timings");
-    libraryBtn
-        .addEventListener("click", () => {
-            show("library-modal");
-        });
+    if (libraryBtn) libraryBtn.addEventListener("click", () => show("library-modal"));
 });

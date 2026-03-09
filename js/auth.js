@@ -25,7 +25,7 @@ export async function signup(email, password) {
         return false;
     }
     if (!validatePassword(password)) {
-        alert("Password must be atleast 8 characters long.")
+        alert("Password must be atleast 8 characters long, with atleast 1 uppercase, 1 lowercase, 1 number, 1 special character.")
         return false;
     }
     const { data, error } = await supabase.auth.signUp({

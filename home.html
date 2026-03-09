@@ -20,12 +20,6 @@
     <div id="main-app"
         class="modal flex flex-col md:flex-row h-screen">
 
-
-        <button id="add-event-button"
-            class="fixed bottom-6 left-6 bg-fuchsia-700 py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">
-            + Create Event
-        </button> 
-
     </div>
 
     <!---- Gym Timings -->
@@ -75,7 +69,11 @@
     <!-- Sidebar -->
     <div id="sidebar" 
         class="fixed top-0 left-0 h-full w-60 bg-fuchsia-900 p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out z-40">
-      
+
+        <button id="sidebar-back" class="text-white px-2 py-1 bg-white/10 rounded hover:bg-white/20 mb-4">
+            ← Back
+        </button>
+
         <button id="profile-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-fuchsia-800 transition mb-2">
             Profile
         </button>
@@ -105,6 +103,11 @@
         class="fixed top-6 left-6 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
         ᯓ
     </button>
+
+    <button id="add-event-button"
+        class="fixed bottom-6 left-6 bg-fuchsia-700 py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">
+        + Create Event
+    </button> 
 
   
 
