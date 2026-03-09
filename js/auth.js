@@ -97,6 +97,14 @@ export async function checkSession() {
     }
 }
 
+// whatever modal id is passed, toggle its visibility
+function hide(id) {
+    document.getElementById(id).classList.add("hidden");
+}
+
+function show(id) {
+    document.getElementById(id).classList.remove("hidden");
+}
 
 function showMainApp() {
     hide("login-modal")
@@ -109,16 +117,6 @@ function showMainApp() {
 
 
 //stuff from main.js that should be here
-
-
-// whatever modal id is passed, toggle its visibility
-function hide(id) {
-    document.getElementById(id).classList.add("hidden");
-}
-
-function show(id) {
-    document.getElementById(id).classList.remove("hidden");
-}
 
 document.addEventListener("DOMContentLoaded", () => {
     // Login
