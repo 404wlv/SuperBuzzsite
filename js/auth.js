@@ -5,12 +5,12 @@ const allowedDomain = "@wlv.ac.uk";
 
 //////email domain validation
 
-function validateUniversityEmail(email) {
+export function validateUniversityEmail(email) {
     return email.endsWith(allowedDomain);
 }
 
 ///password validation
-function validatePassword(password) {
+export function validatePassword(password) {
     const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
     return regex.test(password);
 }
