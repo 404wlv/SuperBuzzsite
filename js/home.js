@@ -88,10 +88,9 @@ document.addEventListener("DOMContentLoaded", () => {
             <p>${event.description}</p>
             <p class="text-xs text-gray-500 mt-1">${new Date(event.on).toLocaleString()}</p>
             <p>people registered: ${event.peopleregistered}</p>
-        `; 
-        <a href="">
-        <button class="mt-2 bg-fuchsia-700 text-white px-3 py-1 rounded">Register</button>
-        </a>
+            <!-- a href="URL TO FORM"> add the button here </a> -->
+            <button class="mt-2 bg-fuchsia-700 text-white px-3 py-1 rounded">Register</button>
+        `;
             
         container.appendChild(div);
     });
