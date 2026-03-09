@@ -59,4 +59,41 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const libraryBtn = document.getElementById("library-timings");
     if (libraryBtn) libraryBtn.addEventListener("click", () => show("library-modal"));
+
+
+
+    //events
+
+    async function loadEvents() {
+    const { data: events, error } = await supabase
+        .from("events")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    const container = document.getElementById("events-container");
+    if (!container) return;
+
+    container.innerHTML = ""; // clear old events
+    if (!events || events.length === 0) {
+        container.innerHTML = "<p>No events yet</p>";
+        return;
+    }
+
+    events.forEach(event => {
+        const div = document.createElement("div");
+        div.className = "bg-white text-fuchsia-800 p-4 rounded shadow";
+        div.innerHTML = `
+            <h3 class="font-bold">${event.title}</h3>
+            <p class="text-sm text-gray-600">${event.category}</p>
+            <p>${event.description}</p>
+            <p class="text-xs text-gray-500 mt-1">${new Date(event.on).toLocaleString()}</p>
+            <p>people registered: ${event.peopleregistered}</p>
+        `; 
+        <a href="">
+        <button class="mt-2 bg-fuchsia-700 text-white px-3 py-1 rounded">Register</button>
+        </a>
+            
+        container.appendChild(div);
+    });
+}
 });
