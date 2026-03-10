@@ -95,4 +95,10 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(div);
     });
 }
+    //lib hours
+    const today = new Date().toISOString().split("T")[0];
+
+    if (libraries["Harrison Library"][today].isOpen) {
+        
+    }
 });
