@@ -96,9 +96,9 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 }
     //lib hours
-    const today = new Date().toISOString().split("T")[0];
+    //const today = new Date().toISOString().split("T")[0];
 
-    if (libraries["Harrison Library"][today].isOpen) {
+    //if (libraries["Harrison Library"][today].isOpen) {
         
-    }
+    //}
 });
