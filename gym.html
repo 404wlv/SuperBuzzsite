@@ -11,39 +11,29 @@
 </head>
 
 <body class="bg-fuchsia-300 text-white">
+    <!---- Gym Timings -->
+    <div id="gym-modal" 
+      class="modal hidden flex-initial flex justify-center">
+      <div class="relative flex flex-col sm:flex-row gap-6">
 
-    <!-- HomePage -->
-    <div id="main-app"
-        class="modal flex flex-col md:flex-row h-screen">
-        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+        <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
 
+            <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+                Gym Timings
+            </h2>
+
+            <h3>Next Gym Sessions:</h3>
+            <ul class="list-disc list-inside text-fuchsia-800"> 
+
+                <li>Yoga: 6:00 PM</li>
+                <li>Spin Class: 7:30 PM</li>
+                <li>Weightlifting: 8:00 PM</li>
+            </ul>
         </div>
+      </div>
     </div>
 
-   
-
-    <!-- Chat box -->
-    <div id="chatbox"
-        class="fixed right-6 bg-fuchsia-200 w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-4 hidden">
-
-        <h3 class="text-2xl font-bold text-fuchsia-800">ChatBox</h3>
-
-        <div class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800">
-        <!-- messages go here -->
-        </div>
-
-        <input type="text"
-            placeholder="Type a message..."
-            class="p-3 rounded-xl border border-[#334155] text-fuchsia-800 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 w-full">
-
-    </div>
-
-    <!-- Chat Button -->
-    <button id="chat-toggle"
-        class="fixed right-6 bottom-6 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
-        Chat Now
-    </button>
-
+    
     <!-- Sidebar -->
     <div id="sidebar" 
         class="fixed top-0 left-0 h-full w-60 bg-fuchsia-900 p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out overflow-auto z-40">
@@ -87,37 +77,7 @@
         + Create Event
     </button> 
 
-  
-
-
-  <!-- Map -->
-
-
-  <!-- Library -->
-   <div id="library-modal" 
-      class="modal hidden flex-initial flex justify-center">
-      <div class="relative flex flex-col sm:flex-row gap-6">
-
-        <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
-
-          <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
-            Library Timings
-          </h2>
-
-          <h3>Next Library Sessions:</h3>
-          <ul class="list-disc list-inside text-fuchsia-800"> 
-
-            <li>Study Room 1: 5:00 PM</li>
-            <li>Study Room 2: 6:30 PM</li>
-            <li>Computer Lab: 7:00 PM</li>
-          </ul>
-        
-
-        </div>
-      </div>
-    </div>
-
-
+    
   <script type="module" src="js/home.js"></script>
 </body>
 </html>
