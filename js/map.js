@@ -15,3 +15,6 @@ const entranceIcon = L.divIcon({
 L.marker([52.5868, -2.1279], { icon: entranceIcon })
   .addTo(map)
   .bindPopup("Main Entrance - Alan Turing Building");
+
+console.log("map.js loaded");
+console.log(L); // should not be undefined
