@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>profile</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-fuchsia-300 text-white">
+    <div class="p-6 max-w-3xl mx-auto">
+
+<h1 class="text-3xl font-bold text-fuchsia-800 mb-6">
+My Profile
+</h1>
+
+<div class="bg-fuchsia-200 text-fuchsia-800 p-6 rounded-2xl shadow-lg">
+
+<p class="mb-2">
+<strong>Email:</strong>
+<span id="profile-email"></span>
+</p>
+
+<p class="mb-4">
+<strong>User ID:</strong>
+<span id="profile-id"></span>
+</p>
+
+<input
+id="display-name"
+type="text"
+placeholder="Display name"
+class="w-full p-3 rounded-xl border border-[#334155] mb-3"
+/>
+
+<button
+id="save-profile"
+class="bg-fuchsia-800 text-white px-4 py-2 rounded-xl hover:scale-105 transition">
+Save Profile
+</button>
+
+<button
+id="logout-btn"
+class="ml-4 bg-red-600 px-4 py-2 rounded-xl">
+Logout
+</button>
+
+</div>
+
+</div>
+
+<script type="module" src="./js/profile.js"></script>
+
+</body>
+</html>

@@ -68,24 +68,24 @@ document.addEventListener("DOMContentLoaded", () => {
     //events
 
     async function loadEvents() {
-    const { data: events, error } = await supabase
-        .from("events")
-        .select("*")
-        .order("created_at", { ascending: false });
+        const { data: events, error } = await supabase
+            .from("events")
+            .select("*")
+            .order("created_at", { ascending: false });
 
-    const container = document.getElementById("events-container");
-    if (!container) return;
+        const container = document.getElementById("events-container");
+        if (!container) return;
 
-    container.innerHTML = ""; // clear old events
-    if (!events || events.length === 0) {
-        container.innerHTML = "<p>No events yet</p>";
-        return;
-    }
+        container.innerHTML = ""; // clear old events
+        if (!events || events.length === 0) {
+            container.innerHTML = "<p>No events yet</p>";
+            return;
+        }
 
-    events.forEach(event => {
-        const div = document.createElement("div");
-        div.className = "bg-white text-fuchsia-800 p-4 rounded shadow";
-        div.innerHTML = `
+        events.forEach(event => {
+            const div = document.createElement("div");
+            div.className = "bg-white text-fuchsia-800 p-4 rounded shadow";
+            div.innerHTML = `
             <h3 class="font-bold">${event.title}</h3>
             <p class="text-sm text-gray-600">${event.category}</p>
             <p>${event.description}</p>
@@ -94,16 +94,24 @@ document.addEventListener("DOMContentLoaded", () => {
             <!-- a href="URL TO FORM"> add the button here </a> -->
             <button class="mt-2 bg-fuchsia-700 text-white px-3 py-1 rounded">Register</button>
         `;
-            
-        container.appendChild(div);
-    });
 
-    loadEvents();
-}
+            container.appendChild(div);
+        });
+
+        loadEvents();
+    }
     //lib hours
     //const today = new Date().toISOString().split("T")[0];
 
     //if (libraries["Harrison Library"][today].isOpen) {
-        
+
     //}
 });
+
+const profileBtn = document.getElementById("profile-button")
+
+if (profileBtn) {
+    profileBtn.addEventListener("click", () => {
+        window.location.href = "profile.html"
+    })
+}
