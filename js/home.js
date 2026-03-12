@@ -60,6 +60,9 @@ document.addEventListener("DOMContentLoaded", () => {
     const libraryBtn = document.getElementById("library-timings");
     if (libraryBtn) libraryBtn.addEventListener("click", () => show("library-modal"));
 
+    const mapBtn = document.getElementById("map-btn");
+    if (mapBtn) mapBtn.addEventListener("click", () => window.location.href = "map.html");
+
 
 
     //events
