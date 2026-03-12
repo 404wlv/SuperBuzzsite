@@ -94,6 +94,8 @@ document.addEventListener("DOMContentLoaded", () => {
             
         container.appendChild(div);
     });
+
+    loadEvents();
 }
     //lib hours
     //const today = new Date().toISOString().split("T")[0];
