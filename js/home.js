@@ -1,4 +1,6 @@
+import { faqs, fallback } from "./faqs.js";
 import { supabase } from "./supabaseClient.js";
+
 
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession();
