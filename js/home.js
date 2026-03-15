@@ -1,4 +1,4 @@
-import { faqs, fallback } from "./faqs.js";
+import { faqs, fallback } from "./faq.js";
 import { supabase } from "./supabaseClient.js";
 
 

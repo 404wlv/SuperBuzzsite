@@ -1,4 +1,4 @@
- export const faqs = [
+export const faqs = [
   {
     keywords: ["library", "library hours"],
     answer: "Harrison Library is open from 8:00 AM to 10:00 PM."
