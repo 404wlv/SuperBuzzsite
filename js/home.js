@@ -161,3 +161,22 @@ function getBotReply(message) {
 
     return fallback
 }
+
+
+////function for send ing the message
+function sendMessage() {
+
+    const message = chatInput.value.trim()
+
+    if (!message) return
+
+    addMessage(message, "user")
+
+    const reply = getBotReply(message)
+
+    setTimeout(() => {
+        addMessage(reply, "bot")
+    }, 500)
+
+    chatInput.value = ""
+}
