@@ -117,3 +117,47 @@ if (profileBtn) {
         window.location.href = "profile.html"
     })
 }
+
+
+/////chatbot logics
+const chatInput = document.getElementById("chat-input")
+const chatSend = document.getElementById("chat-send")
+const chatMessages = document.getElementById("chat-messages")
+
+function addMessage(text, sender) {
+
+    const msg = document.createElement("div")
+
+    if (sender === "user") {
+        msg.className = "text-right"
+    } else {
+        msg.className = "text-left"
+    }
+
+    msg.textContent = text
+
+    chatMessages.appendChild(msg)
+
+    chatMessages.scrollTop = chatMessages.scrollHeight
+}
+
+
+///match message with faqs
+function getBotReply(message) {
+
+    const text = message.toLowerCase()
+
+    for (const faq of faqs) {
+
+        for (const keyword of faq.keywords) {
+
+            if (text.includes(keyword)) {
+                return faq.answer
+            }
+
+        }
+
+    }
+
+    return fallback
+}
