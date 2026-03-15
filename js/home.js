@@ -180,3 +180,19 @@ function sendMessage() {
 
     chatInput.value = ""
 }
+
+
+/////sending the message and logic for enter key 
+//////need to confirm this function again
+if (chatSend) {
+    chatSend.addEventListener("click", sendMessage)
+}
+
+if (chatInput) {
+    chatInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+            sendMessage()
+        }
+    })
+}
+
