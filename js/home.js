@@ -217,9 +217,27 @@ if (chatInput) {
 }
 
 
-/////for closing all teh models
+/////for fixing overlapoping all teh models
 function closeAllModals() {
   document.getElementById("bus-modal").classList.add("hidden");
   document.getElementById("gym-modal").classList.add("hidden");
   document.getElementById("library-modal").classList.add("hidden");
 }
+
+
+////function for closing the tabs
+document.addEventListener("click", function (event) {
+
+  const busModal = document.getElementById("bus-modal");
+  const gymModal = document.getElementById("gym-modal");
+
+  // If user clicks on modal background (not the card)
+  if (event.target === busModal) {
+    busModal.classList.add("hidden");
+  }
+
+  if (event.target === gymModal) {
+    gymModal.classList.add("hidden");
+  }
+
+});
