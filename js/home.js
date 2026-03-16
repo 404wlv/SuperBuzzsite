@@ -1,6 +1,4 @@
-import { faqs, fallback } from "./faq.js";
 import { supabase } from "./supabaseClient.js";
-
 
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession();
@@ -13,6 +11,23 @@ async function testConnection() {
 }
 
 testConnection();
+
+let faqs = [];  
+
+async function loadFAQs() {
+  const { data, error } = await supabase
+    .from("faqs")
+    .select("*");
+
+  if (error) {
+    console.log("FAQ fetch error:", error);
+    return;
+  }
+
+  faqs = data;
+}
+
+loadFAQs();
 
 function hide(id) {
     const el = document.getElementById(id);
@@ -65,10 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const mapBtn = document.getElementById("map-button");
     if (mapBtn) mapBtn.addEventListener("click", () => window.location.href = "map.html");
 
-
-
     //events
-
     async function loadEvents() {
         const { data: events, error } = await supabase
             .from("events")
@@ -100,8 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
             container.appendChild(div);
         });
 
-        loadEvents();
+        // removed recursive call
     }
+
+    loadEvents(); // ✅= call once (placed after the function)
+
     //lib hours
     //const today = new Date().toISOString().split("T")[0];
 
@@ -117,7 +132,6 @@ if (profileBtn) {
         window.location.href = "profile.html"
     })
 }
-
 
 /////chatbot logics
 const chatInput = document.getElementById("chat-input")
@@ -141,27 +155,24 @@ function addMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight
 }
 
-
-///match message with faqs
 function getBotReply(message) {
 
-    const text = message.toLowerCase()
+  const text = message.toLowerCase();
 
-    for (const faq of faqs) {
+  for (const faq of faqs) {
 
-        for (const keyword of faq.keywords) {
+    const keywords = faq.keywords.split(",")
 
-            if (text.includes(keyword)) {
-                return faq.answer
-            }
-
+    for (const word of keywords) {
+    
+    if (text.includes(word.trim())) {
+         return faq.answer;
         }
+     }
+  }
 
-    }
-
-    return fallback
+  return "I'm sorry, I couldn't find that information. Please email dummyemail@gmail.com for further assistance.";
 }
-
 
 ////function for send ing the message
 function sendMessage() {
@@ -181,7 +192,6 @@ function sendMessage() {
     chatInput.value = ""
 }
 
-
 /////sending the message and logic for enter key 
 //////need to confirm this function again
 if (chatSend) {
@@ -195,4 +205,3 @@ if (chatInput) {
         }
     })
 }
-
