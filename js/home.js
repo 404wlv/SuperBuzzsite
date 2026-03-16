@@ -68,11 +68,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    const busBtn = document.getElementById("bus-timings");
-    if (busBtn) busBtn.addEventListener("click", () => show("bus-modal"));
+    // const busBtn = document.getElementById("bus-timings");
+    // if (busBtn) busBtn.addEventListener("click", () => show("bus-modal"));
 
-    const gymBtn = document.getElementById("gym-timings");
-    if (gymBtn) gymBtn.addEventListener("click", () => show("gym-modal"));
+    document.getElementById("bus-timings").addEventListener("click", () => {
+  closeAllModals();
+  document.getElementById("bus-modal").classList.remove("hidden");
+});
+
+    // const gymBtn = document.getElementById("gym-timings");
+    // if (gymBtn) gymBtn.addEventListener("click", () => show("gym-modal"));
+
+    document.getElementById("gym-timings").addEventListener("click", () => {
+  closeAllModals();
+  document.getElementById("gym-modal").classList.remove("hidden");
+});
 
     const libraryBtn = document.getElementById("library-timings");
     if (libraryBtn) libraryBtn.addEventListener("click", () => show("library-modal"));
@@ -204,4 +214,12 @@ if (chatInput) {
             sendMessage()
         }
     })
+}
+
+
+/////for closing all teh models
+function closeAllModals() {
+  document.getElementById("bus-modal").classList.add("hidden");
+  document.getElementById("gym-modal").classList.add("hidden");
+  document.getElementById("library-modal").classList.add("hidden");
 }
