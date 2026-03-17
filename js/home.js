@@ -325,7 +325,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    document.getElementById("attend-button").addEventListener("click", () => {
+    //document.getElementById("attend-button").addEventListener("click", () => {
         // mark attended, update points, show toast, also check if button exists 
-    });
+    //});
 });
