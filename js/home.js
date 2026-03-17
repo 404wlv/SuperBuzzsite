@@ -103,7 +103,7 @@ function renderEvents(){
             <p class="text-xs sm:text-sm">${event.category}</p>
             <div class="absolute hidden opacity-0 scale-90 
               group-hover:opacity-100 group-hover:scale-100
-              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-full sm:w-full">
+              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200">
                 ${event.description}
             </div>
         `
