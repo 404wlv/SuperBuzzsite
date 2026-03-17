@@ -136,60 +136,64 @@
     </div>
 
     <script>
-      async function loadBusDepartures() {
-      const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
+      async function loadTransport() {
+          const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
+          const busList = document.getElementById("bus-list");
 
-      // Map stop IDs to friendly names
-      const stops = {
-          "nwmjdtdt": "University of Wolverhampton Stop AB",
-          "nwmtgjtw": "University of Wolverhampton Stop AC"
-      };
+          if (!busList) return;
 
-      const busList = document.getElementById("bus-list");
-      if (!busList) return;
+          busList.innerHTML = "<li>Loading transport data...</li>";
 
-      busList.innerHTML = "<li>Loading departures...</li>";
+          try {
+              let output = "";
 
-      try {
-          const departuresAll = [];
+              // 🚌 BUS STOPS
+              const stops = {
+                  "nwmjdtdt": "Stop AB",
+                  "nwmtgjtw": "Stop AC"
+              };
 
-          for (const stopId in stops) {
-              const res = await fetch(`https://api.busesandtrains.co.uk/v1/departures?stop_id=${stopId}&app_key=${appKey}`);
-              const data = await res.json();
+              for (const stopId in stops) {
+                  const res = await fetch(`https://api.busesandtrains.co.uk/v1/stops/${stopId}/departures?app_key=${appKey}`);
+                  const data = await res.json();
 
-              if (data.departures?.length) {
-                  departuresAll.push(...data.departures.map(dep => ({
-                      stopName: stops[stopId],
-                      line: dep.line,
-                      destination: dep.destination,
-                      time: dep.time
-                  })));
+                  output += `<li class="font-bold mt-2">🚌 ${stops[stopId]}</li>`;
+
+                  if (data.departures?.length) {
+                      data.departures.slice(0, 3).forEach(dep => {
+                          output += `<li>${dep.line} → ${dep.destination} at ${new Date(dep.expected || dep.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>`;
+                      });
+                  } else {
+                      output += `<li>No buses</li>`;
+                  }
               }
+
+              // 🚆 TRAIN (Wolverhampton)
+              const trainRes = await fetch(`https://api.busesandtrains.co.uk/v1/rail/stations/WVH/departures?app_key=${appKey}`);
+              const trainData = await trainRes.json();
+
+              output += `<li class="font-bold mt-4">🚆 Wolverhampton Station</li>`;
+
+              if (trainData.departures?.length) {
+                  trainData.departures.slice(0, 5).forEach(train => {
+                      output += `<li>${train.destination} at ${new Date(train.expected || train.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} (Platform ${train.platform || "?"})</li>`;
+                  });
+              } else {
+                  output += `<li>No trains</li>`;
+              }
+
+              busList.innerHTML = output;
+
+          } catch (err) {
+              console.error(err);
+              busList.innerHTML = "<li>Error loading transport data</li>";
           }
-
-          if (!departuresAll.length) {
-              busList.innerHTML = "<li>No upcoming departures.</li>";
-              return;
-          }
-
-          busList.innerHTML = "";
-          departuresAll.forEach(dep => {
-              const li = document.createElement("li");
-              li.textContent = `${dep.stopName} | ${dep.line} → ${dep.destination} at ${dep.time}`;
-              busList.appendChild(li);
-          });
-
-      } catch (err) {
-          busList.innerHTML = `<li>Error fetching bus data: ${err.message}</li>`;
-          console.error(err);
       }
-      }
-
-      // Attach to your modal button
       document.getElementById("bus-timings")?.addEventListener("click", () => {
-          const busModal = document.getElementById("bus-modal");
-          if (busModal) busModal.classList.remove("hidden");
-          loadBusDepartures();
+        const modal = document.getElementById("bus-modal");
+        if (modal) modal.classList.remove("hidden");
+
+        loadTransport();
       });
     </script>
 
