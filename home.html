@@ -136,61 +136,71 @@
     </div>
 
     <script>
-      async function loadTransport() {
-          const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
-          const busList = document.getElementById("bus-list");
+    async function loadTransport() {
+        const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
+        const busList = document.getElementById("bus-list");
 
-          if (!busList) return;
+        if (!busList) return;
 
-          busList.innerHTML = "<li>Loading transport data...</li>";
+        busList.innerHTML = "<li>Loading transport data...</li>";
 
-          try {
-              let output = "";
+        try {
+            let output = "";
 
-              // 🚌 BUS STOPS
-              const stops = {
-                  "nwmjdtdt": "Stop AB",
-                  "nwmtgjtw": "Stop AC"
-              };
+            // BUS STOPS
+            const stops = {
+                "nwmjdtdt": "Stop AB",
+                "nwmtgjtw": "Stop AC"
+            };
 
-              for (const stopId in stops) {
-                  const res = await fetch(`https://api.busesandtrains.co.uk/v1/stops/${stopId}/departures?app_key=${appKey}`);
-                  const data = await res.json();
+            for (const stopId in stops) {
+                const res = await fetch(
+                    `https://api.busesandtrains.co.uk/v1/stops/${stopId}/departures?app_key=${appKey}`
+                );
 
-                  output += `<li class="font-bold mt-2">🚌 ${stops[stopId]}</li>`;
+                if (!res.ok) {
+                    output += `<li>Error loading ${stops[stopId]}</li>`;
+                    continue;
+                }
 
-                  if (data.departures?.length) {
-                      data.departures.slice(0, 3).forEach(dep => {
-                          output += `<li>${dep.line} → ${dep.destination} at ${new Date(dep.expected || dep.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>`;
+                const data = await res.json();
+
+                output += `<li class="font-bold mt-2">🚌 ${stops[stopId]}</li>`;
+
+                if (data.departures && data.departures.length > 0) {
+                    data.departures.slice(0, 3).forEach(dep => {
+                        const time = dep.expected || dep.scheduled;
+                        output += `<li>${dep.line} → ${dep.destination} at ${time}</li>`;
+                    });
+                } else {
+                    output += `<li>No buses</li>`;
+                }
+            }
+
+            // TRAIN (Wolverhampton)
+            const trainRes = await fetch(
+                `https://api.busesandtrains.co.uk/v1/rail/stations/WVH/departures?app_key=${appKey}`
+            );
+
+            if (trainRes.ok) {
+                const trainData = await trainRes.json();
+
+                output += `<li class="font-bold mt-4">🚆 Wolverhampton Station</li>`;
+
+                if (trainData.departures && trainData.departures.length > 0) {
+                    trainData.departures.slice(0, 5).forEach(train => {
+                        const time = train.expected || train.scheduled;
+                          const status = train.is_cancelled ? "❌ Cancelled" : "";
+
+                          output += `<li>
+                              ${train.destination} at ${time} 
+                              (Platform ${train.platform || "?"}) 
+                              ${status}
+                          </li>`;
                       });
                   } else {
-                      output += `<li>No buses</li>`;
+                      output += `<li>No trains</li>`;
                   }
-              }
-
-              // 🚆 TRAIN (Wolverhampton)
-              const trainRes = await fetch(`https://api.busesandtrains.co.uk/v1/rail/stations/WVH/departures?app_key=${appKey}`);
-              const trainData = await trainRes.json();
-
-              output += `<li class="font-bold mt-4">🚆 Wolverhampton Station</li>`;
-
-              if (trainData.departures?.length) {
-                  trainData.departures.slice(0, 5).forEach(train => {
-                    const time = train.expected === "On time" || train.expected === "Cancelled"
-                        ? train.scheduled
-                        : train.expected;
-
-                    const status = train.is_cancelled ? "❌ Cancelled" : (train.expected === "On time" ? "✅ On time" : "");
-
-                    output += `<li>
-                        ${train.destination} at ${time} 
-                        (Platform ${train.platform || "?"}) 
-                        ${status}
-                    </li>`;
-                  });
-               
-              } else {
-                  output += `<li>No trains</li>`;
               }
 
               busList.innerHTML = output;
@@ -200,11 +210,11 @@
               busList.innerHTML = "<li>Error loading transport data</li>";
           }
       }
-      document.getElementById("bus-list")?.addEventListener("click", () => {
-        const modal = document.getElementById("bus-modal");
-        if (modal) modal.classList.remove("hidden");
 
-        loadTransport();
+      // BUTTON CLICK
+      document.getElementById("bus-timings")?.addEventListener("click", () => {
+          document.getElementById("bus-modal")?.classList.remove("hidden");
+          loadTransport();
       });
     </script>
 
