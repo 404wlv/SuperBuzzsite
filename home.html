@@ -137,34 +137,60 @@
     </div>
 
     <script>
-      async function loadBusStops(query) {
-          const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
-          const url = `https://busesandtrains.co.uk/v1/stops?q=${encodeURIComponent(query)}&app_key=${appKey}`;
+      async function loadBusDepartures() {
+      const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
 
-          try {
-              const response = await fetch(url);
-              if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
-              const data = await response.json();
+      // Map stop IDs to friendly names
+      const stops = {
+          "nwmjdtdt": "University of Wolverhampton Stop AB",
+          "nwmtgjtw": "University of Wolverhampton Stop AC"
+      };
 
-              const busList = document.getElementById("bus-list");
-              busList.innerHTML = ""; // clear old items
+      const busList = document.getElementById("bus-list");
+      if (!busList) return;
 
-              data.stops?.forEach(stop => {  // adjust based on API response structure
-                  const li = document.createElement("li");
-                  li.textContent = `${stop.name} (${stop.id})`; 
-                  busList.appendChild(li);
-              });
+      busList.innerHTML = "<li>Loading departures...</li>";
 
-          } catch (err) {
-              console.error("Error fetching bus stops:", err);
-              document.getElementById("bus-list").innerHTML = "<li>Failed to load bus stops.</li>";
+      try {
+          const departuresAll = [];
+
+          for (const stopId in stops) {
+              const res = await fetch(`https://busesandtrains.co.uk/v1/departures?stop_id=${stopId}&app_key=${appKey}`);
+              const data = await res.json();
+
+              if (data.departures?.length) {
+                  departuresAll.push(...data.departures.map(dep => ({
+                      stopName: stops[stopId],
+                      line: dep.line,
+                      destination: dep.destination,
+                      time: dep.time
+                  })));
+              }
           }
+
+          if (!departuresAll.length) {
+              busList.innerHTML = "<li>No upcoming departures.</li>";
+              return;
+          }
+
+          busList.innerHTML = "";
+          departuresAll.forEach(dep => {
+              const li = document.createElement("li");
+              li.textContent = `${dep.stopName} | ${dep.line} → ${dep.destination} at ${dep.time}`;
+              busList.appendChild(li);
+          });
+
+      } catch (err) {
+          busList.innerHTML = `<li>Error fetching bus data: ${err.message}</li>`;
+          console.error(err);
+      }
       }
 
-      // Call this when modal opens
+      // Attach to your modal button
       document.getElementById("bus-timings")?.addEventListener("click", () => {
-          loadBusStops("London");
-          document.getElementById("bus-modal").classList.remove("hidden");
+          const busModal = document.getElementById("bus-modal");
+          if (busModal) busModal.classList.remove("hidden");
+          loadBusDepartures();
       });
     </script>
 
