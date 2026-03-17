@@ -250,6 +250,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const attendEventBtn = document.getElementById("attend-btn");
     if (attendEventBtn) {
         attendEventBtn.addEventListener("click", () => {
+            document.getElementById("attend-form").classList.remove("hidden");
             const name = document.getElementById("attendee-name").value.trim();
             const email = document.getElementById("attendee-email").value.trim();
             const studentId = document.getElementById("attendee-student-id").value.trim();
@@ -259,6 +260,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const consent = document.getElementById("attendee-consent").checked;
             
             const submit = document.getElementById("confirm-attend-btn");
+
             if (!name || !email || !studentId || !course) {
                 alert("Please fill all required fields!");
                 return;
