@@ -333,94 +333,44 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //bus timings
-
-    async function loadTransport() 
-    {
+    async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-
         if (!busList) return;
 
-            busList.innerHTML = "<li>Loading transport data...</li>";
+        busList.innerHTML = "<li>Loading transport data...</li>";
 
-            try 
-            {
-                let output = "";
+        try {
+            const stops = { "nwmjdtdt": "Stop AB", "nwmtgjtw": "Stop AC" };
+            let output = "";
 
-                const stops = {
-                    "nwmjdtdt": "Stop AB",
-                    "nwmtgjtw": "Stop AC"
-                };
-
-                for (const stopId in stops) 
-                {
-                    const res = await fetch(
-                        `https://api.busesandtrains.co.uk/v1/stops/${stopId}/departures?app_key=${appKey}`
-                    );
-
-                    if (!res.ok) 
-                    {
-                        output += `<li>Error loading ${stops[stopId]}</li>`;
-                        continue;
-                    }
-
-                    const data = await res.json();
-
-                    output += `<li class="font-bold mt-2">🚌 ${stops[stopId]}</li>`;
-
-                    if (data.departures && data.departures.length > 0) 
-                    {
-                        data.departures.slice(0, 3).forEach(dep => {
-                            const time = dep.expected || dep.scheduled;
-                            output += `<li>${dep.line} → ${dep.destination} at ${time}</li>`;
-                        });
-                    } 
-                    
-                    else 
-                    {
-                        output += `<li>No buses</li>`;
-                    }
+            for (const stopId in stops) {
+                const res = await fetch(`https://api.busesandtrains.co.uk/v1/stops/${stopId}/departures?app_key=${appKey}`);
+                if (!res.ok) {
+                    output += `<li>Error loading ${stops[stopId]}</li>`;
+                    continue;
                 }
 
-            
-                const trainRes = await fetch(
-                    `https://api.busesandtrains.co.uk/v1/rail/stations/WVH/departures?app_key=${appKey}`
-                );
+                const data = await res.json();
+                output += `<li class="font-bold mt-2">🚌 ${stops[stopId]}</li>`;
 
-                if (trainRes.ok) 
-                {
-                    const trainData = await trainRes.json();
-
-                    output += `<li class="font-bold mt-4">🚆 Wolverhampton Station</li>`;
-
-                    if (trainData.departures && trainData.departures.length > 0) 
-                    {
-                        trainData.departures.slice(0, 5).forEach(train => {
-                            const time = train.expected || train.scheduled;
-                            const status = train.is_cancelled ? "❌ Cancelled" : "";
-
-                            output += `<li>
-                                ${train.destination} at ${time} 
-                                (Platform ${train.platform || "?"}) 
-                                ${status}
-                            </li>`;
-                        });
-                    } 
-                    else 
-                    {
-                        output += `<li>No trains</li>`;
-                    }
+                const departures = data.departures || [];
+                if (departures.length > 0) {
+                    departures.slice(0, 5).forEach(dep => {
+                        const time = dep.expected || dep.scheduled;
+                        output += `<li>${dep.line} → ${dep.destination} at ${new Date(time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>`;
+                    });
+                } else {
+                    output += `<li>No buses</li>`;
                 }
-
-                busList.innerHTML = output;
-
-            } 
-            catch (err) 
-            {
-                console.error(err);
-                busList.innerHTML = "<li>Error loading transport data</li>";
             }
-      }
+
+            busList.innerHTML = output;
+        } catch (err) {
+            console.error(err);
+            busList.innerHTML = "<li>Error loading transport data</li>";
+        }
+    }
 
 
 
