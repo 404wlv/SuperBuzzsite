@@ -220,14 +220,7 @@ function openEventModal(event){
 document.addEventListener("DOMContentLoaded", () => {
     closeAllModals();
 
-    //chat, sidebar toggles -Aafrin
-
-    const chatToggleBtn = document.getElementById("chat-toggle");
-    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
-        closeAllModals();
-        const chatModal = document.getElementById("chat-modal");
-        if (chatModal) chatModal.classList.toggle("hidden");
-    });
+    //sidebar toggles
 
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
     if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
@@ -297,10 +290,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 
-    //chatbot 
-    const chatInput = document.getElementById("chat-input")
-    const chatSend = document.getElementById("chat-send")
-    const chatMessages = document.getElementById("chat-messages")
+    //chatbox I mean
+    const chatToggleBtn = document.getElementById("chat-toggle");
+    const chatBox = document.getElementById("chatbox");
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
+    const chatMessages = document.getElementById("chat-messages");
 
     function addMessage(text, sender) {
         const msg = document.createElement("div")
@@ -331,22 +326,20 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!message) return
         addMessage(message, "user")
         const reply = getBotReply(message)
-        setTimeout(() => {
-            addMessage(reply, "bot")
-        }, 500)
+        setTimeout(() => addMessage(reply, "bot"), 500)
         chatInput.value = ""
     }
 
-    if (chatSend) {
-        chatSend.addEventListener("click", sendMessage)
+    if (chatToggleBtn) {
+        chatToggleBtn.addEventListener("click", () => {
+            if (chatBox) chatBox.classList.toggle("hidden");
+        });
     }
 
-    if (chatInput) {
-        chatInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") sendMessage()
-        })
-    }
-
+    if (chatSend) chatSend.addEventListener("click", sendMessage);
+    if (chatInput) chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
 
 
     //profile
