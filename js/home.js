@@ -30,7 +30,6 @@ async function loadFAQs() {
     }
 
     faqs = data.map(faq => ({
-        question: faq.question,
         answer: faq.answer,
         keywords: faq.keywords || ""
     }));
