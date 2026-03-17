@@ -46,14 +46,14 @@ document.getElementById("save-profile")
         }
 
     })
-
+/*
 const logout = document.getElementById("logout-btn")
 if (logout) {
     logout.addEventListener("click", () => {
         window.location.href = "login.html"
     })
 }
-
+*/
 
 
 
