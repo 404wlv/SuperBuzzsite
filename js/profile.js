@@ -46,8 +46,13 @@ document.getElementById("save-profile")
         }
 
     })
-document.getElementById("logout-btn")
-    .addEventListener("click", logout)
+
+const logout = document.getElementById("logout-btn")
+if (logout) {
+    logout.addEventListener("click", () => {
+        window.location.href = "login.html"
+    })
+}
 
 
 
