@@ -176,8 +176,19 @@
 
               if (trainData.departures?.length) {
                   trainData.departures.slice(0, 5).forEach(train => {
-                      output += `<li>${train.destination} at ${new Date(train.expected || train.scheduled).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} (Platform ${train.platform || "?"})</li>`;
+                    const time = train.expected === "On time" || train.expected === "Cancelled"
+                        ? train.scheduled
+                        : train.expected;
+
+                    const status = train.is_cancelled ? "❌ Cancelled" : (train.expected === "On time" ? "✅ On time" : "");
+
+                    output += `<li>
+                        ${train.destination} at ${time} 
+                        (Platform ${train.platform || "?"}) 
+                        ${status}
+                    </li>`;
                   });
+               
               } else {
                   output += `<li>No trains</li>`;
               }
