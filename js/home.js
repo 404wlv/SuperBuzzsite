@@ -18,7 +18,6 @@ testConnection();
 //Temporary hardcoded FAQs - will be replaced by database content -Aafrin
 let faqs = [];
 
-// Load FAQs from Supabase
 async function loadFAQs() {
     const { data, error } = await supabase
         .from("faqs")
@@ -30,7 +29,7 @@ async function loadFAQs() {
     }
 
     faqs = data.map(faq => ({
-        answer: faq.answer,
+        answer: faq.answer || "",
         keywords: faq.keywords || ""
     }));
 }
@@ -88,13 +87,13 @@ function getCategoryColor(category) {
 function closeAllModals() 
 {
     document.addEventListener("click", (event) => {
-            const modals = document.querySelectorAll(".modal");
-            modals.forEach(modal => {
-                if(event.target === modal){
-                    modal.classList.add("hidden");
-                }
-            });
+        const modals = document.querySelectorAll(".modal");
+        modals.forEach(modal => {
+            if(event.target === modal){
+                modal.classList.add("hidden");
+            }
         });
+    });
 }
 
 
@@ -124,10 +123,9 @@ function openEventModal(event){
     document.getElementById("event-description").textContent = event.description
     document.getElementById("event-location").textContent = "Location: " + event.location
     document.getElementById("event-date").textContent = "Date: " + event.date
-    document.getElementById("event-modal").classList.remove("hidden")
+    const modal = document.getElementById("event-modal")
+    if(modal) modal.classList.remove("hidden")
 }
-
-
 
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -193,29 +191,20 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "map.html";
     });
 
-
-    //
     const closeModal = document.getElementById("close-event-modal")
     if(closeModal){
         closeModal.addEventListener("click", () => {
-            hide("event-modal")
+            const modal = document.getElementById("event-modal")
+            if(modal) modal.classList.add("hidden")
         })
     }
 
     renderEvents()
-    
-    //document.getElementById("attend-button").addEventListener("click", () => {
-        // mark attended, update points, show toast, also check if button exists 
-    //});
-
-
-
 
     //chatbot 
     const chatInput = document.getElementById("chat-input")
     const chatSend = document.getElementById("chat-send")
     const chatMessages = document.getElementById("chat-messages")
-    const chatModal = document.getElementById("chatbox")
 
     function addMessage(text, sender) {
         const msg = document.createElement("div")
@@ -228,25 +217,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getBotReply(message) {
-        if (!faqs || faqs.length === 0) 
-            return "Sorry, I am loading data. Please try again in a moment.";
+        if (!faqs || faqs.length === 0) return "Sorry, I am loading data. Please try again in a moment.";
 
         const text = message.toLowerCase();
-
         for (const faq of faqs) {
-
-            if (!faq || !faq.answer) continue; // skip invalid entries
-
+            if (!faq || !faq.answer) continue;
             if (faq.keywords) {
                 const keywords = faq.keywords.split(",");
-
                 for (const word of keywords) {
-                    
                     if (text.includes(word.trim().toLowerCase())) return faq.answer;
                 }
             }
         }
-
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
     }
 
@@ -255,21 +237,14 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!message) return
         addMessage(message, "user")
         const reply = getBotReply(message)
-        setTimeout(() => addMessage(reply, "bot"), 500)
+        setTimeout(() => addMessage(reply, "bot"), 300)
         chatInput.value = ""
     }
 
-    if (chatSend) {
-        chatSend.addEventListener("click", sendMessage)
-    }
-
-    if (chatInput) {
-        chatInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") sendMessage()
-        })
-    }
-
-
+    if (chatSend) chatSend.addEventListener("click", sendMessage)
+    if (chatInput) chatInput.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage()
+    })
 
     //profile
     const profileBtn = document.getElementById("profile-button")
@@ -278,6 +253,4 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "profile.html"
         })
     }
-
-
 });
