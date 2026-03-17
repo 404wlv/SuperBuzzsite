@@ -13,7 +13,7 @@
 
     <!-- HomePage -->
     <div id="main-app"
-      class="modal flex flex-col md:flex-row h-screen">
+      class="flex flex-col md:flex-row h-screen">
 
       <div id="events-container"
         class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 overflow-y-auto h-screen">
@@ -68,9 +68,7 @@
 
         <h3 class="text-2xl font-bold text-fuchsia-800">ChatBox</h3>
 
-        <div class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800">
-        <!-- messages go here -->
-        </div>
+        <div id="chat-messages" class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800">
 
         <input type="text"
             placeholder="Type a message..."
