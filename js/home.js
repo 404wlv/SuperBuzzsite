@@ -15,8 +15,10 @@ async function testConnection() {
 //run the connection test on page load
 testConnection();
 
-//Load FAQs from Supabase instead of hardcoded
+//Temporary hardcoded FAQs - will be replaced by database content -Aafrin
 let faqs = [];
+
+// Load FAQs from Supabase
 async function loadFAQs() {
     const { data, error } = await supabase
         .from("faqs")
@@ -86,21 +88,16 @@ function getCategoryColor(category) {
 //close modals when clicking outside -Aafrin
 function closeAllModals() 
 {
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach(modal => modal.classList.add("hidden"));
+    document.addEventListener("click", (event) => {
+            const modals = document.querySelectorAll(".modal");
+            modals.forEach(modal => {
+                if(event.target === modal){
+                    modal.classList.add("hidden");
+                }
+            });
+        });
 }
 
-//show modal
-function showModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if(modal) modal.classList.remove("hidden");
-}
-
-//hide modal
-function hideModal(modalId) {
-    const modal = document.getElementById(modalId);
-    if(modal) modal.classList.add("hidden");
-}
 
 function renderEvents(){
     const container = document.getElementById("event")
@@ -112,7 +109,7 @@ function renderEvents(){
         card.innerHTML = `
             <h3 class="font-bold">${event.title}</h3>
             <p class="text-sm">${event.category}</p>
-            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 z-50">
+            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48">
                 ${event.description}
             </div>
         `
@@ -128,68 +125,98 @@ function openEventModal(event){
     document.getElementById("event-description").textContent = event.description
     document.getElementById("event-location").textContent = "Location: " + event.location
     document.getElementById("event-date").textContent = "Date: " + event.date
-    showModal("event-modal")
+    document.getElementById("event-modal").classList.remove("hidden")
 }
+
+
+
 
 document.addEventListener("DOMContentLoaded", () => {
     closeAllModals();
 
     //chat, sidebar toggles -Aafrin
+
     const chatToggleBtn = document.getElementById("chat-toggle");
-    const chatBox = document.getElementById("chatbox");
     if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
         closeAllModals();
-        if(chatBox) chatBox.classList.toggle("hidden");
+        const chatModal = document.getElementById("chatbox");
+        if (chatModal) chatModal.classList.toggle("hidden");
     });
 
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
-    const sidebar = document.getElementById("sidebar");
     if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
         closeAllModals();
-        if(sidebar) sidebar.classList.toggle("-translate-x-full");
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) sidebar.classList.toggle("-translate-x-full");
     });
 
     const sidebarBackBtn = document.getElementById("sidebar-back");
     if (sidebarBackBtn) {
         sidebarBackBtn.addEventListener("click", () => {
             closeAllModals();
-            if(sidebar) sidebar.classList.add("-translate-x-full");
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar) sidebar.classList.add("-translate-x-full");
         });
     }
 
     //modal buttons -Aafrin
+    
     const busBtn = document.getElementById("bus-timings");
-    if (busBtn) busBtn.addEventListener("click", () => showModal("bus-modal"));
+    if (busBtn) {
+        busBtn.addEventListener("click", () => {
+            closeAllModals();
+            const busModal = document.getElementById("bus-modal");
+            if (busModal) busModal.classList.remove("hidden");
+        });
+    }
 
     const gymBtn = document.getElementById("gym-timings");
-    if (gymBtn) gymBtn.addEventListener("click", () => showModal("gym-modal"));
+    if (gymBtn) {
+        gymBtn.addEventListener("click", () => {
+            closeAllModals();
+            const gymModal = document.getElementById("gym-modal");
+            if (gymModal) gymModal.classList.remove("hidden");
+        });
+    }
 
     const libraryBtn = document.getElementById("library-timings");
-    if (libraryBtn) libraryBtn.addEventListener("click", () => showModal("library-modal"));
+    if (libraryBtn) {
+        libraryBtn.addEventListener("click", () => {
+            closeAllModals();
+            const libraryModal = document.getElementById("library-modal");
+            if (libraryModal) libraryModal.classList.remove("hidden");
+        });
+    }
 
-    // add close buttons to modals
-    document.querySelectorAll(".modal").forEach(modal => {
-        const closeBtn = document.createElement("button")
-        closeBtn.textContent = "✕"
-        closeBtn.className = "absolute top-2 right-2 text-xl text-fuchsia-800 bg-white/20 rounded px-2 py-1 hover:bg-white/40"
-        closeBtn.addEventListener("click", () => modal.classList.add("hidden"))
-        modal.appendChild(closeBtn)
-    })
+    const mapBtn = document.getElementById("map-button");
+    if (mapBtn) mapBtn.addEventListener("click", () => {
+        closeAllModals();
+        window.location.href = "map.html";
+    });
+
 
     //
     const closeModal = document.getElementById("close-event-modal")
     if(closeModal){
         closeModal.addEventListener("click", () => {
-            hideModal("event-modal")
+            hide("event-modal")
         })
     }
 
     renderEvents()
+    
+    //document.getElementById("attend-button").addEventListener("click", () => {
+        // mark attended, update points, show toast, also check if button exists 
+    //});
+
+
+
 
     //chatbot 
     const chatInput = document.getElementById("chat-input")
     const chatSend = document.getElementById("chat-send")
     const chatMessages = document.getElementById("chat-messages")
+    const chatModal = document.getElementById("chatbox")
 
     function addMessage(text, sender) {
         const msg = document.createElement("div")
@@ -220,9 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!message) return
         addMessage(message, "user")
         const reply = getBotReply(message)
-        setTimeout(() => {
-            addMessage(reply, "bot")
-        }, 500)
+        setTimeout(() => addMessage(reply, "bot"), 500)
         chatInput.value = ""
     }
 
@@ -236,6 +261,8 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
+
+
     //profile
     const profileBtn = document.getElementById("profile-button")
     if (profileBtn) {
@@ -243,5 +270,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "profile.html"
         })
     }
+
 
 });
