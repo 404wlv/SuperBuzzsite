@@ -15,14 +15,14 @@
       <button id="sidebar-toggle" class="fixed top-6 left-6 z-30 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
           ᯓ
       </button>
-      
+
       <div id="event" 
-        class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-28 md:pt-4 overflow-y-auto h-screen z-40">
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-28 md:pt-4 overflow-y-auto h-screen">
         <!-- pt-28 added to push events lower for sidebar button -->
       </div>
 
       <!-- Event Modal -->
-      <div id="event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+      <div id="event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50">
         <div class="bg-white text-fuchsia-800 p-4 sm:p-6 rounded-2xl w-full max-w-full sm:max-w-md relative">
             <button id="close-event-modal" class="absolute top-3 right-3 text-xl font-bold">✕</button>
             <h2 id="event-title" class="text-xl sm:text-2xl font-bold mb-2"></h2>
