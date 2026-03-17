@@ -165,6 +165,13 @@ function addMessage(text, sender) {
     chatMessages.scrollTop = chatMessages.scrollHeight
 }
 
+function makeitpretty(text, sender)
+{
+    const msg = document.createElement("div")
+    msg.className = sender === "user" ? "text-right" : "text-left"
+    msg.classList.add("bg-gray-200", "p-2", "rounded", "my-1", sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300")
+
+}
 function getBotReply(message) {
 
   const text = message.toLowerCase();
