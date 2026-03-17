@@ -15,28 +15,28 @@
     <div id="main-app"
       class="flex flex-col md:flex-row h-screen">
 
-      <div id="events-container"
+      <div id="event"
         class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 overflow-y-auto h-screen z-40">
 
                 
         <div class="bg-white text-fuchsia-800 p-6 rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto relative">
 
-          <button id="close-event-modal"
+          <button id="close-event-btn"
             class="absolute top-3 right-3 text-xl font-bold">
             ✕
           </button>
 
-          <h2 id="modal-title" class="text-2xl font-bold mb-2"></h2>
+          <h2 id="event-title" class="text-2xl font-bold mb-2"></h2>
 
-          <p id="modal-category" class="text-sm mb-2"></p>
+          <p id="event-category" class="text-sm mb-2"></p>
 
-          <p id="modal-description" class="mb-4"></p>
+          <p id="event-description" class="mb-4"></p>
 
-          <p id="modal-location" class="text-sm mb-2"></p>
+          <p id="event-location" class="text-sm mb-2"></p>
 
-          <p id="modal-date" class="text-sm mb-4"></p>
+          <p id="event-date" class="text-sm mb-4"></p>
 
-          <button class="bg-fuchsia-700 text-white px-4 py-2 rounded-xl">
+          <button id="attend-btn" class="bg-fuchsia-700 text-white px-4 py-2 rounded-xl">
             Attend Event
           </button>
 

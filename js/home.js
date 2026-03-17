@@ -15,24 +15,6 @@ async function testConnection() {
 //run the connection test on page load
 testConnection();
 
-//functions to show hide and toggle the elements -Aafrin
-function hide(id) {
-    const el = document.getElementById(id);
-    if (el) el.classList.add("hidden");
-}
-
-function toggle(id) {
-    const el = document.getElementById(id);
-    if (el) el.classList.toggle("hidden");
-}
-
-document.querySelectorAll("[data-close]").forEach(btn => {
-    btn.addEventListener("click", () => {
-        const target = btn.getAttribute("data-close");
-        hide(target);
-    });
-});
-
 //Temporary hardcoded FAQs - will be replaced by database content -Aafrin
 let faqs = [
     {
@@ -142,6 +124,43 @@ const events = [
     }
 ];
 
+//Temporary hardcoded events - will be replaced by database content -Aafrin
+let events = [
+    {
+        id:1,
+        title:"Freshers Welcome Party",
+        category:"social",
+        description:"Meet new students, enjoy music and free pizza.",
+        location:"Student Union",
+        date:"2026-10-12 18:00"
+    },
+    {
+        id:2,
+        title:"AI Workshop",
+        category:"academic",
+        description:"Learn the basics of artificial intelligence.",
+        location:"MI102B Alan Turning",
+        date:"2026-10-14 14:00"
+    },
+    {
+        id:3,
+        title:"Basketball Tournament",
+        category:"sports",
+        description:"Join the annual campus basketball competition.",
+        location:"Sports Centre",
+        date:"2026-10-15 16:00"
+    },
+    {
+        id:4,
+        title:"Career Networking Night",
+        category:"career",
+        description:"Meet employers and alumni for networking.",
+        location:"MC001 Millenium Building",
+        date:"2026-10-20 17:30"
+    }
+];
+
+
 //category colors for events -Aafrin -> temporary solution
 function getCategoryColor(category) {
     switch(category){
@@ -153,14 +172,62 @@ function getCategoryColor(category) {
     }   
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+//close modals when clicking outside -Aafrin
+function closeAllModals() 
+{
+    document.addEventListener("click", (event) => {
+            const modals = document.querySelectorAll(".modal");
+            modals.forEach(modal => {
+                if(event.target === modal){
+                    modal.classList.add("hidden");
+                }
+            });
+        });
+}
 
+
+function renderEvents(){
+    const container = document.getElementById("event")
+    container.innerHTML = ""
+
+    events.forEach(event => {
+        const card = document.createElement("div")
+        card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`
+        card.innerHTML = `
+            <h3 class="font-bold">${event.title}</h3>
+            <p class="text-sm">${event.category}</p>
+            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48">
+                ${event.description}
+            </div>
+        `
+        card.addEventListener("click", () => openEventModal(event))
+        container.appendChild(card)
+    })
+}
+
+//opening event details modal -Aafrin
+function openEventModal(event){
+    document.getElementById("event-title").textContent = event.title
+    document.getElementById("event-category").textContent = event.category
+    document.getElementById("event-description").textContent = event.description
+    document.getElementById("event-location").textContent = "Location: " + event.location
+    document.getElementById("event-date").textContent = "Date: " + event.date
+}
+
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
     closeAllModals();
 
     //chat, sidebar toggles -Aafrin
 
     const chatToggleBtn = document.getElementById("chat-toggle");
-    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => toggle("chatbox"));
+    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
+        closeAllModals();
+        const chatModal = document.getElementById("chat-modal");
+        if (chatModal) chatModal.classList.toggle("hidden");
+    });
 
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
     if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
@@ -214,37 +281,7 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
 
-    //events
-    function renderEvents(){
-        const container = document.getElementById("events-container")
-        container.innerHTML = ""
-
-        events.forEach(event => {
-            const card = document.createElement("div")
-            card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`
-            card.innerHTML = `
-                <h3 class="font-bold">${event.title}</h3>
-                <p class="text-sm">${event.category}</p>
-                <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48">
-                    ${event.description}
-                </div>
-            `
-            card.addEventListener("click", () => openEventModal(event))
-            container.appendChild(card)
-        })
-    }
-
-    //opening event details modal -Aafrin
-    function openEventModal(event){
-        document.getElementById("modal-title").textContent = event.title
-        document.getElementById("modal-category").textContent = event.category
-        document.getElementById("modal-description").textContent = event.description
-        document.getElementById("modal-location").textContent = "Location: " + event.location
-        document.getElementById("modal-date").textContent = "Date: " + event.date
-        document.getElementById("event-modal").classList.remove("hidden")
-    }
-
-
+    //
     const closeModal = document.getElementById("close-event-modal")
     if(closeModal){
         closeModal.addEventListener("click", () => {
@@ -253,17 +290,14 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     renderEvents()
-
     
+    //document.getElementById("attend-button").addEventListener("click", () => {
+        // mark attended, update points, show toast, also check if button exists 
+    //});
 
-    const profileBtn = document.getElementById("profile-button")
-    if (profileBtn) {
-        profileBtn.addEventListener("click", () => {
-            window.location.href = "profile.html"
-        })
-    }
 
-    /////chatbot logics
+
+    //chatbot 
     const chatInput = document.getElementById("chat-input")
     const chatSend = document.getElementById("chat-send")
     const chatMessages = document.getElementById("chat-messages")
@@ -286,7 +320,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const keywords = faq.keywords.split(",");
                 for (const word of keywords) {
                     if (text.includes(word.trim())) return faq.answer;
-                }
+                }   
             }
         }
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
@@ -313,19 +347,15 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    //function to close modals rather than hardcoding it -Aafrin
-    function closeAllModals() {
-        document.addEventListener("click", (event) => {
-            const modals = document.querySelectorAll(".modal");
-            modals.forEach(modal => {
-                if(event.target === modal){
-                    modal.classList.add("hidden");
-                }
-            });
-        });
+
+
+    //profile
+    const profileBtn = document.getElementById("profile-button")
+    if (profileBtn) {
+        profileBtn.addEventListener("click", () => {
+            window.location.href = "profile.html"
+        })
     }
 
-    //document.getElementById("attend-button").addEventListener("click", () => {
-        // mark attended, update points, show toast, also check if button exists 
-    //});
+
 });
