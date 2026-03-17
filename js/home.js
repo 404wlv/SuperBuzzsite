@@ -291,8 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function addMessage(text, sender) {
         const msg = document.createElement("div")
         msg.className = sender === "user"
-            ? "text-right bg-blue-500 text-white p-2 rounded my-1"
-            : "text-left bg-gray-300 p-2 rounded my-1"
+            ? "text-right bg-gray-500 text-fuchsia-200 p-2 rounded my-1"
+            : "text-left text-gray-200 text-fuchsia-600 p-2 rounded my-1"
         msg.textContent = text
         chatMessages.appendChild(msg)
         chatMessages.scrollTop = chatMessages.scrollHeight
