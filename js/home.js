@@ -196,6 +196,62 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderEvents()
 
+    //add event button popup
+    
+    const addEventBtn = document.getElementById("add-event-button");
+    const createEventModal = document.getElementById("create-event-modal");
+    const closeCreateEventModal = document.getElementById("close-create-event-modal");
+    const createEventSubmit = document.getElementById("create-event-btn");
+
+    if (addEventBtn && createEventModal) {
+        addEventBtn.addEventListener("click", () => {
+            createEventModal.classList.remove("hidden");
+        });
+    }
+
+    if (closeCreateEventModal && createEventModal) {
+        closeCreateEventModal.addEventListener("click", () => {
+            createEventModal.classList.add("hidden");
+        });
+    }
+
+    if (createEventSubmit) {
+        createEventSubmit.addEventListener("click", () => {
+            const title = document.getElementById("new-event-title").value.trim();
+            const category = document.getElementById("new-event-category").value;
+            const description = document.getElementById("new-event-description").value.trim();
+            const location = document.getElementById("new-event-location").value.trim();
+            const date = document.getElementById("new-event-date").value;
+
+            if (!title || !category || !description || !location || !date) {
+                alert("Please fill all fields!");
+                return;
+            }
+
+            // Add new event locally
+            const newEvent = {
+                id: events.length + 1,
+                title,
+                category,
+                description,
+                location,
+                date
+            };
+            events.push(newEvent);
+
+            renderEvents(); // refresh event cards
+
+            // clear inputs
+            document.getElementById("new-event-title").value = "";
+            document.getElementById("new-event-description").value = "";
+            document.getElementById("new-event-location").value = "";
+            document.getElementById("new-event-date").value = "";
+
+            createEventModal.classList.add("hidden");
+            alert("Event created successfully!");
+        });
+    }
+
     //chatbot 
     const chatInput = document.getElementById("chat-input")
     const chatSend = document.getElementById("chat-send")
@@ -252,5 +308,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "profile.html"
         })
     }
+
 
 });

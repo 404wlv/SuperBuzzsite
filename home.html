@@ -31,7 +31,38 @@
             </button>
         </div>
       </div>
+  
 
+    </div>
+
+    <!-- Create Event Modal -->
+    <div id="create-event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+      <div class="bg-white text-fuchsia-800 p-6 rounded-2xl w-full max-w-md relative">
+        <button id="close-create-event-modal" class="absolute top-3 right-3 text-xl font-bold">✕</button>
+        <h2 class="text-2xl font-bold mb-4 text-center">Create Event</h2>
+          
+        <label class="block mb-2 text-sm">Title</label>
+        <input id="new-event-title" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-fuchsia-800">
+
+        <label class="block mb-2 text-sm">Category</label>
+        <select id="new-event-category" class="w-full p-2 mb-4 rounded border border-gray-300 text-fuchsia-800">
+          <option value="social">Social</option>
+          <option value="academic">Academic</option>
+          <option value="sports">Sports</option>
+          <option value="career">Career</option>
+        </select>
+
+        <label class="block mb-2 text-sm">Description</label>
+        <textarea id="new-event-description" class="w-full p-2 mb-4 rounded border border-gray-300 text-fuchsia-800"></textarea>
+
+        <label class="block mb-2 text-sm">Location</label>
+        <input id="new-event-location" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-fuchsia-800">
+
+        <label class="block mb-2 text-sm">Date & Time</label>
+        <input id="new-event-date" type="datetime-local" class="w-full p-2 mb-4 rounded border border-gray-300 text-fuchsia-800">
+
+        <button id="create-event-btn" class="bg-fuchsia-700 text-white px-4 py-2 rounded-xl w-full">Create Event</button>
+      </div>
     </div>
 
     <!-- Gym Modal -->
