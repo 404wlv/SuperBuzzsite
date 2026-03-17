@@ -11,7 +11,11 @@
 
     <!-- HomePage -->
     <div id="main-app" class="flex flex-col md:flex-row h-screen">
-
+      <!-- Sidebar Toggle -->
+      <button id="sidebar-toggle" class="fixed top-6 left-6 z-30 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
+          ᯓ
+      </button>
+      
       <div id="event" 
         class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 pt-28 md:pt-4 overflow-y-auto h-screen z-40">
         <!-- pt-28 added to push events lower for sidebar button -->
@@ -109,10 +113,6 @@
         Chat Now
     </button>
 
-    <!-- Sidebar Toggle -->
-    <button id="sidebar-toggle" class="fixed top-6 left-6 z-30 bg-fuchsia-800 text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
-        ᯓ
-    </button>
 
     <!-- Add Event -->
     <button id="add-event-button" class="fixed bottom-6 left-6 z-50 bg-fuchsia-700 py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">

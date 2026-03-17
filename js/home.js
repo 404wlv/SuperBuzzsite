@@ -197,7 +197,7 @@ document.addEventListener("DOMContentLoaded", () => {
     renderEvents()
 
     //add event button popup
-    
+    // Create Event popup
     const addEventBtn = document.getElementById("add-event-button");
     const createEventModal = document.getElementById("create-event-modal");
     const closeCreateEventModal = document.getElementById("close-create-event-modal");
@@ -209,7 +209,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (closeCreateEventModal && createEventModal) {
+    if (closeCreateEventModal) {
         closeCreateEventModal.addEventListener("click", () => {
             createEventModal.classList.add("hidden");
         });
@@ -228,18 +228,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            // Add new event locally
-            const newEvent = {
-                id: events.length + 1,
-                title,
-                category,
-                description,
-                location,
-                date
-            };
+            const newEvent = { id: events.length + 1, title, category, description, location, date };
             events.push(newEvent);
-
-            renderEvents(); // refresh event cards
+            renderEvents();
 
             // clear inputs
             document.getElementById("new-event-title").value = "";
@@ -248,7 +239,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("new-event-date").value = "";
 
             createEventModal.classList.add("hidden");
-            alert("Event created successfully!");
         });
     }
 
