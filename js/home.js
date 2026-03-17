@@ -15,27 +15,6 @@ async function testConnection() {
 //run the connection test on page load
 testConnection();
 
-//Temporary hardcoded FAQs - will be replaced by database content -Aafrin
-let faqs = [];
-
-async function loadFAQs() {
-    const { data, error } = await supabase
-        .from("faqs")
-        .select("*");
-
-    if (error) {
-        console.log("FAQ fetch error:", error);
-        return;
-    }
-
-    faqs = data.map(faq => ({
-        answer: faq.answer || "",
-        keywords: faq.keywords || ""
-    }));
-}
-
-loadFAQs();
-
 //Temporary hardcoded events - will be replaced by database content -Aafrin
 let events = [
     {
@@ -84,8 +63,7 @@ function getCategoryColor(category) {
 }
 
 //close modals when clicking outside -Aafrin
-function closeAllModals() 
-{
+function closeAllModals() {
     document.addEventListener("click", (event) => {
         const modals = document.querySelectorAll(".modal");
         modals.forEach(modal => {
@@ -96,7 +74,23 @@ function closeAllModals()
     });
 }
 
+//fetch FAQs from Supabase
+let faqs = [];
+async function loadFAQs() {
+    const { data, error } = await supabase.from("faqs").select("*");
+    if (error) {
+        console.log("FAQ fetch error:", error);
+        return;
+    }
 
+    faqs = data.map(faq => ({
+        answer: faq.answer,
+        keywords: faq.keywords || ""
+    }));
+}
+loadFAQs();
+
+//render events cards -Aafrin
 function renderEvents(){
     const container = document.getElementById("event")
     container.innerHTML = ""
@@ -105,9 +99,9 @@ function renderEvents(){
         const card = document.createElement("div")
         card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`
         card.innerHTML = `
-            <h3 class="font-bold">${event.title}</h3>
-            <p class="text-sm">${event.category}</p>
-            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48">
+            <h3 class="font-bold text-sm sm:text-base">${event.title}</h3>
+            <p class="text-xs sm:text-sm">${event.category}</p>
+            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-56">
                 ${event.description}
             </div>
         `
@@ -118,11 +112,20 @@ function renderEvents(){
 
 //opening event details modal -Aafrin
 function openEventModal(event){
-    document.getElementById("event-title").textContent = event.title
-    document.getElementById("event-category").textContent = event.category
-    document.getElementById("event-description").textContent = event.description
-    document.getElementById("event-location").textContent = "Location: " + event.location
-    document.getElementById("event-date").textContent = "Date: " + event.date
+    const titleEl = document.getElementById("event-title")
+    const catEl = document.getElementById("event-category")
+    const descEl = document.getElementById("event-description")
+    const locEl = document.getElementById("event-location")
+    const dateEl = document.getElementById("event-date")
+
+    if (!titleEl || !catEl || !descEl || !locEl || !dateEl) return
+
+    titleEl.textContent = event.title
+    catEl.textContent = event.category
+    descEl.textContent = event.description
+    locEl.textContent = "Location: " + event.location
+    dateEl.textContent = "Date: " + event.date
+
     const modal = document.getElementById("event-modal")
     if(modal) modal.classList.remove("hidden")
 }
@@ -132,7 +135,6 @@ document.addEventListener("DOMContentLoaded", () => {
     closeAllModals();
 
     //chat, sidebar toggles -Aafrin
-
     const chatToggleBtn = document.getElementById("chat-toggle");
     if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
         closeAllModals();
@@ -157,33 +159,26 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //modal buttons -Aafrin
-    
     const busBtn = document.getElementById("bus-timings");
-    if (busBtn) {
-        busBtn.addEventListener("click", () => {
-            closeAllModals();
-            const busModal = document.getElementById("bus-modal");
-            if (busModal) busModal.classList.remove("hidden");
-        });
-    }
+    if (busBtn) busBtn.addEventListener("click", () => {
+        closeAllModals();
+        const busModal = document.getElementById("bus-modal");
+        if (busModal) busModal.classList.remove("hidden");
+    });
 
     const gymBtn = document.getElementById("gym-timings");
-    if (gymBtn) {
-        gymBtn.addEventListener("click", () => {
-            closeAllModals();
-            const gymModal = document.getElementById("gym-modal");
-            if (gymModal) gymModal.classList.remove("hidden");
-        });
-    }
+    if (gymBtn) gymBtn.addEventListener("click", () => {
+        closeAllModals();
+        const gymModal = document.getElementById("gym-modal");
+        if (gymModal) gymModal.classList.remove("hidden");
+    });
 
     const libraryBtn = document.getElementById("library-timings");
-    if (libraryBtn) {
-        libraryBtn.addEventListener("click", () => {
-            closeAllModals();
-            const libraryModal = document.getElementById("library-modal");
-            if (libraryModal) libraryModal.classList.remove("hidden");
-        });
-    }
+    if (libraryBtn) libraryBtn.addEventListener("click", () => {
+        closeAllModals();
+        const libraryModal = document.getElementById("library-modal");
+        if (libraryModal) libraryModal.classList.remove("hidden");
+    });
 
     const mapBtn = document.getElementById("map-button");
     if (mapBtn) mapBtn.addEventListener("click", () => {
@@ -217,16 +212,13 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getBotReply(message) {
-        if (!faqs || faqs.length === 0) return "Sorry, I am loading data. Please try again in a moment.";
-
         const text = message.toLowerCase();
         for (const faq of faqs) {
-            if (!faq || !faq.answer) continue;
             if (faq.keywords) {
                 const keywords = faq.keywords.split(",");
                 for (const word of keywords) {
                     if (text.includes(word.trim().toLowerCase())) return faq.answer;
-                }
+                }   
             }
         }
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
@@ -237,14 +229,21 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!message) return
         addMessage(message, "user")
         const reply = getBotReply(message)
-        setTimeout(() => addMessage(reply, "bot"), 300)
+        setTimeout(() => {
+            addMessage(reply, "bot")
+        }, 500)
         chatInput.value = ""
     }
 
-    if (chatSend) chatSend.addEventListener("click", sendMessage)
-    if (chatInput) chatInput.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") sendMessage()
-    })
+    if (chatSend) {
+        chatSend.addEventListener("click", sendMessage)
+    }
+
+    if (chatInput) {
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") sendMessage()
+        })
+    }
 
     //profile
     const profileBtn = document.getElementById("profile-button")
@@ -253,4 +252,5 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "profile.html"
         })
     }
+
 });
