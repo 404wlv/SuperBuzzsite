@@ -101,7 +101,9 @@ function renderEvents(){
         card.innerHTML = `
             <h3 class="font-bold text-sm sm:text-base">${event.title}</h3>
             <p class="text-xs sm:text-sm">${event.category}</p>
-            <div class="absolute hidden group-hover:block bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-56">
+            <div class="absolute hidden opacity-0 scale-90 
+              group-hover:opacity-100 group-hover:scale-100
+              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-56">
                 ${event.description}
             </div>
         `
