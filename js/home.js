@@ -12,7 +12,56 @@ async function testConnection() {
 
 testConnection();
 
-let faqs = [];  
+let faqs = [
+  {
+    question: "What is SuperBuzz?",
+    answer: "SuperBuzz is a campus platform that helps students stay updated with events, services, and facilities such as the gym, library, and campus buses."
+  },
+  {
+    question: "Who can use SuperBuzz?",
+    answer: "SuperBuzz is designed for students and faculty members on campus. You may need to sign up using your campus account."
+  },
+  {
+    question: "How do I create an account?",
+    answer: "Go to the sign up page and register using your student or staff details. Once registered, you can log in and access all features."
+  },
+  {
+    question: "How can I see upcoming campus events?",
+    answer: "You can view upcoming and live campus events in the Events on the homepage of the Website."
+  },
+  {
+    question: "Can I create my own campus event?",
+    answer: "Yes. Students and staff can submit events through the event creation feature."
+  },
+  {
+    question: "Where can I see gym opening times?",
+    answer: "Gym opening hours are available in the Gym section of SuperBuzz."
+  },
+  {
+    question: "How do I check library room availability?",
+    answer: "The Library section shows current opening hours and available study rooms."
+  },
+  {
+    question: "Can I track campus bus times?",
+    answer: "Yes. Live campus bus times are displayed in the Bus Times section."
+  },
+  {
+    question: "What are SuperBuzz points?",
+    answer: "Students can earn points by completing activities or participating in events. These points give you access to discounts and free food/coupons that can be redeemed in the university shops and food places."
+  },
+  {
+    question: "What is the campus map used for?",
+    answer: "The interactive campus map helps students locate buildings, facilities, and event locations."
+  },
+  {
+    question: "What does the chatbot do?",
+    answer: "The chatbot can answer common student questions and help you find information quickly."
+  },
+  {
+    question: "Who do I contact if something is not working?",
+    answer: "If you experience issues, contact the campus support team or use the help section within SuperBuzz."
+  }
+];
 
 async function loadFAQs() {
   const { data, error } = await supabase
@@ -72,16 +121,16 @@ document.addEventListener("DOMContentLoaded", () => {
     // if (busBtn) busBtn.addEventListener("click", () => show("bus-modal"));
 
     document.getElementById("bus-timings").addEventListener("click", () => {
-  closeAllModals();
-  document.getElementById("bus-modal").classList.remove("hidden");
+        closeAllModals();
+        document.getElementById("bus-modal").classList.remove("hidden");
 });
 
     // const gymBtn = document.getElementById("gym-timings");
     // if (gymBtn) gymBtn.addEventListener("click", () => show("gym-modal"));
 
     document.getElementById("gym-timings").addEventListener("click", () => {
-  closeAllModals();
-  document.getElementById("gym-modal").classList.remove("hidden");
+        closeAllModals();
+        document.getElementById("gym-modal").classList.remove("hidden");
 });
 
     const libraryBtn = document.getElementById("library-timings");
@@ -172,6 +221,7 @@ function makeitpretty(text, sender)
     msg.classList.add("bg-gray-200", "p-2", "rounded", "my-1", sender === "user" ? "bg-blue-500 text-white" : "bg-gray-300")
 
 }
+
 function getBotReply(message) {
 
   const text = message.toLowerCase();
@@ -199,11 +249,13 @@ function sendMessage() {
     if (!message) return
 
     addMessage(message, "user")
+    makeitpretty(message, "user")
 
     const reply = getBotReply(message)
 
     setTimeout(() => {
         addMessage(reply, "bot")
+        makeitpretty(reply, "bot")
     }, 500)
 
     chatInput.value = ""
