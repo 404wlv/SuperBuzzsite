@@ -154,7 +154,7 @@
           const departuresAll = [];
 
           for (const stopId in stops) {
-              const res = await fetch(`https://busesandtrains.co.uk/v1/departures?stop_id=${stopId}&app_key=${appKey}`);
+              const res = await fetch(`https://api.busesandtrains.co.uk/v1/departures?stop_id=${stopId}&app_key=${appKey}`);
               const data = await res.json();
 
               if (data.departures?.length) {
