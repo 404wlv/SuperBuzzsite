@@ -342,7 +342,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (chatInput) {
-        chatInput.addEventListener("keydown" || "keypress", (e) => {
+        chatInput.addEventListener("keydown", (e) => {
             if (e.key === "Enter") sendMessage()
         })
     }
