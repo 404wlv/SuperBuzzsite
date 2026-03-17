@@ -228,16 +228,25 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function getBotReply(message) {
+        if (!faqs || faqs.length === 0) 
+            return "Sorry, I am loading data. Please try again in a moment.";
+
         const text = message.toLowerCase();
+
         for (const faq of faqs) {
-            if (text.includes(faq.question.toLowerCase())) return faq.answer;
+
+            if (!faq || !faq.answer) continue; // skip invalid entries
+
             if (faq.keywords) {
                 const keywords = faq.keywords.split(",");
+
                 for (const word of keywords) {
-                    if (text.includes(word.trim())) return faq.answer;
-                }   
+                    
+                    if (text.includes(word.trim().toLowerCase())) return faq.answer;
+                }
             }
         }
+
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
     }
 
