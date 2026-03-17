@@ -233,6 +233,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const newEvent = { id: events.length + 1, title, category, description, location, date };
             events.push(newEvent);
             renderEvents();
+            alert("Event created successfully!");
 
             // clear inputs
             document.getElementById("new-event-title").value = "";
@@ -241,8 +242,38 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("new-event-date").value = "";
 
             createEventModal.classList.add("hidden");
+
         });
     }
+
+    //event attendance form - Aafrin
+    const attendEventBtn = document.getElementById("attend-btn");
+    if (attendEventBtn) {
+        attendEventBtn.addEventListener("click", () => {
+            const name = document.getElementById("attendee-name").value.trim();
+            const email = document.getElementById("attendee-email").value.trim();
+            const studentId = document.getElementById("attendee-student-id").value.trim();
+            const course = document.getElementById("attendee-course").value.trim();
+            const allergens = document.getElementById("attendee-allergens").value.trim();
+            const disabilities = document.getElementById("attendee-disabilities").value.trim();
+            const consent = document.getElementById("attendee-consent").checked;
+            
+            const submit = document.getElementById("confirm-attend-btn");
+            if (!name || !email || !studentId || !course) {
+                alert("Please fill all required fields!");
+                return;
+            }
+            if (!consent) {
+                alert("You must consent to data processing to attend the event.");
+                return;
+            }
+
+            //send this data to your backend or database -> later on not now
+
+            alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
+
+        });
+    }   
 
     //chatbot 
     const chatInput = document.getElementById("chat-input")
