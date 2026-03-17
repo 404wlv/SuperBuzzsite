@@ -333,6 +333,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //bus timings
+    /*
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
@@ -371,8 +372,52 @@ document.addEventListener("DOMContentLoaded", () => {
             busList.innerHTML = "<li>Error loading transport data</li>";
         }
     }
+    */
+    const dummyBuses = [
+        {
+            line: "4",
+            destination: "i54",
+            expected: "07:25"
+        },
+        {
+            line: "33",
+            destination: "Northwood Pk Circ.",
+            expected: "07:28"
+        },
+        {
+            line: "3",
+            destination: "Fordhouses",
+            expected: "07:35"
+        },
+        {
+            line: "32",
+            destination: "Northwood Pk Circ.",
+            expected: "07:37"
+        },
+        {
+            line: "4",
+            destination: "i54",
+            expected: "07:46"
+        }
+    ];
+    
+    function loadTransport() {
+        const busList = document.getElementById("bus-list");
+        if (!busList) return;
 
+        busList.innerHTML = "<li>Loading transport data...</li>";
 
+        // Simulate delay
+        setTimeout(() => {
+            let output = `<li class="font-bold mt-2">🚌 Stop AB</li>`;
+
+            dummyBuses.forEach(dep => {
+                output += `<li>${dep.line} → ${dep.destination} at ${dep.expected}</li>`;
+            });
+
+            busList.innerHTML = output;
+        }, 500);
+    }
 
     //profile
     const profileBtn = document.getElementById("profile-button")
