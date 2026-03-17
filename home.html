@@ -3,75 +3,78 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+
   <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <title class="text-3xl">SuperBuzz</title>
-
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  
-
 </head>
 
 <body class="bg-fuchsia-300 text-white">
 
     <!-- HomePage -->
     <div id="main-app"
-        class="modal flex flex-col md:flex-row h-screen">
-        <div id="events-container" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+      class="modal flex flex-col md:flex-row h-screen">
+
+      <div id="events-container"
+        class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 overflow-y-auto h-screen">
+
+                
+        <div class="bg-white text-fuchsia-800 p-6 rounded-2xl w-full max-w-lg max-h-[80vh] overflow-y-auto relative">
+
+          <button id="close-event-modal"
+            class="absolute top-3 right-3 text-xl font-bold">
+            ✕
+          </button>
+
+          <h2 id="modal-title" class="text-2xl font-bold mb-2"></h2>
+
+          <p id="modal-category" class="text-sm mb-2"></p>
+
+          <p id="modal-description" class="mb-4"></p>
+
+          <p id="modal-location" class="text-sm mb-2"></p>
+
+          <p id="modal-date" class="text-sm mb-4"></p>
+
+          <button class="bg-fuchsia-700 text-white px-4 py-2 rounded-xl">
+            Attend Event
+          </button>
 
         </div>
+      </div>
     </div>
 
-    <!-- Gym Timings -->
+    <!---- Gym Timings -->
     <div id="gym-modal" 
-      class="modal hidden flex justify-center items-center fixed inset-0">
-
+      class="modal hidden flex-initial flex justify-center">
       <div class="relative flex flex-col sm:flex-row gap-6">
 
         <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
 
-          <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
-            Gym Timings
-          </h2>
+            <h2 class="text-2xl font-bold mb-6 text-center text-fuchsia-800">
+                Gym Timings
+            </h2>
 
-          <h3 class="text-fuchsia-800 font-semibold">Next Gym Sessions:</h3>
-
-          <ul class="list-disc list-inside text-fuchsia-800">
-            <li>Yoga: 6:00 PM</li>
-            <li>Spin Class: 7:30 PM</li>
-            <li>Weightlifting: 8:00 PM</li>
-          </ul>
-
+            <h3>Next Gym Sessions:</h3>
+            <ul class="list-disc list-inside text-fuchsia-800"> 
+            </ul>
         </div>
       </div>
     </div>
 
     <!-- Chat box -->
     <div id="chatbox"
-      class="fixed bottom-20 right-6 bg-fuchsia-200 w-80 p-4 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-3 hidden">
+        class="fixed right-6 bg-fuchsia-200 w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-4 hidden">
 
-      <h3 class="text-xl font-bold text-fuchsia-800 text-center">Campus Chat</h3>
+        <h3 class="text-2xl font-bold text-fuchsia-800">ChatBox</h3>
 
-      <!-- Messages -->
-      <div id="chat-messages"
-        class="h-48 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800 text-sm flex flex-col gap-2">
-      </div>
+        <div class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-fuchsia-800">
+        <!-- messages go here -->
+        </div>
 
-      <!-- Input area -->
-      <div class="flex gap-2">
-        <input id="chat-input"
-          type="text"
-          placeholder="Type a message..."
-          class="flex-1 p-2 rounded-xl border border-[#334155] text-fuchsia-800 focus:outline-none">
-
-        <button id="chat-send"
-          class="bg-fuchsia-800 text-white px-3 rounded-xl hover:scale-105 transition">
-          Send
-        </button>
-      </div>
+        <input type="text"
+            placeholder="Type a message..."
+            class="p-3 rounded-xl border border-[#334155] text-fuchsia-800 focus:outline-none focus:ring-2 focus:ring-fuchsia-500 w-full">
 
     </div>
 
@@ -121,6 +124,12 @@
         + Create Event
     </button> 
 
+  
+
+
+  
+
+
   <!-- Library -->
    <div id="library-modal" 
       class="modal hidden flex-initial flex justify-center">
@@ -145,10 +154,9 @@
       </div>
     </div>
 
-    <!-- Bus Timings -->
-    <div id="bus-modal" 
-      class="modal hidden flex justify-center items-center fixed inset-0">
-
+    <!-- bus timings -->
+   <div id="bus-modal" 
+      class="modal hidden flex-initial flex justify-center">
       <div class="relative flex flex-col sm:flex-row gap-6">
 
         <div class="bg-fuchsia-200 w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
@@ -157,13 +165,10 @@
             Bus Timings
           </h2>
 
-          <h3 class="text-fuchsia-800 font-semibold">Next Bus Departures:</h3>
-
-          <ul class="list-disc list-inside text-fuchsia-800">
-            <li>Bus 101 - 5 mins</li>
-            <li>Bus 202 - 12 mins</li>
-            <li>Bus 303 - 20 mins</li>
+          <h3>Next Bus Departures:</h3>
+          <ul class="list-disc list-inside text-fuchsia-800"> 
           </ul>
+        
 
         </div>
       </div>
