@@ -336,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) return;
+        if (!busList) {Console.log("failed"); return;}
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
