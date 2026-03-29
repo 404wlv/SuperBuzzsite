@@ -61,8 +61,14 @@ export async function login(email, password) {
 
 //////////logout/////////////////
 export async function logout() {
-    await supabase.auth.signOut()
-    location.reload()
+
+    const { error } = await supabase.auth.signOut()
+
+    if (error) {
+        alert(error.message)
+    } else {
+        window.location.href = "index.html"
+    }
 }
 
 ///forget passord///
