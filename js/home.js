@@ -18,48 +18,48 @@ testConnection();
 //Temporary hardcoded events - will be replaced by database content -Aafrin
 let events = [
     {
-        id:1,
-        title:"Freshers Welcome Party",
-        category:"social",
-        description:"Meet new students, enjoy music and free pizza.",
-        location:"Student Union",
-        date:"2026-10-12 18:00"
+        id: 1,
+        title: "Freshers Welcome Party",
+        category: "social",
+        description: "Meet new students, enjoy music and free pizza.",
+        location: "Student Union",
+        date: "2026-10-12 18:00"
     },
     {
-        id:2,
-        title:"AI Workshop",
-        category:"academic",
-        description:"Learn the basics of artificial intelligence.",
-        location:"MI102B Alan Turning",
-        date:"2026-10-14 14:00"
+        id: 2,
+        title: "AI Workshop",
+        category: "academic",
+        description: "Learn the basics of artificial intelligence.",
+        location: "MI102B Alan Turning",
+        date: "2026-10-14 14:00"
     },
     {
-        id:3,
-        title:"Basketball Tournament",
-        category:"sports",
-        description:"Join the annual campus basketball competition.",
-        location:"Sports Centre",
-        date:"2026-10-15 16:00"
+        id: 3,
+        title: "Basketball Tournament",
+        category: "sports",
+        description: "Join the annual campus basketball competition.",
+        location: "Sports Centre",
+        date: "2026-10-15 16:00"
     },
     {
-        id:4,
-        title:"Career Networking Night",
-        category:"career",
-        description:"Meet employers and alumni for networking.",
-        location:"MC001 Millenium Building",
-        date:"2026-10-20 17:30"
+        id: 4,
+        title: "Career Networking Night",
+        category: "career",
+        description: "Meet employers and alumni for networking.",
+        location: "MC001 Millenium Building",
+        date: "2026-10-20 17:30"
     }
 ];
 
 //category colors for events -Aafrin -> temporary solution
 function getCategoryColor(category) {
-    switch(category){
+    switch (category) {
         case "social": return "bg-purple-200";
         case "academic": return "bg-indigo-200";
         case "sports": return "bg-green-200";
         case "career": return "bg-yellow-200";
         default: return "bg-fuchsia-200";
-    }   
+    }
 }
 
 //close modals when clicking outside -Aafrin
@@ -67,7 +67,7 @@ function closeAllModals() {
     document.addEventListener("click", (event) => {
         const modals = document.querySelectorAll(".modal");
         modals.forEach(modal => {
-            if(event.target === modal){
+            if (event.target === modal) {
                 modal.classList.add("hidden");
             }
         });
@@ -91,7 +91,7 @@ async function loadFAQs() {
 loadFAQs();
 
 //render events cards -Aafrin
-function renderEvents(){
+function renderEvents() {
     const container = document.getElementById("event")
     container.innerHTML = ""
 
@@ -113,7 +113,7 @@ function renderEvents(){
 }
 
 //opening event details modal -Aafrin
-function openEventModal(event){
+function openEventModal(event) {
     const titleEl = document.getElementById("event-title")
     const catEl = document.getElementById("event-category")
     const descEl = document.getElementById("event-description")
@@ -129,7 +129,7 @@ function openEventModal(event){
     dateEl.textContent = "Date: " + event.date
 
     const modal = document.getElementById("event-modal")
-    if(modal) modal.classList.remove("hidden")
+    if (modal) modal.classList.remove("hidden")
 }
 
 
@@ -190,10 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const closeModal = document.getElementById("close-event-modal")
-    if(closeModal){
+    if (closeModal) {
         closeModal.addEventListener("click", () => {
             const modal = document.getElementById("event-modal")
-            if(modal) modal.classList.add("hidden")
+            if (modal) modal.classList.add("hidden")
         })
     }
 
@@ -305,7 +305,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 const keywords = faq.keywords.split(",");
                 for (const word of keywords) {
                     if (text.includes(word.trim().toLowerCase())) return faq.answer;
-                }   
+                }
             }
         }
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
@@ -333,11 +333,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //bus timings
-  
+
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) {Console.log("failed"); return;}
+        if (!busList) { Console.log("failed"); return; }
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
@@ -359,7 +359,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (departures.length > 0) {
                     departures.slice(0, 5).forEach(dep => {
                         const time = dep.expected || dep.scheduled;
-                        output += `<li>${dep.line} → ${dep.destination} at ${new Date(time).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</li>`;
+                        output += `<li>${dep.line} → ${dep.destination} at ${new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>`;
                     });
                 } else {
                     output += `<li>No buses</li>`;
@@ -372,8 +372,8 @@ document.addEventListener("DOMContentLoaded", () => {
             busList.innerHTML = "<li>Error loading transport data</li>";
         }
     }
-   
-    
+
+
 
     //profile
     const profileBtn = document.getElementById("profile-button")
@@ -385,3 +385,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+//// checkin -danial
+async function handleCheckin() {
+    const { data: userData } = await supabase.auth.getUser()
+    const user = userData.user
+
+    if (!user) {
+        alert("user not loogged in")
+        return
+    }
+}
