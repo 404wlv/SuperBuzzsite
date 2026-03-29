@@ -385,6 +385,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 });
+
+
 //// checkin -danial
 async function handleCheckin() {
     const { data: userData } = await supabase.auth.getUser()
@@ -402,4 +404,51 @@ async function handleCheckin() {
         console.log(error)
         return
     }
+
+    ///person who signsin for teh first time
+    if (!data) {
+        await supabase.from("daily_checkins").insert({
+            user_id: user.id,
+            last_checkin: today,
+            streak: 1
+        })
+        alert("Day 1 complete! 2 more days fro brownie 🐪")
+        updateButtonState(true)
+        return
+    }
+    const last = data.last_checkin
+
+    // already clicked today
+    if (last === today) {
+        alert("Already checked in today ✅")
+        updateButtonState(true)
+        return
+    }
+    // check for yesteray
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    const yDate = yesterday.toISOString().split("T")[0]
+
+    let newStreak = 1
+
+    if (last === yDate) {
+        newStreak = data.streak + 1
+    }
+
+    await supabase
+        .from("daily_checkins")
+        .update({
+            last_checkin: today,
+            streak: newStreak
+        })
+        .eq("user_id", user.id)
+
+    // 🎁 reward
+    if (newStreak === 3) {
+        alert("🎉 Congrats! Free brownie! Code: BROWNIE123")
+    } else {
+        alert(`${3 - newStreak} more days for brownie 🍫`)
+    }
+
+    updateButtonState(true)
 }
