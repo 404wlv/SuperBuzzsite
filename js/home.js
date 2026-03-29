@@ -394,4 +394,12 @@ async function handleCheckin() {
         alert("user not loogged in")
         return
     }
+    const today = new Date().toISOString().split("T")[0]
+
+    const { data, error } = await supabase.from("daily_checkins").select("*").eq("user_id", user.id).single()
+
+    if (error && error.code !== "PGRST116") {
+        console.log(error)
+        return
+    }
 }
