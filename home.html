@@ -7,7 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-fuchsia-300 text-white">
+<body class="bg-[#ACBAC4] text-[#F0F0DB]">
 
     <!-- HomePage -->
     <div id="main-app" class="flex flex-col md:flex-row h-screen">
@@ -144,24 +144,24 @@
     <!-- Chat box -->
     <div id="chatbox" class="fixed right-2 sm:right-6 bottom-20 bg-[#E1D9BC] w-[90%] sm:w-full max-w-md p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-3 hidden z-50">
       <h3 class="text-xl sm:text-2xl font-bold text-[#30364F]">ChatBox</h3>
-      <div id="chat-messages" class="flex-1 bg-white rounded-xl p-3 overflow-y-auto text-[#30364F] max-h-80"></div>
+      <div id="chat-messages" class="flex-1 bg-[#F0F0DB] rounded-xl p-3 overflow-y-auto text-[#30364F] max-h-80"></div>
       <input id="chat-input" type="text" placeholder="Type a message..." class="p-2 sm:p-3 rounded-xl border border-[#334155] text-[#30364F] focus:outline-none focus:ring-2 focus:ring-fuchsia-500 w-full">
-      <button id="chat-send" class="bg-fuchsia-700 text-white px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">Send</button>
+      <button id="chat-send" class="bg-[#30364F] text-[#F0F0DB] px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">Send</button>
     </div>
 
     <div id="sidebar" class="fixed top-0 left-0 h-full w-60 bg-[#30364F] p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out overflow-auto z-40">
 
       <div class="mt-12 flex flex-col space-y-2">
-        <button id="profile-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Profile</button>
-        <button id="bus-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Bus Timings</button>
-        <button id="gym-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Gym Timings</button>
-        <button id="map-button" class="w-full text-left py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Map</button>
-        <button id="library-timings" class="w-full text-left py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Library Timings</button>
+        <button id="profile-button" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Profile</button>
+        <button id="bus-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Bus Timings</button>
+        <button id="gym-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Gym Timings</button>
+        <button id="map-button" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Map</button>
+        <button id="library-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Library Timings</button>
       </div>
     </div>
 
     <!-- Chat Button -->
-    <button id="chat-toggle" class="fixed right-2 sm:right-6 bottom-6 z-50 bg-[#30364F] text-white px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
+    <button id="chat-toggle" class="fixed right-2 sm:right-6 bottom-6 z-50 bg-[#30364F] text-[#F0F0DB] px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
         Chat Now
     </button>
 
