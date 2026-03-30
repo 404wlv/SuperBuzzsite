@@ -291,7 +291,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function addMessage(text, sender) {
         const msg = document.createElement("div")
         msg.className = sender === "user"
-            ? "text-right bg-[#ACBAC4] text-[#F0F0DB] p-2 rounded my-1"
+            ? "text-right bg-[#ACBAC4] text-[#E1D9BC] p-2 rounded my-1"
             : "text-left bg-[#E1D9BC] text-[#30364F] p-2 rounded my-1"
         msg.textContent = text
         chatMessages.appendChild(msg)
