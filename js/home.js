@@ -332,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
         })
     }
 
-    //bus timings
+    //bus timings -Aafrin
 
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
