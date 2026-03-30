@@ -199,7 +199,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderEvents()
 
-    //add event button popup
+    //add event button popup -Aafrin
     // Create Event popup
     const addEventBtn = document.getElementById("add-event-button");
     const createEventModal = document.getElementById("create-event-modal");
@@ -291,8 +291,8 @@ document.addEventListener("DOMContentLoaded", () => {
     function addMessage(text, sender) {
         const msg = document.createElement("div")
         msg.className = sender === "user"
-            ? "text-right bg-gray-500 text-fuchsia-200 p-2 rounded my-1"
-            : "text-left bg-gray-300 text-fuchsia-600 p-2 rounded my-1"
+            ? "text-right bg-[#ACBAC4] text-[#F0F0DB] p-2 rounded my-1"
+            : "text-left bg-[#E1D9BC] text-[#30364F] p-2 rounded my-1"
         msg.textContent = text
         chatMessages.appendChild(msg)
         chatMessages.scrollTop = chatMessages.scrollHeight
