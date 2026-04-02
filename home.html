@@ -18,9 +18,17 @@
 
       <!-- checkin button --testing danial -->
        <div id="checkin-card" class="fixed top-6 right-6 w-72 bg-fuchsia-200 text-fuchsia-800 p-5 rounded-2xl shadow-2xl border border-[#334155] z-50">
-        <h3>
+        <h3 class="text-lg font-bold mb-2">
           🎓 Daily Check-in
         </h3>
+        <p id="checkin-message" class="text-sm mb-3">Click below to mark your day at university!</p>
+      <!-- progress bar (i hate this) -->
+         <div class="w-full bg-gray-300 rounded-full h-3 mb-3">
+    <div id="checkin-progress"
+      class="bg-fuchsia-700 h-3 rounded-full transition-all duration-500"
+      style="width: 0%">
+    </div>
+  </div>
 
        </div>
       <!-- <button id="daily-checkin"
