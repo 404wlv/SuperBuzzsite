@@ -53,3 +53,33 @@ async function loadCheckinStatus() {
     const checkedToday = data.last_checkin === today
     updateUI(data.streak, checkedToday)
 }
+
+async function handleCheckin() {
+    const { data: userData } = await supabase.auth.getUser()
+    const user = userData.user
+    if (!user) return
+
+    const today = new Date().toISOString().split("T")[0]
+
+    const { data } = await supabase
+        .from("daily_checkins")
+        .select("*")
+        .eq("user_id", user.id)
+        .single()
+
+    if (!data) {
+        await supabase.from("daily_checkins").insert({
+            user_id: user.id,
+            last_checkin: today,
+            streak: 1
+        })
+
+        updateUI(1, true)
+        return
+    }
+
+    if (data.last_checkin === today) {
+        updateUI(data.streak, true)
+        return
+    }
+}
