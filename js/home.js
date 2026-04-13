@@ -64,14 +64,8 @@ function getCategoryColor(category) {
 
 //close modals when clicking outside -Aafrin
 function closeAllModals() {
-    document.addEventListener("click", (event) => {
-        const modals = document.querySelectorAll(".modal");
-        modals.forEach(modal => {
-            if (event.target === modal) {
-                modal.classList.add("hidden");
-            }
-        });
-    });
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach(modal => modal.classList .add("hidden"));   
 }
 
 //fetch FAQs from Supabase
@@ -160,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    //modal buttons -Aafrin
+    //modal buttons
     const busBtn = document.getElementById("bus-timings");
     if (busBtn) busBtn.addEventListener("click", () => {
         closeAllModals();
@@ -337,7 +331,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) { Console.log("failed"); return; }
+        if (!busList) { console.log("bus-list not found"); return; }
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
