@@ -82,4 +82,37 @@ async function handleCheckin() {
         updateUI(data.streak, true)
         return
     }
+
+    const yesterday = new Date()
+    yesterday.setDate(yesterday.getDate() - 1)
+    const yDate = yesterday.toISOString().split("T")[0]
+
+    let newStreak = 1
+
+    if (data.last_checkin === yDate) {
+        newStreak = data.streak + 1
+    }
+
+    await supabase
+        .from("daily_checkins")
+        .update({
+            last_checkin: today,
+            streak: newStreak
+        })
+        .eq("user_id", user.id)
+
+    if (newStreak === TARGET_STREAK) {
+        alert("🎉 Congrats! Use code BROWNIE123 for a free brownie!")
+    }
+
+    updateUI(newStreak, true)
 }
+
+document.addEventListener("DOMContentLoaded", () => {
+    loadCheckinStatus()
+
+    const btn = document.getElementById("checkin-btn")
+    if (btn) {
+        btn.addEventListener("click", handleCheckin)
+    }
+})
