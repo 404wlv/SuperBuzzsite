@@ -154,7 +154,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    //modal buttons
+    //modal buttons -Aafrin
     const busBtn = document.getElementById("bus-timings");
     if (busBtn) busBtn.addEventListener("click", () => {
         closeAllModals();
@@ -183,13 +183,16 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "map.html";
     });
 
-    const closeModal = document.getElementById("close-event-modal")
-    if (closeModal) {
-        closeModal.addEventListener("click", () => {
-            const modal = document.getElementById("event-modal")
-            if (modal) modal.classList.add("hidden")
-        })
-    }
+    function closeAllModals() {
+    document.addEventListener("click", (event) => {
+        const modals = document.querySelectorAll(".modal");
+        modals.forEach(modal => {
+            if (event.target === modal) {
+                modal.classList.add("hidden");
+            }
+        });
+    });
+}
 
     renderEvents()
 
@@ -331,7 +334,7 @@ document.addEventListener("DOMContentLoaded", () => {
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) { console.log("bus-list not found"); return; }
+        if (!busList) { Console.log("failed"); return; }
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
