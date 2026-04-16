@@ -7,12 +7,12 @@
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-[#ACBAC4] text-[#F0F0DB]">
+<body class="bg-[#123458] text-[#F1EFEC]">
 
     <!-- HomePage -->
     <div id="main-app" class="flex flex-col md:flex-row h-screen">
       <!-- Sidebar Toggle -->
-      <button id="sidebar-toggle" class="fixed top-6 left-6 z-50 bg-[#30364F] text-[#F0F0DB] px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
+      <button id="sidebar-toggle" class="fixed top-6 left-6 z-50 bg-[#030303] text-[#F1EFEC] px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
         ᯓ
       </button>
 
@@ -40,19 +40,19 @@
 
        </div>
       <!-- <button id="daily-checkin"
-      class="fixed top-6 right-6 bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl shadow-xl hover:scale-105 transition z-50">Day at University </button> -->
+      class="fixed top-6 right-6 bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl shadow-xl hover:scale-105 transition z-50">Day at University </button> -->
 
 
       <!-- Event Modal -->
       <div id="event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50">
-        <div class="bg-white text-[#30364F] p-4 sm:p-6 rounded-2xl w-full max-w-full sm:max-w-md relative">
+        <div class="bg-white text-[#030303] p-4 sm:p-6 rounded-2xl w-full max-w-full sm:max-w-md relative">
             <button id="close-event-modal" class="absolute top-3 right-3 text-xl font-bold">✕</button>
             <h2 id="event-title" class="text-xl sm:text-2xl font-bold mb-2"></h2>
             <p id="event-category" class="text-sm mb-2"></p>
             <p id="event-description" class="mb-4 text-sm sm:text-base"></p>
             <p id="event-location" class="text-sm mb-2"></p>
             <p id="event-date" class="text-sm mb-4"></p>
-            <button id="attend-btn" class="bg-[#30364F] text-[#F0F0DB] px-3 py-1 rounded-xl text-sm w-full sm:w-auto">
+            <button id="attend-btn" class="bg-[#030303] text-[#F1EFEC] px-3 py-1 rounded-xl text-sm w-full sm:w-auto">
                 Attend Event
             </button>
         </div>
@@ -63,15 +63,15 @@
 
     <!-- Create Event Modal -->
     <div id="create-event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-white text-[#30364F] p-6 rounded-2xl w-full max-w-md relative">
+      <div class="bg-white text-[#030303] p-6 rounded-2xl w-full max-w-md relative">
         <button id="close-create-event-modal" class="absolute top-3 right-3 text-xl font-bold">✕</button>
         <h2 class="text-2xl font-bold mb-4 text-center">Create Event</h2>
           
         <label class="block mb-2 text-sm">Title</label>
-        <input id="new-event-title" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="new-event-title" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
 
         <label class="block mb-2 text-sm">Category</label>
-        <select id="new-event-category" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <select id="new-event-category" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
           <option value="social">Social</option>
           <option value="academic">Academic</option>
           <option value="sports">Sports</option>
@@ -79,53 +79,53 @@
         </select>
 
         <label class="block mb-2 text-sm">Description</label>
-        <textarea id="new-event-description" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]"></textarea>
+        <textarea id="new-event-description" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]"></textarea>
 
         <label class="block mb-2 text-sm">Location</label>
-        <input id="new-event-location" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="new-event-location" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
 
         <label class="block mb-2 text-sm">Date & Time</label>
-        <input id="new-event-date" type="datetime-local" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="new-event-date" type="datetime-local" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
 
-        <button id="create-event-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl w-full">Create Event</button>
+        <button id="create-event-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">Create Event</button>
       </div>
     </div>
 
     <!-- Attend Event form -->
     <div id="attend-form" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-white text-[#30364F] p-6 rounded-2xl w-full max-w-md relative">
+      <div class="bg-white text-[#030303] p-6 rounded-2xl w-full max-w-md relative">
         <h2 class="text-2xl font-bold mb-4 text-center">Form</h2>
         <label class="block mb-2 text-sm">Your Name</label>
-        <input id="attendee-name" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-name" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Your Email</label>
-        <input id="attendee-email" type="email" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-email" type="email" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Your Student ID</label>
-        <input id="attendee-student-id" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-student-id" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Your Course</label>
-        <input id="attendee-course" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-course" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Allergens/food requirements</label>
-        <input id="attendee-allergens" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-allergens" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Any help with disabilities</label>
-        <input id="attendee-disabilities" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#30364F]">
+        <input id="attendee-disabilities" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
         <label class="block mb-2 text-sm">Consent to be recorded during the event</label>
         <checkbox id="attendee-consent" class="mb-4">
           <span class="ml-2 text-sm">I consent</span>
         </checkbox>
-        <button id="confirm-attend-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl w-full">Submit Form</button>
+        <button id="confirm-attend-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">Submit Form</button>
       </div>
     </div>
 
     <!-- Gym Modal -->
     <div id="gym-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-[#E1D9BC] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
-          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Gym Timings</h2>
+      <div class="bg-[#D4C9BE] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Gym Timings</h2>
           <h3 class="mb-2 text-gray-500">GYM OPENING TIMINGS[City Campus Gym]:</h3>
-          <ul class="list-disc list-inside text-[#30364F]">
+          <ul class="list-disc list-inside text-[#030303]">
             <li>MONDAY-FRIDAY 9:00 TO 22:00<li>
             <li>SATURDAY-SUNDAY 9:00 TO 17:00<li>
           </ul>
           <h4 class="mb-2 text-gray-500">GYM SESSIONS THIS WEEK[City Campus Gym](16:00-18:00):</h4>
-          <ul class="list-disc list-inside text-[#30364F]">
+          <ul class="list-disc list-inside text-[#030303]">
             <li>Monday - Jiu-jitsu<li>
             <li>Tuesday - Badminton<li>
             <li>Wednesday - Tennis<li>
@@ -141,11 +141,11 @@
       <!-- Container for BOTH cards -->
       <div class="flex flex-col sm:flex-row gap-6">
         <!-- Harrison Library -->
-        <div class="bg-[#E1D9BC] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
-          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Harrison Library</h2>
+        <div class="bg-[#D4C9BE] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Harrison Library</h2>
           <h3 class="mb-2 text-gray-500">Library Opening timings:</h3>
 
-          <ul class="list-disc list-inside text-[#30364F]"> 
+          <ul class="list-disc list-inside text-[#030303]"> 
             <li>MONDAY-FRIDAY 8:00 TO 00:00</li>
             <li>SATURDAY 8:00 TO 22:00</li>
             <li>SUNDAY 8:00 TO 16:00</li>
@@ -153,10 +153,10 @@
         </div>
 
         <!-- Walsall Library -->
-        <div class="bg-[#E1D9BC] w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155]">
-          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Walsall Library</h2>
+        <div class="bg-[#D4C9BE] w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155]">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Walsall Library</h2>
           <h3 class="mb-2 text-gray-500">Library Opening timings:</h3>
-          <ul class="list-disc list-inside text-[#30364F]">
+          <ul class="list-disc list-inside text-[#030303]">
             <li>MONDAY-FRIDAY 8:30 TO 00:00</li>
             <li>SATURDAY-SUNDAY 10:00 TO 22:00</li>
           </ul>
@@ -166,42 +166,42 @@
 
    <!-- Bus Modal -->
     <div id="bus-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-[#E1D9BC] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
-          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Bus Timings</h2>
+      <div class="bg-[#D4C9BE] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Bus Timings</h2>
           <h3 class="mb-2 text-gray-500">Next Bus Departures:</h3>
-          <ul id="bus-list" class="list-disc list-inside text-[#30364F]">
+          <ul id="bus-list" class="list-disc list-inside text-[#030303]">
           </ul>
       </div>
     </div>
    
  
     <!-- Chat box -->
-    <div id="chatbox" class="fixed right-2 sm:right-6 bottom-20 bg-[#E1D9BC] w-[90%] sm:w-full max-w-md p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-3 hidden z-50">
-      <h3 class="text-xl sm:text-2xl font-bold text-[#30364F]">ChatBox</h3>
-      <div id="chat-messages" class="flex-1 bg-[#F0F0DB] rounded-xl p-3 overflow-y-auto text-[#30364F] min-h-[200px] max-h-80"></div>
-      <input id="chat-input" type="text" placeholder="Type a message..." class="p-2 sm:p-3 rounded-xl border border-[#334155] bg-[#F0F0DB] text-[#30364F] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
-      <button id="chat-send" class="bg-[#30364F] text-[#F0F0DB] px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">Send</button>
+    <div id="chatbox" class="fixed right-2 sm:right-6 bottom-20 bg-[#D4C9BE] w-[90%] sm:w-full max-w-md p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-3 hidden z-50">
+      <h3 class="text-xl sm:text-2xl font-bold text-[#030303]">ChatBox</h3>
+      <div id="chat-messages" class="flex-1 bg-[#F1EFEC] rounded-xl p-3 overflow-y-auto text-[#030303] min-h-[200px] max-h-80"></div>
+      <input id="chat-input" type="text" placeholder="Type a message..." class="p-2 sm:p-3 rounded-xl border border-[#334155] bg-[#F1EFEC] text-[#030303] focus:outline-none focus:ring-2 focus:ring-[#123458] w-full">
+      <button id="chat-send" class="bg-[#030303] text-[#F1EFEC] px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">Send</button>
     </div>
 
-    <div id="sidebar" class="fixed top-0 left-0 h-full w-60 bg-[#30364F] p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out overflow-auto z-40">
+    <div id="sidebar" class="fixed top-0 left-0 h-full w-60 bg-[#030303] p-6 text-white transform -translate-x-full transition-transform duration-300 ease-in-out overflow-auto z-40">
 
       <div class="mt-12 flex flex-col space-y-2">
-        <button id="profile-button" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Profile</button>
-        <button id="bus-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Bus Timings</button>
-        <button id="gym-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Gym Timings</button>
-        <button id="map-button" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Map</button>
-        <button id="library-timings" class="w-full text-left text-[#F0F0DB] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Library Timings</button>
+        <button id="profile-button" class="w-full text-left text-[#F1EFEC] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Profile</button>
+        <button id="bus-timings" class="w-full text-left text-[#F1EFEC] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Bus Timings</button>
+        <button id="gym-timings" class="w-full text-left text-[#F1EFEC] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Gym Timings</button>
+        <button id="map-button" class="w-full text-left text-[#F1EFEC] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Map</button>
+        <button id="library-timings" class="w-full text-left text-[#F1EFEC] py-3 px-4 rounded-lg hover:bg-[#4A5568] transition">Library Timings</button>
       </div>
     </div>
 
     <!-- Chat Button -->
-    <button id="chat-toggle" class="fixed right-2 sm:right-6 bottom-6 z-50 bg-[#30364F] text-[#F0F0DB] px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
+    <button id="chat-toggle" class="fixed right-2 sm:right-6 bottom-6 z-50 bg-[#030303] text-[#F1EFEC] px-4 py-3 rounded-2xl shadow-xl hover:scale-110 transition">
         Chat Now
     </button>
 
 
     <!-- Add Event -->
-    <button id="add-event-button" class="fixed bottom-6 left-6 z-50 bg-[#30364F] text-[#F0F0DB] py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">
+    <button id="add-event-button" class="fixed bottom-6 left-6 z-50 bg-[#030303] text-[#F1EFEC] py-3 px-6 rounded-2xl shadow-xl hover:scale-110 transition">
         + Create Event
     </button>
 
