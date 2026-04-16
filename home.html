@@ -138,14 +138,29 @@
 
     <!-- Library Modal -->
     <div id="library-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-[#E1D9BC] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
-          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Library Timings</h2>
-          <h3 class="mb-2 text-gray-500">Library Opening timings[HARRISON LIBRARY]:</h3>
+      <!-- Container for BOTH cards -->
+      <div class="flex flex-col sm:flex-row gap-6">
+        <!-- Harrison Library -->
+        <div class="bg-[#E1D9BC] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Harrison Library</h2>
+          <h3 class="mb-2 text-gray-500">Library Opening timings:</h3>
+
           <ul class="list-disc list-inside text-[#30364F]"> 
             <li>MONDAY-FRIDAY 8:00 TO 00:00</li>
             <li>SATURDAY 8:00 TO 22:00</li>
             <li>SUNDAY 8:00 TO 16:00</li>
           </ul>
+        </div>
+
+        <!-- Walsall Library -->
+        <div class="bg-[#E1D9BC] w-full max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155]">
+          <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#30364F]">Walsall Library</h2>
+          <h3 class="mb-2 text-gray-500">Library Opening timings:</h3>
+          <ul class="list-disc list-inside text-[#30364F]">
+            <li>MONDAY-FRIDAY 8:30 TO 00:00</li>
+            <li>SATURDAY-SUNDAY 10:00 TO 22:00</li>
+          </ul>
+        </div>
       </div>
     </div>
 
