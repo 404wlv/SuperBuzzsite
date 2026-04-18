@@ -52,23 +52,23 @@ function getbbox()
 
 function parse_osm_data(osm_data) {
     const buildings = [];
-    const nodes = {};
+    const nodes = new Map();
+
 
     //store all nodes
     osm_data.elements.forEach(element => {  
         if (element.type === "node") {
-            nodes[element.id] = 
-            [element.lon, element.lat]
-
+            nodes.set(element.id, [element.lon, element.lat]);
         }
     });
 
+  
     //build polygons for each building
     osm_data.elements.forEach(element => { 
         if (element.type === "way" && element.nodes) {
 
           const coordinates = element.nodes
-            .map(id => nodes[id]) //Convert to [lon, lat] format for GeoJSON
+            .map(id => nodes.get(id)).filter(p => p) //Convert to [lon, lat] format for GeoJSON
             .filter(Boolean) //Remove any undefined nodes
 
           if (coordinates.length > 2) { 
