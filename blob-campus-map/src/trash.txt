@@ -1,0 +1,97 @@
+
+
+function projection(lat, lon, centre)
+{
+    const scale = 2000; // Arbitrary scale factor for better visibility
+
+    return {
+      x: (lon - centre.lon) * scale,
+      z: (lat - centre.lat) * -scale
+    }
+}
+
+function createbuilding(coodinates, centre)
+{
+    const shape = new THREE.Shape();
+
+    coodinates.forEach((coord, index) => {
+
+        const p = projection(coord.lat, coord.lon, centre);
+
+        if (!isFinite(p.x) || !isFinite(p.z)) return;
+
+        if (index === 0) {
+            shape.moveTo(p.x, p.z);
+        } else {
+            shape.lineTo(p.x, p.z);
+        }
+    });
+
+    const geometry = new THREE.ExtrudeGeometry(shape, { 
+      depth: 20, 
+      bevelEnabled: false 
+    });
+
+    geometry.rotateX(-Math.PI / 2); //Rotate to make it vertical
+
+    const mesh = new THREE.Mesh(
+      geometry, 
+      new THREE.MeshBasicMaterial({ color: "#ff0000" })
+    );
+
+    return mesh;
+
+
+}
+
+function addMesh(mesh) {
+    if (threeLayer.scene) {
+        threeLayer.scene.add(mesh);
+    } else {
+        console.warn("Scene not ready yet");
+    }
+}
+
+
+const threeLayer = {
+    id: "three-layer",
+    type: "custom",
+    renderingMode: "3d",
+
+    onAdd(map, gl) {
+        this.map = map;
+        this.camera = new THREE.Camera();
+        this.scene = new THREE.Scene();
+        
+        threeLayer.scene = this.scene;
+
+        this.renderer = new THREE.WebGLRenderer({
+            canvas: map.getCanvas(),
+            context: gl
+        });
+
+        this.renderer.autoClear = false;
+
+        // lights
+        const ambient = new THREE.AmbientLight(0xffffff, 0.8);
+        this.scene.add(ambient);
+
+        const dir = new THREE.DirectionalLight(0xffffff, 1);
+        dir.position.set(100, 200, 100);
+        this.scene.add(dir);
+
+      
+    },
+
+    render(gl, matrix) {
+        const m = new THREE.Matrix4().fromArray(matrix);
+        this.camera.projectionMatrix = m;
+
+        this.renderer.resetState();
+        this.renderer.render(this.scene, this.camera);
+
+        this.map.triggerRepaint();
+    }
+};
+
+
