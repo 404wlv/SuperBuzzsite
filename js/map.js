@@ -1,6 +1,6 @@
 // -------- imports ---------
-import maplibregl from "maplibre-gl";
-import "maplibre-gl/dist/maplibre-gl.css";
+import maplibregl from "https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js";
+import "https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.css";
 //import * as THREE from "three";
 
 
