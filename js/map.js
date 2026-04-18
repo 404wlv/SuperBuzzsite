@@ -25,7 +25,7 @@ async function fetchbuildings() {
     `
       [out:json];
       (
-        way["building"](52.5868,-2.1355,52.5905,-2.1220);
+        way["building"](-2.1355, 52.5868,-2.1220, 52.5905);
       );
       out body;
       >;
