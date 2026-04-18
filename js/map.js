@@ -55,10 +55,8 @@ function parse_osm_data(osm_data) {
     osm_data.elements.forEach(element => {  
         if (element.type === "node") {
             nodes[element.id] = 
-            {
-              lat: element.lat,
-              lon: element.lon
-            };
+            [element.lon, element.lat]
+
         }
     });
 
@@ -70,7 +68,13 @@ function parse_osm_data(osm_data) {
             .map(id => nodes[id]) //Convert to [lon, lat] format for GeoJSON
             .filter(Boolean) //Remove any undefined nodes
 
-          if (coordinates.length > 2) { //A valid polygon needs at least 3 points
+          if (coordinates.length > 2) { 
+                // close polygon if not already closed
+                if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
+                    coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
+                    coordinates.push(coordinates[0]);
+                }
+                //A valid polygon needs at least 3 points
             buildings.push(coordinates);
           }
         }
