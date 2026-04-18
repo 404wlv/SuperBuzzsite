@@ -1,11 +1,3 @@
-// -------- imports ---------
-import maplibregl from "https://unpkg.com/maplibre-gl@latest/dist/maplibre-gl.js";
-
-//import * as THREE from "three";
-
-
-
-
 
 
 // -------- setup ---------
