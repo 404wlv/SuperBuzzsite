@@ -23,13 +23,17 @@ function createmap()
 async function fetchbuildings() {
     const query = 
     `
-      [out:json];
-      (
-        way["building"](-2.1355, 52.5868,-2.1220, 52.5905);
-      );
-      out body;
-      >;
-      out skel qt;
+        [out:json];
+        area["name"="University of Wolverhampton"]->.uni;
+
+        (
+        way["building"]["operator"="University of Wolverhampton"](area.uni);
+        way["building"]["name"~"University|Wolverhampton"](area.uni);
+        );
+
+        out body;
+        >;
+        out skel qt;
     `;
 
     const url = `https://overpass-api.de/api/interpreter`;
