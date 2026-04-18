@@ -5,7 +5,7 @@
     <!-- <link rel="icon" type="image/svg+xml" href="/" /> -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>blob-campus-map</title>
-    
+
     <style>
         html, body, #map {
           margin: 0;
@@ -15,7 +15,7 @@
   </head>
   <body>
       <div id="map"></div>
-      <script type="module" src="/src/main.js"></script>
+      <script type="module" src="/blob-campus-map/src/main.js"></script>
       
   </body>
 </html>
