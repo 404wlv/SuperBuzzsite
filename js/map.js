@@ -1,7 +1,7 @@
 // -------- imports ---------
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
-import * as THREE from "three";
+//import * as THREE from "three";
 
 
 
