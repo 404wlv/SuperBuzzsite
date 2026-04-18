@@ -27,8 +27,7 @@ async function fetchbuildings() {
         area["name"="University of Wolverhampton"]->.uni;
 
         (
-        way["building"]["operator"="University of Wolverhampton"](area.uni);
-        way["building"]["name"~"University|Wolverhampton"](area.uni);
+        way["building"](area.uni);
         );
 
         out body;
@@ -102,12 +101,7 @@ map.on("load", async () => {
             type: "Feature",
             geometry: {
                 type: "Polygon",
-                coordinates: [
-                  [
-                    ...coords.map(p => [p.lon, p.lat]),
-                    [coords[0].lon, coords[0].lat] // close the ring
-                  ]
-                ]
+                coordinates: [coords]
             }
         }))
     };
