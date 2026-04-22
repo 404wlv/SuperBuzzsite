@@ -200,7 +200,7 @@ map.on("load", async () => {
             "text-anchor": "top"
         },
         paint: {
-            "text-color": "#ff0000",
+            "text-color": "#fbeed1",
             "text-halo-color": "#000000",
             "text-halo-width": 2
         }
