@@ -160,7 +160,22 @@ map.on("load", async () => {
         }
     });
    
-  
+    map.addLayer({
+        id: "building-labels",
+        type: "symbol",
+        source: "buildings",
+        layout: {
+            "text-field": ["get", "code"],
+            "text-size": 12,
+            "text-offset": [0, 1.5],
+            "text-anchor": "top"
+        },
+        paint: {
+            "text-color": "#ff0000",
+            "text-halo-color": "#000000",
+            "text-halo-width": 2
+        }
+    });
 
 
 
