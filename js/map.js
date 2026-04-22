@@ -115,6 +115,16 @@ function getBuildingCode(osmName) {
     return "UNKNOWN";
 }
 
+function getCentroid(coords) {
+    let x = 0, y = 0;
+
+    coords.forEach(c => {
+        x += c[0];
+        y += c[1];
+    });
+
+    return [x / coords.length, y / coords.length];
+}
 
 
 
@@ -143,11 +153,30 @@ map.on("load", async () => {
         })
     };
 
+    const centroidGeojson = {
+        type: "FeatureCollection",
+        features: geojson.features.map(f => ({
+            type: "Feature",
+            properties: f.properties,
+            geometry: {
+                type: "Point",
+                coordinates: getCentroid(f.geometry.coordinates[0])
+            }
+        }))
+    };
+
+    map.addSource("centroids", {
+        type: "geojson",
+        data: centroidGeojson
+    });
+
     map.addSource("buildings", {
         type: "geojson",
         data: geojson
     });
+
     console.log(geojson);
+
     map.addLayer({
         id: "buildings-3d",
         type: "fill-extrusion",
@@ -163,11 +192,11 @@ map.on("load", async () => {
     map.addLayer({
         id: "building-labels",
         type: "symbol",
-        source: "buildings",
+        source: "centroids",
         layout: {
             "text-field": ["get", "code"],
             "text-size": 12,
-            "text-offset": [0, 1.5],
+            "text-offset": [0, 1.2],
             "text-anchor": "top"
         },
         paint: {
