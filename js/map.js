@@ -134,13 +134,6 @@ function openDrawer(name, code) {
         .classList.remove("translate-x-full");
 }
 
-function closeDrawer() {
-    document.getElementById("drawerRight")
-        .classList.add("translate-x-full");
-}
-
-document.getElementById("close-drawer")
-    .addEventListener("click", closeDrawer);
 
 // -- on map load stuff --
 map.on("load", async () => {
