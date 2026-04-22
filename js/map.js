@@ -126,7 +126,18 @@ function getCentroid(coords) {
     return [x / coords.length, y / coords.length];
 }
 
+function openDrawer(name, code) {
+    document.getElementById("drawer-title").innerText = code;
+    document.getElementById("drawer-body").innerText = name;
 
+    document.getElementById("drawerRight")
+        .classList.remove("translate-x-full");
+}
+
+function closeDrawer() {
+    document.getElementById("drawerRight")
+        .classList.add("translate-x-full");
+}
 
 // -- on map load stuff --
 map.on("load", async () => {
@@ -206,6 +217,23 @@ map.on("load", async () => {
         }
     });
 
+});
 
+map.on("click", "building-labels", (e) => {
 
+        const feature = e.features[0];
+
+        const name = feature.properties.osmName;
+        const code = feature.properties.code;
+
+        openDrawer(name, code);
+
+});
+
+map.on("mouseenter", "building-labels", () => {
+    map.getCanvas().style.cursor = "pointer";
+});
+
+map.on("mouseleave", "building-labels", () => {
+    map.getCanvas().style.cursor = "";
 });
