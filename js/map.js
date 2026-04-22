@@ -66,7 +66,7 @@ function parse_osm_data(osm_data) {
     //build polygons for each building
     osm_data.elements.forEach(element => { 
         if (element.type === "way" && element.nodes) {
-
+            console.log(element.tags); 
           const coordinates = element.nodes
             .map(id => nodes.get(id)).filter(p => p) //Convert to [lon, lat] format for GeoJSON
             .filter(Boolean) //Remove any undefined nodes
@@ -122,6 +122,7 @@ map.on("load", async () => {
             "fill-extrusion-opacity": 0.8
         }
     });
-    
+   
+
 
 });
