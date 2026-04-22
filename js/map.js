@@ -6,6 +6,24 @@ const map = createmap();
 
 // -------- functions ---------
 
+const buildingnames = {
+    "MB (Rosalind Franklin Building)": "MB",
+    "MG Building": "MG",
+    "MK (School of Media)": "MK (School of Media)",
+    "MH (Mary Seacole Building)": "MH",
+    "ML Building": "ML",
+    "MH (Arthur Storer Building)": "MN",
+    "Art & Design Building": "MK (Art & Design Building)",
+    "MM": "MM",
+    "MX Building": "MX",
+    "Randall Lines House Halls": "Randall Lines House Halls",
+    "MC (Millennium City Building)": "MC",
+    "MA (Wulfruna Building)": "MA",
+    "MD (Ambika Paul Building)": "MD",
+    "MI (Alan Turing Building)": "MI",
+    "MU (Lord Swraj Paul Building)": "MU",
+    "Chaplaincy Centre (MP)": "MP (Chaplaincy)",
+}
 
 function createmap() 
 {
@@ -62,28 +80,39 @@ function parse_osm_data(osm_data) {
         }
     });
 
-  
+    
     //build polygons for each building
     osm_data.elements.forEach(element => { 
         if (element.type === "way" && element.nodes) {
-            console.log(element.tags); 
-          const coordinates = element.nodes
-            .map(id => nodes.get(id)).filter(p => p) //Convert to [lon, lat] format for GeoJSON
-            .filter(Boolean) //Remove any undefined nodes
+            const osmName = element.tags?.name;
+            const coordinates = element.nodes
+                .map(id => nodes.get(id)).filter(p => p) //Convert to [lon, lat] format for GeoJSON
+                .filter(Boolean) //Remove any undefined nodes
 
-          if (coordinates.length > 2) { 
+            if (coordinates.length > 2) { 
                 // close polygon if not already closed
                 if (coordinates[0][0] !== coordinates[coordinates.length - 1][0] ||
                     coordinates[0][1] !== coordinates[coordinates.length - 1][1]) {
                     coordinates.push(coordinates[0]);
                 }
                 //A valid polygon needs at least 3 points
-            buildings.push(coordinates);
+
+            buildings.push({
+                coords: coordinates,
+                name: osmName
+            });
           }
         }
       });
     return buildings;
 
+}
+
+function getBuildingCode(osmName) {
+    if (buildingnames[osmName]) {
+        return buildingnames[osmName];
+    }
+    return "UNKNOWN";
 }
 
 
@@ -97,13 +126,21 @@ map.on("load", async () => {
 
     const geojson = {
         type: "FeatureCollection",
-        features: buildings.map(coords => ({
-            type: "Feature",
-            geometry: {
-                type: "Polygon",
-                coordinates: [coords]
-            }
-        }))
+        features: buildings.map(b => {
+            const override = buildingnames[b.name];
+
+            return {
+                type: "Feature",
+                properties: {
+                    osmName: b.name,
+                    code: override || b.name || "UNKNOWN"
+                },
+                geometry: {
+                    type: "Polygon",
+                    coordinates: [b.coords]
+                }
+            };
+        })
     };
 
     map.addSource("buildings", {
@@ -123,6 +160,8 @@ map.on("load", async () => {
         }
     });
    
+  
+
 
 
 });
