@@ -139,6 +139,9 @@ function closeDrawer() {
         .classList.add("translate-x-full");
 }
 
+document.getElementById("close-drawer")
+    .addEventListener("click", closeDrawer);
+
 // -- on map load stuff --
 map.on("load", async () => {
 
