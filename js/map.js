@@ -116,11 +116,12 @@ map.on("load", async () => {
         type: "fill-extrusion",
         source: "buildings",
         paint: {
-            "fill-extrusion-color": "#ff0000",
+            "fill-extrusion-color": "#001a76",
             "fill-extrusion-height": 20,
             "fill-extrusion-base": 0,
             "fill-extrusion-opacity": 0.8
         }
     });
+    
 
 });
