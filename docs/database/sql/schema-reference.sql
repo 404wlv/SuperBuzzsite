@@ -1,4 +1,4 @@
--- WARNING: This schema is for context only and is not meant to be run.
+-- WARNING: This schema is for context only on what is going on in Supabase and is not meant to be run.
 -- Table order and constraints may not be valid for execution.
 
 CREATE TABLE public.daily_checkins (
@@ -9,6 +9,18 @@ CREATE TABLE public.daily_checkins (
   reward_claimed boolean,
   CONSTRAINT daily_checkins_pkey PRIMARY KEY (id)
 );
+
+CREATE TABLE public.events (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  category text NOT NULL,
+  description text NOT NULL,
+  location text NOT NULL,
+  event_date timestamp with time zone NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT events_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE public.faqs (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
   keywords text NOT NULL,
@@ -16,6 +28,7 @@ CREATE TABLE public.faqs (
   created_at timestamp with time zone DEFAULT now(),
   CONSTRAINT faqs_pkey PRIMARY KEY (id)
 );
+
 CREATE TABLE public.profiles (
   id uuid NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
