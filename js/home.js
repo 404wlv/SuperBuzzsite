@@ -183,16 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "map.html";
     });
 
-    function closeAllModals() {
-    document.addEventListener("click", (event) => {
-        const modals = document.querySelectorAll(".modal");
-        modals.forEach(modal => {
-            if (event.target === modal) {
-                modal.classList.add("hidden");
-            }
-        });
-    });
-}
 
     renderEvents()
 
@@ -244,13 +234,28 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    const closeeventModalBtn = document.getElementById("close-event-modal");
+
+    if (closeeventModalBtn) {
+        closeeventModalBtn.addEventListener("click", () => {
+            closeAllModals();
+        });
+    }
+
     //event attendance form - Aafrin
     //Show the form
     const attendEventBtn = document.getElementById("attend-btn");
+    const closeAttendFormBtn = document.getElementById("close-attend-form");
+
     if (attendEventBtn) {
         attendEventBtn.addEventListener("click", () => {
-            const attendForm = document.getElementById("attend-form");
-            if (attendForm) attendForm.classList.remove("hidden");
+            closeAllModals();
+        });
+    }
+
+    if (closeAttendFormBtn) {
+        closeAttendFormBtn.addEventListener("click", () => {
+            closeAllModals();
         });
     }
 
