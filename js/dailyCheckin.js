@@ -20,7 +20,7 @@ function updateUI(streak, checkedToday) {
         btn.textContent = "Checked In ✅"
         btn.classList.remove("bg-fuchsia-800")
         btn.classList.add("bg-green-600")
-        btn.disabled = true
+        btn.disabled = false
     } else {
         btn.textContent = "Check In"
         btn.disabled = false
@@ -124,4 +124,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn) {
         btn.addEventListener("click", handleCheckin)
     }
+
 })
