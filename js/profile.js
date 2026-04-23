@@ -1,14 +1,15 @@
 import { supabase } from "./supabaseClient.js"
 import { logout } from "./auth.js"
 
+document.addEventListener("DOMContentLoaded", () => {
 
-async function loadProfile() {
+  async function loadProfile() {
 
     const { data, error } = await supabase.auth.getUser()
 
     if (error) {
-        console.log("Error loading user:", error)
-        return
+      console.log("Error loading user:", error)
+      return
     }
 
     const user = data.user
@@ -17,44 +18,41 @@ async function loadProfile() {
     document.getElementById("profile-id").textContent = user.id
 
     if (user.user_metadata?.display_name) {
-        document.getElementById("display-name").value =
-            user.user_metadata.display_name
+      document.getElementById("display-name").value =
+        user.user_metadata.display_name
     }
 
-}
+  }
 
-loadProfile()
+  loadProfile()
 
-document.getElementById("save-profile")
+  document.getElementById("save-profile")
     .addEventListener("click", async () => {
 
-        const name = document.getElementById("display-name").value
+      const name = document.getElementById("display-name").value
 
-        const { error } = await supabase.auth.updateUser({
-
-            data: {
-                display_name: name
-            }
-
-        })
-
-        if (error) {
-            alert(error.message)
+      const { error } = await supabase.auth.updateUser({
+        data: {
+          display_name: name
         }
-        else {
-            alert("Profile updated successfully")
-        }
+      })
+
+      if (error) {
+        alert(error.message)
+      } else {
+        alert("Profile updated successfully")
+      }
 
     })
-document.getElementById("logout-btn")
+
+  document.getElementById("logout-btn")
     .addEventListener("click", logout)
 
-
-
-
-const backBtn = document.getElementById("back-home-btn")
-if (backBtn) {
+  const backBtn = document.getElementById("back-home-btn")
+  if (backBtn) {
     backBtn.addEventListener("click", () => {
-        window.location.href = "home.html"
+      window.location.href = "home.html"
     })
-}
+  }
+
+})
