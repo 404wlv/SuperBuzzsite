@@ -223,8 +223,11 @@ function init() {
             .classList.add("translate-x-full");
     }
 
-    document.getElementById("close-drawer")
-        .addEventListener("click", closeDrawer);
+    const closeBtn = document.getElementById("close-drawer");
+
+    if (closeBtn) {
+        closeBtn.addEventListener("click", closeDrawer);
+    }
 
 
     // -- on map load stuff --
