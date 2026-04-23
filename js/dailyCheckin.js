@@ -1,4 +1,3 @@
-console.log("Daily Checkin JS Loaded")
 import { supabase } from "./supabaseClient.js"
 
 const TARGET_STREAK = 3
@@ -117,12 +116,30 @@ async function handleCheckin() {
     updateUI(newStreak, true)
 }
 
+// document.addEventListener("DOMContentLoaded", () => {
+//     loadCheckinStatus()
+
+//     const btn = document.getElementById("checkin-btn")
+//     if (btn) {
+//         btn.addEventListener("click", handleCheckin)
+//     }
+
+// })
 document.addEventListener("DOMContentLoaded", () => {
-    loadCheckinStatus()
+    console.log("DOM loaded ✅")
 
     const btn = document.getElementById("checkin-btn")
-    if (btn) {
-        btn.addEventListener("click", handleCheckin)
+
+    if (!btn) {
+        console.log("❌ Button NOT found")
+    } else {
+        console.log("✅ Button found")
+
+        btn.addEventListener("click", () => {
+            console.log("🔥 BUTTON CLICKED")
+            handleCheckin()
+        })
     }
 
+    loadCheckinStatus()
 })
