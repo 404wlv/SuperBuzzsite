@@ -39,7 +39,7 @@ async function loadCheckinStatus() {
 
     const today = new Date().toISOString().split("T")[0]
 
-    const { data } = await supabase
+    const { data, error } = await supabase
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
