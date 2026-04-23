@@ -130,6 +130,90 @@ function openDrawer(name, code) {
     document.getElementById("drawer-title").innerText = code;
     document.getElementById("drawer-body").innerText = name;
 
+    switch (code) {
+        case "MB":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mb.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Science and Engineering | School of Sciences | The Junction Grab & Go";
+            break;
+
+        case "MG":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mg.png";
+            document.getElementById("drawer-content").innerText = "The Gateway | International Centre | Directorate of Student and Academic Services | Directorate of Recruitment and Partnerships";
+            break;
+
+        case "MK (School of Media)":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mk.png";
+            document.getElementById("drawer-content").innerText = "Faculty Of Arts | Wolverhampton School Of Art (Est. 1851) | School Of Media | Digital Print Services Unit | The Gallery Grab And Go"; 
+            break;
+
+        case "MH":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mh.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Social Sciences | School of Social, Historical and Political Studies | University of Wolverhampton Law School";
+            break;
+
+        case "ML":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/ml.png";
+            document.getElementById("drawer-content").innerText = "Student Support & Wellbeing -- Counselling Services | Multifaith Prayer Room | UCU Offices | Unison Offices";
+            break;
+
+        case "MN":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mn.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Social Sciences | University of Wolverhampton Business School";
+            break;
+
+        case "MK (Art & Design Building)":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mk.png";
+            document.getElementById("drawer-content").innerText = "Faculty Of Arts | Wolverhampton School Of Art (Est. 1851) | School Of Media | Digital Print Services Unit | The Gallery Grab And Go"; 
+            break;
+
+        case "MM":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mm.png";
+            document.getElementById("drawer-content").innerText = "Apprenticeship Hub";
+            break;
+
+        case "MX":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mx.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Arts | Faculty of Arts Student Services | School of Humanities | Admissions | Cashiers & Finance Office | The Conservatory Coffee Shop | Directorate of Student and Academic Services | Finance | Post Room | Human Resources | Estates & Facilities Directorate";
+            break;
+
+        case "Randall Lines House Halls":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/randall.png";
+            document.getElementById("drawer-content").innerText = "Randall Lines House Halls of Residence -- not in use anymore";
+            break;
+
+        case "MC":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mc.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Education, Health and Wellbeing | Faculty of Education, Health and Wellbeing Student Services | Institute of Community and Society | Institute of Health | Institute of Human Sciences |  Skills and Simulations Lab | Research Institute in Information and Language Processing | Cornerhouse Deli | The Courtyard Kitchen | Costa";
+            break;
+            
+        case "MA":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/ma.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Science and Engineering | School of Engineering | School of Pharmacy | School of Sciences | Arena Theatre | Campus Operations | Chancellor’s Hall | External Relations | Main Reception | Offices of the Vice-Chancellor | Wulfruna Lounge";
+            break;
+
+        case "MD":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/md.png";
+            document.getElementById("drawer-content").innerText = "Ambika Paul BuildingThe Campus Store | Careers and Enterprise | Harrison Library | Research Hub | Santander Bank | Sports Centre | Students’ Union | The Workplace and Volunteer Central";
+            break;
+
+        case "MI":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mi.png";
+            document.getElementById("drawer-content").innerText = "Alan Turing Building Subway Crossing to City Campus Faculty of Science and Engineering | Faculty of Science and Engineering Student Services | School of Architecture and Built Environment | School of Mathematics and Computer Science | Student Support & Wellbeing";
+            break;
+
+        case "MU":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mu.png";
+            document.getElementById("drawer-content").innerText = "Faculty of Science Sciences | School of Social Sciences Student Services | University of Wolverhampton Business School | The Forum Grab & Go";
+            break;
+
+        case "MP (Chaplaincy)":
+            document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mp.png";
+            document.getElementById("drawer-content").innerText = "Chaplaincy Centre | Multifaith Prayer Room | Kitchen | Lounge for Global Lunches and Informal Meeting Space";
+            break;
+        
+        
+
+
     document.getElementById("drawerRight")
         .classList.remove("translate-x-full");
 }
