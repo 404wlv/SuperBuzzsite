@@ -43,7 +43,11 @@ async function loadCheckinStatus() {
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
-        .single()
+        .maybeSingle()
+    if (error) {
+        console.log("Errror loading the checkin:", error)
+        return
+    }
 
     if (!data) {
         updateUI(0, false)
@@ -65,7 +69,11 @@ async function handleCheckin() {
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
-        .single()
+        .maybeSingle()
+    if (error) {
+        console.log("error fetching checkin:", error)
+        return
+    }
 
     if (!data) {
         await supabase.from("daily_checkins").insert({
