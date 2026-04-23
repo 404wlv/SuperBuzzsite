@@ -188,12 +188,12 @@ function openDrawer(name, code) {
             
         case "MA":
             document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/ma.png";
-            document.getElementById("drawer-content").innerText = "Faculty of Science and Engineering | School of Engineering | School of Pharmacy | School of Sciences | Arena Theatre | Campus Operations | Chancellor’s Hall | External Relations | Main Reception | Offices of the Vice-Chancellor | Wulfruna Lounge";
+            document.getElementById("drawer-content").innerText = "Faculty of Science and Engineering | School of Engineering | School of Pharmacy | School of Sciences | Arena Theatre | Campus Operations | Chancellors Hall | External Relations | Main Reception | Offices of the Vice-Chancellor | Wulfruna Lounge";
             break;
 
         case "MD":
             document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/md.png";
-            document.getElementById("drawer-content").innerText = "Ambika Paul BuildingThe Campus Store | Careers and Enterprise | Harrison Library | Research Hub | Santander Bank | Sports Centre | Students’ Union | The Workplace and Volunteer Central";
+            document.getElementById("drawer-content").innerText = "Ambika Paul BuildingThe Campus Store | Careers and Enterprise | Harrison Library | Research Hub | Santander Bank | Sports Centre | Students Union | The Workplace and Volunteer Central";
             break;
 
         case "MI":
@@ -210,9 +210,8 @@ function openDrawer(name, code) {
             document.getElementById("drawer-image").src = "https://404wlv.github.io/SuperBuzzsite/stuff/mp.png";
             document.getElementById("drawer-content").innerText = "Chaplaincy Centre | Multifaith Prayer Room | Kitchen | Lounge for Global Lunches and Informal Meeting Space";
             break;
+    }
         
-        
-
 
     document.getElementById("drawerRight")
         .classList.remove("translate-x-full");
