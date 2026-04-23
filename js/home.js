@@ -1,6 +1,17 @@
 //imports
 import { supabase } from "./supabaseClient.js";
 
+//protecting sessions
+async function checkUser() {
+    const { data, error } = await supabase.auth.getUser()
+    if (!data.user) {
+        console.log("No user, redirecting...")
+        window.location.href = "home.html"
+    } else {
+        console.log("user is logged in")
+    }
+}
+
 //test connection to supabase
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession();
@@ -65,7 +76,7 @@ function getCategoryColor(category) {
 //close modals when clicking outside -Aafrin
 function closeAllModals() {
     const modals = document.querySelectorAll(".modal");
-    modals.forEach(modal => modal.classList .add("hidden"));   
+    modals.forEach(modal => modal.classList.add("hidden"));
 }
 
 //fetch FAQs from Supabase
@@ -244,7 +255,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //event attendance form - Aafrin
     //Show the form
-    
+
     const attendEventBtn = document.getElementById("attend-btn");
     const closeAttendFormBtn = document.getElementById("close-attend-form");
 

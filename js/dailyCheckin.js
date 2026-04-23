@@ -59,28 +59,25 @@ async function loadCheckinStatus() {
 }
 
 async function handleCheckin() {
-    const { data: userData, error } = await supabase.auth.getUser()
-    console.log("USER DATA:", userData)
-    console.log("USER ERROR:", error)
-    const user = userData.user
+    const { data } = await supabase.auth.getSession()
+    const user = data.session?.user
+
     if (!user) {
         alert("User not logged in ❌")
         return
     }
 
+    console.log("User OK:", user.id)
+
     const today = new Date().toISOString().split("T")[0]
 
-    const { data } = await supabase
+    const { data: existing } = await supabase
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
-        .maybeSingle()
-    if (error) {
-        console.log("error fetching checkin:", error)
-        return
-    }
+        .single()
 
-    if (!data) {
+    if (!existing) {
         await supabase.from("daily_checkins").insert({
             user_id: user.id,
             last_checkin: today,
@@ -91,8 +88,8 @@ async function handleCheckin() {
         return
     }
 
-    if (data.last_checkin === today) {
-        updateUI(data.streak, true)
+    if (existing.last_checkin === today) {
+        updateUI(existing.streak, true)
         return
     }
 
@@ -102,8 +99,8 @@ async function handleCheckin() {
 
     let newStreak = 1
 
-    if (data.last_checkin === yDate) {
-        newStreak = data.streak + 1
+    if (existing.last_checkin === yDate) {
+        newStreak = existing.streak + 1
     }
 
     await supabase
@@ -113,10 +110,6 @@ async function handleCheckin() {
             streak: newStreak
         })
         .eq("user_id", user.id)
-
-    if (newStreak === TARGET_STREAK) {
-        alert("🎉 Congrats! Use code BROWNIE123 for a free brownie!")
-    }
 
     updateUI(newStreak, true)
 }
