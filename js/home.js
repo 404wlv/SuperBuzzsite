@@ -130,7 +130,7 @@ function openEventModal(event) {
 document.addEventListener("DOMContentLoaded", () => {
     closeAllModals();
 
-    //chat, sidebar toggles -Aafrin
+    //chat, sidebar toggles -Aafrin.
     const chatToggleBtn = document.getElementById("chat-toggle");
     if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
         closeAllModals();
@@ -244,6 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     //event attendance form - Aafrin
     //Show the form
+    
     const attendEventBtn = document.getElementById("attend-btn");
     const closeAttendFormBtn = document.getElementById("close-attend-form");
 
