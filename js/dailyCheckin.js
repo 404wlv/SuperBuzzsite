@@ -59,9 +59,14 @@ async function loadCheckinStatus() {
 }
 
 async function handleCheckin() {
-    const { data: userData } = await supabase.auth.getUser()
+    const { data: userData, error } = await supabase.auth.getUser()
+    console.log("USER DATA:", userData)
+    console.log("USER ERROR:", error)
     const user = userData.user
-    if (!user) return
+    if (!user) {
+        alert("User not logged in ❌")
+        return
+    }
 
     const today = new Date().toISOString().split("T")[0]
 
@@ -116,30 +121,12 @@ async function handleCheckin() {
     updateUI(newStreak, true)
 }
 
-// document.addEventListener("DOMContentLoaded", () => {
-//     loadCheckinStatus()
-
-//     const btn = document.getElementById("checkin-btn")
-//     if (btn) {
-//         btn.addEventListener("click", handleCheckin)
-//     }
-
-// })
 document.addEventListener("DOMContentLoaded", () => {
-    console.log("DOM loaded ✅")
+    loadCheckinStatus()
 
     const btn = document.getElementById("checkin-btn")
-
-    if (!btn) {
-        console.log("❌ Button NOT found")
-    } else {
-        console.log("✅ Button found")
-
-        btn.addEventListener("click", () => {
-            console.log("🔥 BUTTON CLICKED")
-            handleCheckin()
-        })
+    if (btn) {
+        btn.addEventListener("click", handleCheckin)
     }
 
-    loadCheckinStatus()
 })
