@@ -249,7 +249,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (attendEventBtn) {
         attendEventBtn.addEventListener("click", () => {
-            closeAllModals();
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.remove("hidden");
         });
     }
 
