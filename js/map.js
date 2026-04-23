@@ -127,8 +127,7 @@ function getCentroid(coords) {
 }
 
 function openDrawer(name, code) {
-    document.getElementById("drawer-title").innerText = code;
-    document.getElementById("drawer-body").innerText = name;
+    document.getElementById("drawer-title").innerText = name;
 
     switch (code) {
         case "MB":
