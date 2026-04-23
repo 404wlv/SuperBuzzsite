@@ -37,3 +37,22 @@ CREATE TABLE public.profiles (
   CONSTRAINT profiles_pkey PRIMARY KEY (id),
   CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
 );
+
+ Schema Notes
+
+This schema reference documents the current Supabase table structure used by the SuperBuzzsite project.
+
+## Tables currently included
+- `profiles`
+- `faqs`
+- `daily_checkins`
+- `events`
+
+## Notes
+- `profiles` is linked to `auth.users.id`
+- `faqs` supports chatbot / FAQ responses
+- `daily_checkins` supports the daily streak feature
+- `events` supports database-backed event loading and creation in `home.js`
+
+This file is included as backend/database evidence and as a reference for current schema structure.
+About the convo with Danial
