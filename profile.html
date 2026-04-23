@@ -18,45 +18,86 @@
 
             <div class="bg-[#E1D9BC] text-[#30364F] p-6 rounded-2xl shadow-lg">
 
-                <p class="mb-2">
+                <!-- Profile Picture -->
+                <img
+                    src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                    class="w-24 h-24 rounded-full mb-4 shadow-md"
+                />
+
+                <!-- Name -->
+                <input
+                    id="display-name"
+                    type="text"
+                    placeholder="Your Name"
+                    class="text-center text-xl font-semibold bg-transparent border-b border-[#30364F] mb-4 outline-none"
+                />
+
+                <!-- Email + ID -->
+                <p class="text-sm mb-1">
                     <strong>Email:</strong>
                     <span id="profile-email"></span>
                 </p>
 
-                <p class="mb-4">
+                <p class="text-sm mb-4">
                     <strong>User ID:</strong>
                     <span id="profile-id"></span>
                 </p>
 
-                <input
-                    id="display-name"
-                    type="text"
-                    placeholder="Display name"
-                    class="w-full p-3 rounded-xl border border-[#334155] mb-3"
-                />
+                <!-- Stats Section -->
+                <div class="grid grid-cols-2 gap-4 w-full text-center mb-6">
+                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
+                        <p class="text-lg font-bold">120</p>
+                        <p class="text-xs">Points</p>
+                    </div>
 
-                <button
-                    id="save-profile"
-                    class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
-                        Save Profile
-                </button>
+                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
+                        <p class="text-lg font-bold">3</p>
+                        <p class="text-xs">Coupons</p>
+                    </div>
 
-                <button
-                    id="logout-btn"
-                    class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
+                        <p class="text-lg font-bold">8</p>
+                        <p class="text-xs">Attended</p>
+                    </div>
+
+                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
+                        <p class="text-lg font-bold">5</p>
+                        <p class="text-xs">Applied</p>
+                    </div>
+
+                </div>
+
+                <!-- Admin Approval -->
+                <div class="mb-4 text-center">
+                    <p class="text-sm mb-1">Events Created</p>
+                    <div class="w-16 h-16 rounded-full border-4 border-green-500 flex items-center justify-center mx-auto">
+                        ✔
+                    </div>
+                    <p class="text-xs mt-1">Approved</p>
+                </div>
+
+                <!-- Help ID Status -->
+                <div class="mb-4 text-center">
+                    <p class="text-sm">Help ID Status:</p>
+                    <span class="text-green-600 font-semibold">Completed</span>
+                </div>
+
+                <!-- Buttons -->
+                <div class="flex gap-3 mt-4">
+                    <button id="save-profile" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                        Save
+                    </button>
+
+                    <button id="logout-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
                         Logout
-                </button>
-                <button
-                    id="back-home-btn"
-                    class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    </button>
+
+                    <button id="back-home-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
                         Home
-                </button>
+                    </button>
+                </div>
 
             </div>
-
-        </div>
-
-    <script type="module" src="./js/profile.js"></script>
-
+        
     </body>
 </html>
