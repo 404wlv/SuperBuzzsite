@@ -218,6 +218,13 @@ function init() {
         document.getElementById("drawerRight")
             .classList.remove("translate-x-full");
     }
+    function closeDrawer() {
+        document.getElementById("drawerRight")
+            .classList.add("translate-x-full");
+    }
+
+    document.getElementById("close-drawer")
+        .addEventListener("click", closeDrawer);
 
 
     // -- on map load stuff --
