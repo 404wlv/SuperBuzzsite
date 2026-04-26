@@ -134,6 +134,20 @@ function openEventModal(event) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+    //recognise "click" to close content -Aafrin
+    document.addEventListener("click", (e) => {
+        const openModals = document.querySelectorAll(".modal:not(.hidden)");
+
+        openModals.forEach(modal => {
+            // if click is outside modal content → close it
+            if (!modal.contains(e.target)) {
+                closeAllModals();
+            }
+        });
+    });
+
+    //close all modals when starting to load content
     closeAllModals();
 
     await loadFAQs();
