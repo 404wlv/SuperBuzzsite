@@ -43,8 +43,11 @@ function getCategoryColor(category) {
 
 //close modals when clicking outside -Aafrin
 function closeAllModals() {
+    console.log("closing modals...");
     const modals = document.querySelectorAll(".modal");
-    modals.forEach(modal => modal.classList.add("hidden"));   
+    console.log(modals);
+
+    modals.forEach(modal => modal.classList.add("hidden"));
 }
 
 //fetch FAQs from Supabase
