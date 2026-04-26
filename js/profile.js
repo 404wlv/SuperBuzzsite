@@ -46,6 +46,7 @@ document.getElementById("save-profile")
         }
 
     })
+    
 document.getElementById("logout-btn")
     .addEventListener("click", logout)
 
@@ -53,6 +54,7 @@ document.getElementById("logout-btn")
 
 
 const backBtn = document.getElementById("back-home-btn")
+
 if (backBtn) {
     backBtn.addEventListener("click", () => {
         window.location.href = "home.html"
