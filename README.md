@@ -167,7 +167,6 @@ Gamified streak system.
 
 - Refactor into fully modular architecture  
 - Replace chatbot with AI model  
-- Add real-time Supabase subscriptions  
 - Admin event approval system  
 - Role-based access control  
 - Mobile app version  
