@@ -6,145 +6,175 @@ SuperBuzzsite is a web-based version of the SuperBuzz mobile concept designed fo
 
 ## 🌐 Overview
 
-This project is an interactive student dashboard that integrates real-time data, Supabase backend services, and campus information tools.
+This project is an interactive student dashboard that integrates real-time data, Supabase backend services, and campus tools.
 
 It includes:
 - Event management system (create + view events)
-- Authentication system (login/signup/reset)
+- Authentication system (login/signup/reset/password recovery)
 - FAQ chatbot assistant
 - Live bus timetable integration
 - Campus map with 3D building visualization
-- Library and gym schedules
+- User profile system
+- Daily check-in streak system (gamification)
 
 ---
 
 ## ⚙️ Tech Stack
 
-- HTML5
-- TailwindCSS
-- Vanilla JavaScript (ES Modules)
-- Supabase (Auth + Database)
-- MapLibre GL JS (3D Map rendering)
-- OpenStreetMap Overpass API
-- Buses & Trains API
+- HTML5  
+- TailwindCSS  
+- Vanilla JavaScript (ES Modules)  
+- Supabase (Auth + Database)  
+- MapLibre GL JS (3D Map rendering)  
+- OpenStreetMap Overpass API  
+- Buses & Trains API  
 
 ---
 
 ## 🧱 Project Structure
-/docs/database
 /js
 ├── home.js # Main dashboard logic (events, chat, UI, transport)
-├── dailyCheckin.js
-├── profile.js
+├── dailyCheckin.js # Daily streak system
+├── profile.js # User profile system
 ├── map.js # Campus 3D map system
 ├── logon.js # Authentication system
 ├── auth.js # Supabase auth wrapper
-├── supabaseClient.js
+├── supabaseClient.js # Supabase connection
 
-/stuff # images
+/stuff # Images and assets
 
 /home.html # Main dashboard
 /map.html # Campus map view
 /logon.html # Login / Signup system
-/index.html # main runner
-/404.html # App documentation
-/profile.html # User profile
+/profile.html # User profile page
+/404.html # Developer documentation page
+/index.html # Entry page
 
 ---
 
 ## 🔑 Authentication System
 
-Authentication is handled using Supabase.
+Authentication is handled using Supabase Auth.
 
 ### Features:
-- University email validation
-- Secure login/signup
-- Password reset flow
+- University email validation  
+- Secure login/signup  
+- Password reset flow  
+- Session-based authentication  
 
 ### Flow:
-Login → Supabase Auth → Redirect to home page
+Login → Supabase Auth → Home Dashboard
 
 ---
 
 ## 📅 Events System
 
-Events are stored in Supabase and dynamically loaded into the UI.
+Events are stored in Supabase and dynamically loaded.
 
 ### Features:
-- Fetch events from database
-- Render event cards dynamically
-- Create new events via modal form
-- View event details in popup modal
+- Fetch events from database  
+- Render event cards dynamically  
+- Create new events via modal  
+- View event details in popup modal  
+- Category-based styling  
 
 ---
 
 ## 💬 Chatbot System
 
-A lightweight FAQ-based chatbot system. (for now)
+FAQ-based chatbot assistant.
 
 ### How it works:
-- User message is matched against keyword list
-- If a match is found → return FAQ answer
-- Otherwise fallback response is shown
+- User input captured  
+- Keyword matching against FAQ list  
+- Matching answer returned  
+- Fallback response if no match  
 
 ---
 
 ## 🚌 Transport System
 
-Live bus data is fetched using the Buses & Trains API.
+Live bus data via Buses & Trains API.
 
 ### Features:
-- Displays next bus departures
-- Uses real stop IDs -> atco_code
-- Updates dynamically on request
+- Real-time departures  
+- Multiple stops supported  
+- ATCO stop IDs used  
+- Dynamic loading per request  
 
 ---
 
 ## 🗺️ Campus Map System
 
-Interactive 3D map built using MapLibre GL JS.
+3D map built using MapLibre GL JS.
 
-### How it works:
-1. Fetch building data from OpenStreetMap (Overpass API)
-2. Convert data into GeoJSON format
-3. Render 3D buildings on map
-4. Display building labels
-5. Click building → opens info drawer
+### Process:
+1. Fetch OSM data via Overpass API  
+2. Convert to GeoJSON  
+3. Render 3D buildings  
+4. Add labels  
+5. Click building → info drawer opens  
+
+---
+
+## 👤 Profile System
+
+User profile management via Supabase.
+
+### Features:
+- Display email + user ID  
+- Edit display name  
+- Save to Supabase metadata  
+- Logout support  
+
+---
+
+## 🎯 Daily Check-in System
+
+Gamified streak system.
+
+### Features:
+- Daily check-ins  
+- Streak tracking  
+- Progress bar toward reward  
+- Stored in Supabase  
 
 ---
 
 ## 🧩 Core Features Summary
 
-- 📅 Events system (Supabase-backed)
-- 💬 Chatbot (FAQ keyword matching)
-- 🚌 Live bus tracking
-- 🏋️ Gym + 📚 Library schedules
-- 🗺️ 3D campus map
-- 🔐 Authentication system
-- 👤 Profile
+- Events system  
+- Chatbot assistant  
+- Live bus tracking  
+- Campus map  
+- Profile system  
+- Daily check-in system  
+- Authentication system  
 
 ---
 
-## 📌 Key Notes for Developers
+## 📌 Key Notes
 
-- The project is modular but currently uses a single large `home.js`
-- Most UI interactions are handled via DOM event listeners
-- Supabase handles all backend data storage
-- Map system depends on OpenStreetMap + MapLibre GL
+- Modular but still file-based JS structure  
+- Supabase handles backend completely  
+- Heavy DOM event usage  
+- Map system depends on OSM + MapLibre  
+- API-driven architecture  
 
 ---
 
 ## 🚀 Future Improvements
 
-- Convert JS into modular architecture (events.js, chat.js, etc.)
-- Add real AI chatbot instead of keyword matching
-- Add real-time updates using Supabase subscriptions
-- Store event attendance in database
-- Improve role system (admin vs student)
-- Refactor modal system into reusable component manager
+- Refactor into fully modular architecture  
+- Replace chatbot with AI model  
+- Add real-time Supabase subscriptions  
+- Admin event approval system  
+- Role-based access control  
+- Mobile app version  
+- Map navigation routing  
 
 ---
 
-## 👨‍💻 Author Notes
+## 👨‍💻 Author
 
-This project was built as a campus productivity and information tool for University of Wolverhampton students, combining multiple APIs and services into a single unified platform.
+Built for University of Wolverhampton students as a unified campus platform combining multiple APIs, tools, and services into one system.
