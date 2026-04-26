@@ -363,7 +363,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         busList.innerHTML = "<li>Loading transport data...</li>";
 
         try {
-            const stops = { "nwmjdtdt": "Stop AB", "nwmtgjtw": "Stop AC" };
+            //using the atco_code instead of the stop id try: https://api.busesandtrains.co.uk/v1/stops?q=Wolverhampton&app_key=bat_5de26858af3ec1f5769df8dccf071920 for data
+            const stops = { "43000700503": "Stop AB", "43000700504": "Stop AC" };
             let output = "";
 
             for (const stopId in stops) {
