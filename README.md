@@ -31,16 +31,24 @@ It includes:
 ---
 
 ## 🧱 Project Structure
+/docs/database
 /js
 ├── home.js # Main dashboard logic (events, chat, UI, transport)
+├── dailyCheckin.js
+├── profile.js
 ├── map.js # Campus 3D map system
 ├── logon.js # Authentication system
 ├── auth.js # Supabase auth wrapper
 ├── supabaseClient.js
 
+/stuff # images
+
 /home.html # Main dashboard
 /map.html # Campus map view
 /logon.html # Login / Signup system
+/index.html # main runner
+/404.html # App documentation
+/profile.html # User profile
 
 ---
 
@@ -72,7 +80,7 @@ Events are stored in Supabase and dynamically loaded into the UI.
 
 ## 💬 Chatbot System
 
-A lightweight FAQ-based chatbot system.
+A lightweight FAQ-based chatbot system. (for now)
 
 ### How it works:
 - User message is matched against keyword list
@@ -87,7 +95,7 @@ Live bus data is fetched using the Buses & Trains API.
 
 ### Features:
 - Displays next bus departures
-- Uses real stop IDs
+- Uses real stop IDs -> atco_code
 - Updates dynamically on request
 
 ---
@@ -113,6 +121,7 @@ Interactive 3D map built using MapLibre GL JS.
 - 🏋️ Gym + 📚 Library schedules
 - 🗺️ 3D campus map
 - 🔐 Authentication system
+- 👤 Profile
 
 ---
 

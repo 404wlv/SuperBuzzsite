@@ -41,6 +41,8 @@
     <a href="#chat">Chat System</a>
     <a href="#map">Map System</a>
     <a href="#auth">Authentication</a>
+    <a href="#profile">Profile System</a>
+    <a href="#checkin">Daily Check-in</a>
     <a href="#functions">Function Index</a>
   </div>
 
@@ -50,76 +52,99 @@
     <!-- Header -->
     <div class="mb-10">
       <h1 class="text-4xl font-bold glow">SuperBuzz Developer Documentation</h1>
-      <p class="text-gray-400 mt-2">Internal system overview for the 404 development team</p>
+      <p class="text-gray-400 mt-2">Internal system overview for Team 404</p>
     </div>
 
     <!-- Overview -->
     <section id="overview" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Overview</h2>
       <p>
-        SuperBuzz is a university web platform built for the University of Wolverhampton.
-        It integrates events, maps, chat, transport, and authentication into a single system.
+        SuperBuzz is a modular university platform built for the University of Wolverhampton.
+        It combines events, navigation, chat, authentication, profile management, and gamification systems into one unified web application.
       </p>
     </section>
 
     <!-- Architecture -->
     <section id="architecture" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Architecture</h2>
-      <p class="mb-2">Frontend-heavy modular JavaScript system powered by Supabase.</p>
+      <p class="mb-2">Frontend modular JavaScript system powered by Supabase backend-as-a-service.</p>
       <ul class="list-disc ml-6 text-gray-300">
-        <li>home.js → main dashboard logic</li>
+        <li>home.js → main dashboard (events, chat, UI)</li>
         <li>map.js → 3D campus map system</li>
-        <li>logon.js → authentication flow</li>
-        <li>Supabase → database + auth</li>
+        <li>logon.js → authentication system</li>
+        <li>profile.js → user profile management</li>
+        <li>dailyCheckin.js → gamified streak system</li>
+        <li>Supabase → database + authentication</li>
       </ul>
     </section>
 
     <!-- Events -->
     <section id="events" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Events System</h2>
-      <p>Handles event creation, retrieval, and UI rendering.</p>
+      <p>Handles event creation, retrieval, and UI rendering via Supabase.</p>
       <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
 loadEvents()
 renderEvents()
 openEventModal(event)
       </pre>
-      <p class="text-gray-400 mt-2">Data stored in Supabase 'events' table.</p>
     </section>
 
     <!-- Chat -->
     <section id="chat" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Chat System</h2>
-      <p>Keyword-based FAQ chatbot system.</p>
+      <p>Keyword-based FAQ assistant system.</p>
       <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
 sendMessage()
 getBotReply(message)
       </pre>
-      <p class="text-gray-400 mt-2">Matches user input against FAQ keywords.</p>
     </section>
 
     <!-- Map -->
     <section id="map" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Map System</h2>
-      <p>3D campus visualization using MapLibre GL JS.</p>
+      <p>3D campus visualization using MapLibre GL JS + OpenStreetMap.</p>
       <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
 fetchbuildings()
 parse_osm_data()
 getCentroid()
 openDrawer()
       </pre>
-      <p class="text-gray-400 mt-2">Uses Overpass API + GeoJSON conversion.</p>
     </section>
 
     <!-- Auth -->
     <section id="auth" class="panel p-6 rounded-xl mb-6">
       <h2 class="text-2xl font-bold mb-2">Authentication</h2>
-      <p>Handled via Supabase Auth.</p>
+      <p>Handled using Supabase Auth system.</p>
       <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
 login()
 signup()
+logout()
 sendResetEmail()
 updatePassword()
       </pre>
+    </section>
+
+    <!-- Profile -->
+    <section id="profile" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Profile System</h2>
+      <p>User profile management using Supabase metadata.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+loadProfile()
+supabase.auth.updateUser()
+logout()
+      </pre>
+    </section>
+
+    <!-- Check-in -->
+    <section id="checkin" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Daily Check-in System</h2>
+      <p>Gamified streak tracking system for student engagement.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+loadCheckinStatus()
+handleCheckin()
+updateUI()
+      </pre>
+      <p class="text-gray-400 mt-2">Stores streak data in Supabase daily_checkins table.</p>
     </section>
 
     <!-- Functions -->
@@ -135,6 +160,8 @@ updatePassword()
         <li>parse_osm_data()</li>
         <li>login()</li>
         <li>signup()</li>
+        <li>loadProfile()</li>
+        <li>handleCheckin()</li>
       </ul>
     </section>
 
