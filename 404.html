@@ -3,10 +3,141 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
+  <title>404 System // SuperBuzz Docs</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background: #0a0a0a;
+      color: #e5e7eb;
+      font-family: ui-sans-serif, system-ui;
+    }
+    .glow {
+      text-shadow: 0 0 10px rgba(168,85,247,0.6);
+    }
+    .panel {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+    }
+    .sidebar a {
+      display: block;
+      padding: 10px;
+      border-radius: 8px;
+      transition: 0.2s;
+    }
+    .sidebar a:hover {
+      background: rgba(168,85,247,0.2);
+    }
+  </style>
 </head>
-    <body>
+<body class="h-screen flex">
 
-        
-    </body>
+  <!-- Sidebar -->
+  <div class="w-64 panel p-4 sidebar">
+    <h1 class="text-xl font-bold glow mb-6">404 SYSTEM</h1>
+    <a href="#overview">Overview</a>
+    <a href="#architecture">Architecture</a>
+    <a href="#events">Events System</a>
+    <a href="#chat">Chat System</a>
+    <a href="#map">Map System</a>
+    <a href="#auth">Authentication</a>
+    <a href="#functions">Function Index</a>
+  </div>
+
+  <!-- Main -->
+  <div class="flex-1 p-8 overflow-y-auto">
+
+    <!-- Header -->
+    <div class="mb-10">
+      <h1 class="text-4xl font-bold glow">SuperBuzz Developer Documentation</h1>
+      <p class="text-gray-400 mt-2">Internal system overview for the 404 development team</p>
+    </div>
+
+    <!-- Overview -->
+    <section id="overview" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Overview</h2>
+      <p>
+        SuperBuzz is a university web platform built for the University of Wolverhampton.
+        It integrates events, maps, chat, transport, and authentication into a single system.
+      </p>
+    </section>
+
+    <!-- Architecture -->
+    <section id="architecture" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Architecture</h2>
+      <p class="mb-2">Frontend-heavy modular JavaScript system powered by Supabase.</p>
+      <ul class="list-disc ml-6 text-gray-300">
+        <li>home.js → main dashboard logic</li>
+        <li>map.js → 3D campus map system</li>
+        <li>logon.js → authentication flow</li>
+        <li>Supabase → database + auth</li>
+      </ul>
+    </section>
+
+    <!-- Events -->
+    <section id="events" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Events System</h2>
+      <p>Handles event creation, retrieval, and UI rendering.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+loadEvents()
+renderEvents()
+openEventModal(event)
+      </pre>
+      <p class="text-gray-400 mt-2">Data stored in Supabase 'events' table.</p>
+    </section>
+
+    <!-- Chat -->
+    <section id="chat" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Chat System</h2>
+      <p>Keyword-based FAQ chatbot system.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+sendMessage()
+getBotReply(message)
+      </pre>
+      <p class="text-gray-400 mt-2">Matches user input against FAQ keywords.</p>
+    </section>
+
+    <!-- Map -->
+    <section id="map" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Map System</h2>
+      <p>3D campus visualization using MapLibre GL JS.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+fetchbuildings()
+parse_osm_data()
+getCentroid()
+openDrawer()
+      </pre>
+      <p class="text-gray-400 mt-2">Uses Overpass API + GeoJSON conversion.</p>
+    </section>
+
+    <!-- Auth -->
+    <section id="auth" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Authentication</h2>
+      <p>Handled via Supabase Auth.</p>
+      <pre class="bg-black/40 p-3 rounded mt-2 text-sm">
+login()
+signup()
+sendResetEmail()
+updatePassword()
+      </pre>
+    </section>
+
+    <!-- Functions -->
+    <section id="functions" class="panel p-6 rounded-xl mb-6">
+      <h2 class="text-2xl font-bold mb-2">Function Index</h2>
+      <ul class="list-disc ml-6 text-gray-300">
+        <li>loadEvents()</li>
+        <li>renderEvents()</li>
+        <li>openEventModal()</li>
+        <li>sendMessage()</li>
+        <li>getBotReply()</li>
+        <li>fetchbuildings()</li>
+        <li>parse_osm_data()</li>
+        <li>login()</li>
+        <li>signup()</li>
+      </ul>
+    </section>
+
+  </div>
+</body>
 </html>
