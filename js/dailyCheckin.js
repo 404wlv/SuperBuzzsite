@@ -19,7 +19,7 @@ function updateUI(streak, checkedToday) {
         btn.textContent = "Checked In ✅"
         btn.classList.remove("bg-fuchsia-800")
         btn.classList.add("bg-green-600")
-        btn.disabled = true
+        btn.disabled = false
     } else {
         btn.textContent = "Check In"
         btn.disabled = false
@@ -39,11 +39,15 @@ async function loadCheckinStatus() {
 
     const today = new Date().toISOString().split("T")[0]
 
-    const { data } = await supabase
+    const { data, error } = await supabase
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
-        .single()
+        .maybeSingle()
+    if (error) {
+        console.log("Errror loading the checkin:", error)
+        return
+    }
 
     if (!data) {
         updateUI(0, false)
@@ -55,19 +59,25 @@ async function loadCheckinStatus() {
 }
 
 async function handleCheckin() {
-    const { data: userData } = await supabase.auth.getUser()
-    const user = userData.user
-    if (!user) return
+    const { data } = await supabase.auth.getSession()
+    const user = data.session?.user
+
+    if (!user) {
+        alert("User not logged in ❌")
+        return
+    }
+
+    console.log("User OK:", user.id)
 
     const today = new Date().toISOString().split("T")[0]
 
-    const { data } = await supabase
+    const { data: existing } = await supabase
         .from("daily_checkins")
         .select("*")
         .eq("user_id", user.id)
         .single()
 
-    if (!data) {
+    if (!existing) {
         await supabase.from("daily_checkins").insert({
             user_id: user.id,
             last_checkin: today,
@@ -78,8 +88,8 @@ async function handleCheckin() {
         return
     }
 
-    if (data.last_checkin === today) {
-        updateUI(data.streak, true)
+    if (existing.last_checkin === today) {
+        updateUI(existing.streak, true)
         return
     }
 
@@ -89,8 +99,8 @@ async function handleCheckin() {
 
     let newStreak = 1
 
-    if (data.last_checkin === yDate) {
-        newStreak = data.streak + 1
+    if (existing.last_checkin === yDate) {
+        newStreak = existing.streak + 1
     }
 
     await supabase
@@ -100,10 +110,6 @@ async function handleCheckin() {
             streak: newStreak
         })
         .eq("user_id", user.id)
-
-    if (newStreak === TARGET_STREAK) {
-        alert("🎉 Congrats! Use code BROWNIE123 for a free brownie!")
-    }
 
     updateUI(newStreak, true)
 }
@@ -115,4 +121,5 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn) {
         btn.addEventListener("click", handleCheckin)
     }
+
 })

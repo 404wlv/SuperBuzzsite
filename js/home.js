@@ -1,6 +1,17 @@
 //imports
 import { supabase } from "./supabaseClient.js";
 
+//protecting sessions
+async function checkUser() {
+    const { data, error } = await supabase.auth.getUser();
+    if (!data.user) {
+        console.log("No user, redirecting...");
+        window.location.href = "home.html";
+    } else {
+        console.log("user is logged in");
+    }
+}
+
 //test connection to supabase
 async function testConnection() {
     const { data, error } = await supabase.auth.getSession();
@@ -15,41 +26,9 @@ async function testConnection() {
 //run the connection test on page load
 testConnection();
 
-//Temporary hardcoded events - will be replaced by database content -Aafrin
-let events = [
-    {
-        id: 1,
-        title: "Freshers Welcome Party",
-        category: "social",
-        description: "Meet new students, enjoy music and free pizza.",
-        location: "Student Union",
-        date: "2026-10-12 18:00"
-    },
-    {
-        id: 2,
-        title: "AI Workshop",
-        category: "academic",
-        description: "Learn the basics of artificial intelligence.",
-        location: "MI102B Alan Turning",
-        date: "2026-10-14 14:00"
-    },
-    {
-        id: 3,
-        title: "Basketball Tournament",
-        category: "sports",
-        description: "Join the annual campus basketball competition.",
-        location: "Sports Centre",
-        date: "2026-10-15 16:00"
-    },
-    {
-        id: 4,
-        title: "Career Networking Night",
-        category: "career",
-        description: "Meet employers and alumni for networking.",
-        location: "MC001 Millenium Building",
-        date: "2026-10-20 17:30"
-    }
-];
+// Events are now intended to move from temporary hardcoded data
+// to database-controlled content through Supabase - Joshua
+let events = [];
 
 //category colors for events -Aafrin -> temporary solution
 function getCategoryColor(category) {
@@ -65,7 +44,7 @@ function getCategoryColor(category) {
 //close modals when clicking outside -Aafrin
 function closeAllModals() {
     const modals = document.querySelectorAll(".modal");
-    modals.forEach(modal => modal.classList.add("hidden"));   
+    modals.forEach(modal => modal.classList .add("hidden"));   
 }
 
 //fetch FAQs from Supabase
@@ -82,16 +61,41 @@ async function loadFAQs() {
         keywords: faq.keywords || ""
     }));
 }
-loadFAQs();
+
+//load events from Supabase - Joshua
+async function loadEvents() {
+    const { data, error } = await supabase
+        .from("events")
+        .select("*")
+        .order("event_date", { ascending: true });
+
+    if (error) {
+        console.log("Events fetch error:", error);
+        return;
+    }
+
+    events = data.map(event => ({
+        id: event.id,
+        title: event.title,
+        category: event.category,
+        description: event.description,
+        location: event.location,
+        date: event.event_date
+    }));
+
+    renderEvents();
+}
 
 //render events cards -Aafrin
 function renderEvents() {
-    const container = document.getElementById("event")
-    container.innerHTML = ""
+    const container = document.getElementById("event");
+    if (!container) return;
+
+    container.innerHTML = "";
 
     events.forEach(event => {
-        const card = document.createElement("div")
-        card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`
+        const card = document.createElement("div");
+        card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`;
         card.innerHTML = `
             <h3 class="font-bold text-sm sm:text-base">${event.title}</h3>
             <p class="text-xs sm:text-sm">${event.category}</p>
@@ -100,35 +104,37 @@ function renderEvents() {
               transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200">
                 ${event.description}
             </div>
-        `
-        card.addEventListener("click", () => openEventModal(event))
-        container.appendChild(card)
-    })
+        `;
+        card.addEventListener("click", () => openEventModal(event));
+        container.appendChild(card);
+    });
 }
 
 //opening event details modal -Aafrin
 function openEventModal(event) {
-    const titleEl = document.getElementById("event-title")
-    const catEl = document.getElementById("event-category")
-    const descEl = document.getElementById("event-description")
-    const locEl = document.getElementById("event-location")
-    const dateEl = document.getElementById("event-date")
+    const titleEl = document.getElementById("event-title");
+    const catEl = document.getElementById("event-category");
+    const descEl = document.getElementById("event-description");
+    const locEl = document.getElementById("event-location");
+    const dateEl = document.getElementById("event-date");
 
-    if (!titleEl || !catEl || !descEl || !locEl || !dateEl) return
+    if (!titleEl || !catEl || !descEl || !locEl || !dateEl) return;
 
-    titleEl.textContent = event.title
-    catEl.textContent = event.category
-    descEl.textContent = event.description
-    locEl.textContent = "Location: " + event.location
-    dateEl.textContent = "Date: " + event.date
+    titleEl.textContent = event.title;
+    catEl.textContent = event.category;
+    descEl.textContent = event.description;
+    locEl.textContent = "Location: " + event.location;
+    dateEl.textContent = "Date: " + event.date;
 
-    const modal = document.getElementById("event-modal")
-    if (modal) modal.classList.remove("hidden")
+    const modal = document.getElementById("event-modal");
+    if (modal) modal.classList.remove("hidden");
 }
 
-
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     closeAllModals();
+
+    await loadFAQs();
+    await loadEvents();
 
     //chat, sidebar toggles -Aafrin.
     const chatToggleBtn = document.getElementById("chat-toggle");
@@ -183,11 +189,7 @@ document.addEventListener("DOMContentLoaded", () => {
         window.location.href = "map.html";
     });
 
-
-    renderEvents()
-
     //add event button popup -Aafrin
-    // Create Event popup
     const addEventBtn = document.getElementById("add-event-button");
     const createEventModal = document.getElementById("create-event-modal");
     const closeCreateEventModal = document.getElementById("close-create-event-modal");
@@ -206,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (createEventSubmit) {
-        createEventSubmit.addEventListener("click", () => {
+        createEventSubmit.addEventListener("click", async () => {
             const title = document.getElementById("new-event-title").value.trim();
             const category = document.getElementById("new-event-category").value;
             const description = document.getElementById("new-event-description").value.trim();
@@ -218,12 +220,26 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
-            const newEvent = { id: events.length + 1, title, category, description, location, date };
-            events.push(newEvent);
-            renderEvents();
+            const { error } = await supabase
+                .from("events")
+                .insert([
+                    {
+                        title,
+                        category,
+                        description,
+                        location,
+                        event_date: date
+                    }
+                ]);
+
+            if (error) {
+                console.log("Error creating event:", error);
+                alert("Failed to create event.");
+                return;
+            }
+
             alert("Event created successfully!");
 
-            // clear inputs
             document.getElementById("new-event-title").value = "";
             document.getElementById("new-event-description").value = "";
             document.getElementById("new-event-location").value = "";
@@ -231,6 +247,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             createEventModal.classList.add("hidden");
 
+            await loadEvents();
         });
     }
 
@@ -243,8 +260,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     //event attendance form - Aafrin
-    //Show the form
-    
     const attendEventBtn = document.getElementById("attend-btn");
     const closeAttendFormBtn = document.getElementById("close-attend-form");
 
@@ -287,19 +302,19 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    //chatbot 
-    const chatInput = document.getElementById("chat-input")
-    const chatSend = document.getElementById("chat-send")
-    const chatMessages = document.getElementById("chat-messages")
+    //chatbot
+    const chatInput = document.getElementById("chat-input");
+    const chatSend = document.getElementById("chat-send");
+    const chatMessages = document.getElementById("chat-messages");
 
     function addMessage(text, sender) {
-        const msg = document.createElement("div")
+        const msg = document.createElement("div");
         msg.className = sender === "user"
             ? "text-right bg-[#ACBAC4] text-[#E1D9BC] p-2 rounded my-1"
-            : "text-left bg-[#E1D9BC] text-[#30364F] p-2 rounded my-1"
-        msg.textContent = text
-        chatMessages.appendChild(msg)
-        chatMessages.scrollTop = chatMessages.scrollHeight
+            : "text-left bg-[#E1D9BC] text-[#30364F] p-2 rounded my-1";
+        msg.textContent = text;
+        chatMessages.appendChild(msg);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
     }
 
     function getBotReply(message) {
@@ -316,32 +331,34 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function sendMessage() {
-        const message = chatInput.value.trim()
-        if (!message) return
-        addMessage(message, "user")
-        const reply = getBotReply(message)
+        const message = chatInput.value.trim();
+        if (!message) return;
+        addMessage(message, "user");
+        const reply = getBotReply(message);
         setTimeout(() => {
-            addMessage(reply, "bot")
-        }, 500)
-        chatInput.value = ""
+            addMessage(reply, "bot");
+        }, 500);
+        chatInput.value = "";
     }
 
     if (chatSend) {
-        chatSend.addEventListener("click", sendMessage)
+        chatSend.addEventListener("click", sendMessage);
     }
 
     if (chatInput) {
         chatInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") sendMessage()
-        })
+            if (e.key === "Enter") sendMessage();
+        });
     }
 
     //bus timings -Aafrin
-
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) { Console.log("failed"); return; }
+        if (!busList) {
+            console.log("failed");
+            return;
+        }
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
@@ -363,7 +380,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (departures.length > 0) {
                     departures.slice(0, 5).forEach(dep => {
                         const time = dep.expected || dep.scheduled;
-                        output += `<li>${dep.line} → ${dep.destination} at ${new Date(time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</li>`;
+                        output += `<li>${dep.line} → ${dep.destination} at ${new Date(time).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}</li>`;
                     });
                 } else {
                     output += `<li>No buses</li>`;
@@ -377,15 +394,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
-
     //profile
-    const profileBtn = document.getElementById("profile-button")
+    const profileBtn = document.getElementById("profile-button");
     if (profileBtn) {
         profileBtn.addEventListener("click", () => {
-            window.location.href = "profile.html"
-        })
+            window.location.href = "profile.html";
+        });
     }
-
-
 });
