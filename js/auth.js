@@ -2,110 +2,132 @@ import { supabase } from "./supabaseClient.js";
 
 const allowedDomain = "@wlv.ac.uk";
 
-
-//////email domain validation
-
+// email domain validation
 export function validateUniversityEmail(email) {
-    return email.endsWith(allowedDomain);
+    return email.trim().toLowerCase().endsWith(allowedDomain);
 }
 
-///password validation
+// password validation
 export function validatePassword(password) {
-    const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
+    // at least 8 chars, 1 uppercase, 1 lowercase, 1 number, 1 special character
+    const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*]).{8,}$/;
     return regex.test(password);
 }
 
-
-
-
-////////////signup
+// signup
 export async function signup(email, password) {
-    if (!validateUniversityEmail(email)) {
+    const cleanEmail = email.trim().toLowerCase();
+
+    if (!validateUniversityEmail(cleanEmail)) {
         alert("Please use a university email address.");
         return false;
     }
+
     if (!validatePassword(password)) {
-        alert("Password must be atleast 8 characters long, with atleast 1 uppercase, 1 lowercase, 1 number, 1 special character.")
+        alert("Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
         return false;
     }
+
     const { data, error } = await supabase.auth.signUp({
-        email,
+        email: cleanEmail,
         password
-    })
-    console.log("Signup response:", data)
-    console.log("Signup error:", error)
+    });
+
+    console.log("Signup response:", data);
+    console.log("Signup error:", error);
+
     if (error) {
-        alert(error.message)
+        alert(error.message);
         return false;
-    } else {
-        alert("Signup successful! Check your email for verification/")
-        return true;
     }
+
+    alert("Signup successful! Check your email for verification.");
+    return true;
 }
 
-
-///login
+// login
 export async function login(email, password) {
+    const cleanEmail = email.trim().toLowerCase();
+
     const { data, error } = await supabase.auth.signInWithPassword({
-        email,
+        email: cleanEmail,
         password
-    })
+    });
+
+    console.log("Login response:", data);
+    console.log("Login error:", error);
+
     if (error) {
-        alert(error.message)
+        alert(error.message);
         return false;
-    } else {
-        return true;
     }
+
+    return true;
 }
 
-
-//////////logout/////////////////
+// logout
 export async function logout() {
-
-    const { error } = await supabase.auth.signOut()
+    const { error } = await supabase.auth.signOut();
 
     if (error) {
-        alert(error.message)
-    } else {
-        window.location.href = "index.html"
-    }
-}
-
-///forget passord///
-export async function sendResetEmail(email) {
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: window.location.origin
-    })
-    if (error) {
-        alert(error.message)
+        alert(error.message);
         return false;
-    } else {
-        alert("Password reset email sent.")
-        return true;
     }
+
+    window.location.href = "index.html";
+    return true;
 }
 
+// forgot password
+export async function sendResetEmail(email) {
+    const cleanEmail = email.trim().toLowerCase();
 
-///update password
+    if (!validateUniversityEmail(cleanEmail)) {
+        alert("Please use your university email address.");
+        return false;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(cleanEmail, {
+        redirectTo: `${window.location.origin}/reset-password.html`
+    });
+
+    if (error) {
+        alert(error.message);
+        return false;
+    }
+
+    alert("Password reset email sent. Please check your inbox and spam folder.");
+    return true;
+}
+
+// update password
 export async function updatePassword(newPassword) {
+    if (!validatePassword(newPassword)) {
+        alert("Password must be at least 8 characters long and include 1 uppercase letter, 1 lowercase letter, 1 number, and 1 special character.");
+        return false;
+    }
+
     const { error } = await supabase.auth.updateUser({
         password: newPassword
-    })
+    });
+
     if (error) {
-        alert(error.message)
+        alert(error.message);
         return false;
-    } else {
-        alert("Password updated successfully.")
-        return true;
     }
+
+    alert("Password updated successfully.");
+    return true;
 }
 
-
-//////handle state
+// handle state
 export async function checkSession() {
-    const { data } = await supabase.auth.getSession();
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+        console.log("Session check error:", error);
+        return false;
+    }
+
     return !!data.session;
 }
-
-
-

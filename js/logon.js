@@ -1,6 +1,6 @@
-import { signup, login, validateUniversityEmail, validatePassword, sendResetEmail, updatePassword } from './auth.js';
+import { signup, login, validateUniversityEmail, sendResetEmail } from './auth.js';
 
-//some functions
+// some functions
 function hide(id) {
     const el = document.getElementById(id);
     if (el) el.classList.add("hidden");
@@ -21,94 +21,92 @@ document.addEventListener("DOMContentLoaded", () => {
             const email = document.getElementById("login-email").value;
             const password = document.getElementById("login-password").value;
 
-            if (!validateUniversityEmail(email)) { 
-                alert("Use university email!"); 
-                return; 
+            if (!validateUniversityEmail(email)) {
+                alert("Use university email!");
+                return;
             }
-            if (!validatePassword(password)) { 
-                alert("Password must be 8+ chars, include letters & numbers"); 
-                return; 
+
+            if (!password.trim()) {
+                alert("Please enter your password.");
+                return;
             }
 
             const success = await login(email, password);
             if (success) {
                 hide("login-modal");
-                // Optionally redirect to home page:
-                window.location.href = "home.html"; 
+                window.location.href = "home.html";
             }
         });
     }
 
     // LOGIN → SIGNUP
     const signupBtn = document.getElementById("login-to-signup");
-    if (signupBtn) signupBtn.addEventListener("click", () => { 
-        hide("login-modal"); 
-        show("signup-modal"); 
-    });
+    if (signupBtn) {
+        signupBtn.addEventListener("click", () => {
+            hide("login-modal");
+            show("signup-modal");
+        });
+    }
 
     // LOGIN → FORGOT
     const forgotBtn = document.getElementById("forgot-password-btn");
-    if (forgotBtn) forgotBtn.addEventListener("click", () => { 
-        hide("login-modal"); 
-        show("forgot-modal"); 
-    });
+    if (forgotBtn) {
+        forgotBtn.addEventListener("click", () => {
+            hide("login-modal");
+            show("forgot-modal");
+        });
+    }
 
     // SIGNUP
     const signupSubmitBtn = document.getElementById("signup-submit");
-    if (signupSubmitBtn) signupSubmitBtn.addEventListener("click", async () => {
-        const email = document.getElementById("signup-email").value;
-        const password = document.getElementById("signup-password").value;
+    if (signupSubmitBtn) {
+        signupSubmitBtn.addEventListener("click", async () => {
+            const email = document.getElementById("signup-email").value;
+            const password = document.getElementById("signup-password").value;
 
-        const success = await signup(email, password);
-        if (success) {
-            hide("signup-modal");
-            show("login-modal");
-        }
-    });
+            const success = await signup(email, password);
+            if (success) {
+                hide("signup-modal");
+                show("login-modal");
+            }
+        });
+    }
 
     // SIGNUP → BACK
     const backBtn = document.getElementById("back");
-    if (backBtn) backBtn.addEventListener("click", () => { 
-        hide("signup-modal"); 
-        show("login-modal"); 
-    });
+    if (backBtn) {
+        backBtn.addEventListener("click", () => {
+            hide("signup-modal");
+            show("login-modal");
+        });
+    }
 
     // FORGOT → BACK
     const backBtn2 = document.getElementById("back2");
-    if (backBtn2) backBtn2.addEventListener("click", () => { 
-        hide("forgot-modal"); 
-        show("login-modal"); 
-    });
+    if (backBtn2) {
+        backBtn2.addEventListener("click", () => {
+            hide("forgot-modal");
+            show("login-modal");
+        });
+    }
 
     // FORGOT → SEND RESET EMAIL
     const forgotSubmitBtn = document.getElementById("forgot-submit");
-    if (forgotSubmitBtn) forgotSubmitBtn.addEventListener("click", async () => {
-        const email = document.getElementById("forgot-email").value;
-        if (!validateUniversityEmail(email)) { alert("Use university email"); return; }
+    if (forgotSubmitBtn) {
+        forgotSubmitBtn.addEventListener("click", async () => {
+            const email = document.getElementById("forgot-email").value;
 
-        const success = await sendResetEmail(email);
-        if (success) {
-            hide("forgot-modal");
-            show("reset-modal");
-        }
-    });
+            if (!validateUniversityEmail(email)) {
+                alert("Use university email");
+                return;
+            }
 
-    // RESET → BACK
-    const backBtn3 = document.getElementById("back3");
-    if (backBtn3) backBtn3.addEventListener("click", () => { 
-        hide("reset-modal"); 
-        show("login-modal"); 
-    });
-
-    // RESET → SUBMIT NEW PASSWORD
-    const resetSubmitBtn = document.getElementById("reset-submit");
-    if (resetSubmitBtn) resetSubmitBtn.addEventListener("click", async () => {
-        const newPassword = document.getElementById("new-password").value;
-        if (!validatePassword(newPassword)) { alert("Password must be 8+ chars"); return; }
-        const success = await updatePassword(newPassword);
-        if (success) {
-            hide("reset-modal");
-            show("login-modal");
-        }
-    });
+            const success = await sendResetEmail(email);
+            if (success) {
+                alert("Password reset email sent. Please check your inbox and spam folder, then use the reset link in the email.");
+                hide("forgot-modal");
+                show("login-modal");
+            }
+        });
+    }
 });

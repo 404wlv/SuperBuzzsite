@@ -3,187 +3,131 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title class="text-3xl">SuperBuzz</title>
+  <title>SuperBuzz</title>
   <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
-  <!-- Tailwind -->
   <script src="https://cdn.tailwindcss.com"></script>
-
 </head>
 
-
-  
 <body class="bg-[#F0F0DB] text-white">
 
-  <!--  LOGIN -->
-  <div id="login-modal"
-       class="absolute inset-0 flex-initial flex items-center justify-center">
-
+  <!-- LOGIN -->
+  <div id="login-modal" class="absolute inset-0 flex-initial flex items-center justify-center">
     <div class="min-h-screen flex items-center justify-center px-4">
-
-      <!-- Login Card -->
       <div class="bg-[#E1D9BC] w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
-
         <h2 class="text-2xl font-bold mb-6 text-center text-[#30364F]">
           Login
         </h2>
 
-        <input id="login-email"
+        <input
+          id="login-email"
           type="email"
           placeholder="University Email"
-          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
+          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
+        >
 
-        <input id="login-password"
+        <input
+          id="login-password"
           type="password"
           placeholder="Password"
-          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
+          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
+        >
 
-        <button id="login-submit"
-          class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+        <button
+          id="login-submit"
+          class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]"
+        >
           Login
         </button>
 
         <div class="flex flex-col sm:flex-row justify-center gap-6 mb-6 sm:mb-0">
-            <button id="login-to-signup"
-                class="w-full sm:w-24 rounded-2xl bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
-                    Signup
-            </button>
-          
+          <button
+            id="login-to-signup"
+            class="w-full sm:w-24 rounded-2xl bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition shadow-xl font-medium border border-[#334155]"
+          >
+            Signup
+          </button>
 
-            <button id="forgot-password-btn"
-                class="w-full sm:w-40 rounded-2xl bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition shadow-xl font-medium border border-[#334155]">
-                Forgot Password
-            </button>
+          <button
+            id="forgot-password-btn"
+            class="w-full sm:w-40 rounded-2xl bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition shadow-xl font-medium border border-[#334155]"
+          >
+            Forgot Password
+          </button>
         </div>
-
       </div>
     </div>
   </div>
 
-  
-
   <!-- SIGNUP -->
-  <div id="signup-modal"
-       class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
-
+  <div id="signup-modal" class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
     <div class="relative flex flex-col sm:flex-row gap-6">
-
-      <!-- Signup Card -->
       <div class="bg-[#E1D9BC] w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
-
         <h2 class="text-2xl font-bold mb-6 text-center text-[#30364F]">
           Signup
         </h2>
 
-        <input id="signup-email"
+        <input
+          id="signup-email"
           type="email"
           placeholder="University Email"
-          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
+          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
+        >
 
-        <input id="signup-password"
+        <input
+          id="signup-password"
           type="password"
           placeholder="Password"
-          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
+          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
+        >
 
-        <button id="signup-submit"
-          class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
+        <button
+          id="signup-submit"
+          class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]"
+        >
           Signup
         </button>
 
-        <button id="back"
-            class="btn-secondary w-full text-[#30364F] hover:scale-105 transition">
-            ← Back
+        <button
+          id="back"
+          class="btn-secondary w-full text-[#30364F] hover:scale-105 transition"
+        >
+          ← Back
         </button>
-
       </div>
     </div>
   </div>
 
-
   <!-- FORGOT PASSWORD -->
-  <div id="forgot-modal"
-       class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
-
+  <div id="forgot-modal" class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
     <div class="relative flex flex-col sm:flex-row gap-6">
-
       <div class="bg-[#E1D9BC] w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
         <h2 class="text-2xl font-bold mb-6 text-center text-[#30364F]">
           Forgot Password
         </h2>
 
-        <input id="forgot-email"
-            type="email"
-            placeholder="University Email"
-            class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
+        <p class="text-sm text-center text-[#30364F]">
+          Enter your university email and we’ll send you a password reset link.
+        </p>
 
-        <button id="forgot-submit"
-            class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
-            Send Verification Code to Login
+        <input
+          id="forgot-email"
+          type="email"
+          placeholder="University Email"
+          class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
+        >
+
+        <button
+          id="forgot-submit"
+          class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]"
+        >
+          Send Reset Link
         </button>
 
-        <button id="forgot-reset"
-            class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
-            Reset Password
-        </button>
-        <button id="back2"
-            class="btn-secondary w-full text-[#30364F] hover:scale-105 transition">
-            ← Back
-        </button>
-
-      </div>
-   
-
-      <div class="bg-[#E1D9BC] w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
-        <h2 class="text-2xl font-bold mb-6 text-center text-[#30364F]">
-          Input Code to Reset
-        </h2>
-
-        <input id="verification-code"
-            type="text"
-            placeholder="Verification Code"
-            class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
-
-        <button id="verify-code-submit"
-            class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
-            Submit
-        </button>
-
-      </div>
-      
-    </div>
-  </div>
-
-
-
-  <!--  RESET PASSWORD  -->
-  <div id="reset-modal" 
-    class="modal hidden absolute inset-0 flex-initial flex items-center justify-center">
-    <div class="relative flex flex-col sm:flex-row gap-6">
-
-      <div class="bg-[#E1D9BC] w-full max-w-md p-12 sm:p-16 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-6">
-
-        <h2 class="text-2xl font-bold mb-6 text-center text-[#30364F]">
-          Reset Password
-        </h2>
-
-        <input id="new-password"
-            type="password"
-            placeholder="New Password"
-            class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
-
-        <input id="re-enter-password"
-            type="password"
-            placeholder="Re-enter New Password"
-            class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full">
-
-
-        <button id="reset-submit"
-            class="btn-primary w-full bg-[#30364F] text-[#F0F0DB] hover:scale-110 transition rounded-2xl shadow-2xl border border-[#334155]">
-            Submit
-        </button>
-
-        <button id="back3"
-            class="btn-secondary w-full text-[#30364F] hover:scale-105 transition">
-            ← Back
+        <button
+          id="back2"
+          class="btn-secondary w-full text-[#30364F] hover:scale-105 transition"
+        >
+          ← Back
         </button>
       </div>
     </div>
