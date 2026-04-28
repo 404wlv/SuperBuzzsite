@@ -41,12 +41,6 @@ function getCategoryColor(category) {
     }
 }
 
-//close modals when clicking outside -Aafrin
-function closeAllModals() {
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach(modal => modal.classList.add("hidden"));
-}
-
 //fetch FAQs from Supabase
 let faqs = [];
 async function loadFAQs() {
@@ -131,6 +125,20 @@ function openEventModal(event) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+
+    //trying a different approach -Aafrin
+    function closeAllModals() {
+        document.addEventListener("click", (event) => {
+            const modals = document.querySelectorAll(".modal");
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.add("hidden");
+                }
+            });
+        });
+    }
+
+    //close all modals when starting to load content
     closeAllModals();
 
     await loadFAQs();
@@ -220,6 +228,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError || !userData.user) {
+                alert("You must be logged in to create an event.");
+                return;
+            }
+
             const { error } = await supabase
                 .from("events")
                 .insert([
@@ -228,7 +243,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         category,
                         description,
                         location,
-                        event_date: date
+                        event_date: date,
+                        created_by: userData.user.id
                     }
                 ]);
 
@@ -363,7 +379,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         busList.innerHTML = "<li>Loading transport data...</li>";
 
         try {
-            const stops = { "nwmjdtdt": "Stop AB", "nwmtgjtw": "Stop AC" };
+            //using the atco_code instead of the stop id try: https://api.busesandtrains.co.uk/v1/stops?q=Wolverhampton&app_key=bat_5de26858af3ec1f5769df8dccf071920 for data
+            const stops = { "43000700503": "Stop AB", "43000700504": "Stop AC" };
             let output = "";
 
             for (const stopId in stops) {

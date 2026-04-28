@@ -94,4 +94,19 @@ const threeLayer = {
     }
 };
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
+  <title>SuperBuzz Developer Documentation</title>
+</head>
+    <body>
+      <h1>404 SYSTEM</h1>
+      <h2>SuperBuzz Developer Documentation</h2>
+      <p>Internal documentation for the SuperBuzz campus system.</p>
 
+        
+    </body>
+</html>
