@@ -228,6 +228,13 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError || !userData.user) {
+                alert("You must be logged in to create an event.");
+                return;
+            }
+
             const { error } = await supabase
                 .from("events")
                 .insert([
@@ -236,7 +243,8 @@ document.addEventListener("DOMContentLoaded", async () => {
                         category,
                         description,
                         location,
-                        event_date: date
+                        event_date: date,
+                        created_by: userData.user.id
                     }
                 ]);
 
