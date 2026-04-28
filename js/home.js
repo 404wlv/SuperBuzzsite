@@ -1,4 +1,4 @@
-//imports
+ //imports
 import { supabase } from "./supabaseClient.js";
 
 //protecting sessions
@@ -44,14 +44,19 @@ function getCategoryColor(category) {
 //fetch FAQs from Supabase
 let faqs = [];
 async function loadFAQs() {
-    const { data, error } = await supabase.from("faqs").select("*");
+    const { data, error } = await supabase
+        .from("faqs")
+        .select("answer, keywords");
+
     if (error) {
         console.log("FAQ fetch error:", error);
         return;
     }
 
-    faqs = data.map(faq => ({
-        answer: faq.answer,
+    console.log("FAQs loaded from database:", data);
+
+    faqs = (data || []).map(faq => ({
+        answer: faq.answer || "",
         keywords: faq.keywords || ""
     }));
 }
@@ -334,26 +339,43 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function getBotReply(message) {
-        const text = message.toLowerCase();
+        const text = message.toLowerCase().trim();
+
+        if (!faqs.length) {
+            return "I’m sorry, the FAQ data is not available right now.";
+        }
+
         for (const faq of faqs) {
-            if (faq.keywords) {
-                const keywords = faq.keywords.split(",");
-                for (const word of keywords) {
-                    if (text.includes(word.trim().toLowerCase())) return faq.answer;
+            const keywordList = faq.keywords
+                .split(",")
+                .map(word => word.trim().toLowerCase())
+                .filter(Boolean);
+
+            for (const word of keywordList) {
+                if (text.includes(word) || word.includes(text)) {
+                    return faq.answer;
                 }
             }
         }
+
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
     }
 
     function sendMessage() {
         const message = chatInput.value.trim();
         if (!message) return;
+
         addMessage(message, "user");
+
+        console.log("User message:", message);
+        console.log("Current FAQs:", faqs);
+
         const reply = getBotReply(message);
+
         setTimeout(() => {
             addMessage(reply, "bot");
         }, 500);
+
         chatInput.value = "";
     }
 

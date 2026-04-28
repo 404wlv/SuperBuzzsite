@@ -95,14 +95,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     })
 
-  document.getElementById("logout-btn")
+   document.getElementById("logout-btn")
     .addEventListener("click", logout)
 
   const backBtn = document.getElementById("back-home-btn")
-  
   if (backBtn) {
     backBtn.addEventListener("click", () => {
-      window.location.href = "./home.html"
+      window.location.href = "home.html"
     })
   }
 
