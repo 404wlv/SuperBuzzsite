@@ -1,20 +1,35 @@
- //imports
+//imports
 import { supabase } from "./supabaseClient.js";
 
-//protecting sessions
-async function checkUser() {
-    const { data, error } = await supabase.auth.getUser();
-    if (!data.user) {
-        console.log("No user, redirecting...");
-        window.location.href = "home.html";
-    } else {
-        console.log("user is logged in");
+// protect session
+async function protectHomePage() {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error) {
+        console.log("Session check error:", error);
+        window.location.href = "index.html";
+        return false;
     }
+
+    if (!data.session) {
+        console.log("No active session, redirecting...");
+        window.location.href = "index.html";
+        return false;
+    }
+
+    return true;
 }
 
-//test connection to supabase
+// listen for logout/session changes
+supabase.auth.onAuthStateChange((event, session) => {
+    if (!session) {
+        window.location.href = "index.html";
+    }
+});
+
+// test connection to supabase
 async function testConnection() {
-    const { data, error } = await supabase.auth.getSession();
+    const { error } = await supabase.auth.getSession();
 
     if (error) {
         console.log("Error connecting:", error);
@@ -130,8 +145,9 @@ function openEventModal(event) {
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const allowed = await protectHomePage();
+    if (!allowed) return;
 
-    //trying a different approach -Aafrin
     function closeAllModals() {
         document.addEventListener("click", (event) => {
             const modals = document.querySelectorAll(".modal");
@@ -152,14 +168,12 @@ document.addEventListener("DOMContentLoaded", async () => {
     //chat, sidebar toggles -Aafrin.
     const chatToggleBtn = document.getElementById("chat-toggle");
     if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
-        closeAllModals();
         const chatModal = document.getElementById("chatbox");
         if (chatModal) chatModal.classList.toggle("hidden");
     });
 
     const sidebarToggleBtn = document.getElementById("sidebar-toggle");
     if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
-        closeAllModals();
         const sidebar = document.getElementById("sidebar");
         if (sidebar) sidebar.classList.toggle("-translate-x-full");
     });
@@ -167,7 +181,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sidebarBackBtn = document.getElementById("sidebar-back");
     if (sidebarBackBtn) {
         sidebarBackBtn.addEventListener("click", () => {
-            closeAllModals();
             const sidebar = document.getElementById("sidebar");
             if (sidebar) sidebar.classList.add("-translate-x-full");
         });
@@ -176,7 +189,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     //modal buttons -Aafrin
     const busBtn = document.getElementById("bus-timings");
     if (busBtn) busBtn.addEventListener("click", () => {
-        closeAllModals();
         const busModal = document.getElementById("bus-modal");
         if (busModal) busModal.classList.remove("hidden");
         loadTransport();
@@ -184,21 +196,18 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const gymBtn = document.getElementById("gym-timings");
     if (gymBtn) gymBtn.addEventListener("click", () => {
-        closeAllModals();
         const gymModal = document.getElementById("gym-modal");
         if (gymModal) gymModal.classList.remove("hidden");
     });
 
     const libraryBtn = document.getElementById("library-timings");
     if (libraryBtn) libraryBtn.addEventListener("click", () => {
-        closeAllModals();
         const libraryModal = document.getElementById("library-modal");
         if (libraryModal) libraryModal.classList.remove("hidden");
     });
 
     const mapBtn = document.getElementById("map-button");
     if (mapBtn) mapBtn.addEventListener("click", () => {
-        closeAllModals();
         window.location.href = "map.html";
     });
 
@@ -237,6 +246,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (userError || !userData.user) {
                 alert("You must be logged in to create an event.");
+                window.location.href = "index.html";
                 return;
             }
 
@@ -276,7 +286,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (closeeventModalBtn) {
         closeeventModalBtn.addEventListener("click", () => {
-            closeAllModals();
+            const modal = document.getElementById("event-modal");
+            if (modal) modal.classList.add("hidden");
         });
     }
 
@@ -293,7 +304,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (closeAttendFormBtn) {
         closeAttendFormBtn.addEventListener("click", () => {
-            closeAllModals();
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.add("hidden");
         });
     }
 
@@ -305,20 +317,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             const email = document.getElementById("attendee-email").value.trim();
             const studentId = document.getElementById("attendee-student-id").value.trim();
             const course = document.getElementById("attendee-course").value.trim();
-            const allergens = document.getElementById("attendee-allergens").value.trim();
-            const disabilities = document.getElementById("attendee-disabilities").value.trim();
             const consent = document.getElementById("attendee-consent").checked;
 
             if (!name || !email || !studentId || !course) {
                 alert("Please fill all required fields!");
                 return;
             }
+
             if (!consent) {
                 alert("You must consent to data processing to attend the event.");
                 return;
             }
 
-            //send data to backend later
             alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
         });
     }
@@ -401,7 +411,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         busList.innerHTML = "<li>Loading transport data...</li>";
 
         try {
-            //using the atco_code instead of the stop id try: https://api.busesandtrains.co.uk/v1/stops?q=Wolverhampton&app_key=bat_5de26858af3ec1f5769df8dccf071920 for data
             const stops = { "43000700503": "Stop AB", "43000700504": "Stop AC" };
             let output = "";
 

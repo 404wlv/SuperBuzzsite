@@ -1,13 +1,40 @@
 import { supabase } from "./supabaseClient.js"
 import { logout } from "./auth.js"
 
-document.addEventListener("DOMContentLoaded", () => {
+async function protectProfilePage() {
+  const { data, error } = await supabase.auth.getSession()
+
+  if (error) {
+    console.log("Session check error:", error)
+    window.location.href = "index.html"
+    return false
+  }
+
+  if (!data.session) {
+    console.log("No active session, redirecting...")
+    window.location.href = "index.html"
+    return false
+  }
+
+  return true
+}
+
+supabase.auth.onAuthStateChange((event, session) => {
+  if (!session) {
+    window.location.href = "index.html"
+  }
+})
+
+document.addEventListener("DOMContentLoaded", async () => {
+  const allowed = await protectProfilePage()
+  if (!allowed) return
 
   async function loadProfile() {
     const { data, error } = await supabase.auth.getUser()
 
     if (error) {
       console.log("Error loading user:", error)
+      window.location.href = "index.html"
       return
     }
 
@@ -15,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!user) {
       console.log("No user found")
+      window.location.href = "index.html"
       return
     }
 
@@ -53,17 +81,17 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  loadProfile()
+  await loadProfile()
 
   document.getElementById("save-profile")
     .addEventListener("click", async () => {
-
       const name = document.getElementById("display-name").value
 
       const { data, error: userError } = await supabase.auth.getUser()
 
       if (userError || !data.user) {
         alert("Could not load user")
+        window.location.href = "index.html"
         return
       }
 
@@ -92,10 +120,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       alert("Profile updated successfully")
-
     })
 
-   document.getElementById("logout-btn")
+  document.getElementById("logout-btn")
     .addEventListener("click", logout)
 
   const backBtn = document.getElementById("back-home-btn")
@@ -104,5 +131,4 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "home.html"
     })
   }
-
 })
