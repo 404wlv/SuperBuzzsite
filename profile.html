@@ -3,14 +3,13 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>profile</title>
+        <title>Profile</title>
         <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
-
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
 
     <body class="bg-[#ACBAC4] text-[#F0F0DB]">
-        <div class="p-6 max-w-3xl mx-auto ">
+        <div class="p-6 max-w-3xl mx-auto">
             
             <h1 class="text-3xl font-bold text-[#30364F] mb-6">
                 My Profile
@@ -20,7 +19,7 @@
 
                 <!-- Profile Picture -->
                 <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center mb-4 shadow-md">
-                    <svg xlmns="http://ww.w3.org/2000/svg"
+                    <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-12 h-12 text-gray-600" 
                         fill="currentColor"
                         viewBox="0 0 24 24">
@@ -50,24 +49,44 @@
                 <!-- Stats Section -->
                 <div class="grid grid-cols-2 gap-4 w-full text-center mb-6">
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">120</p>
+                        <p id="points-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Points</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">3</p>
+                        <p id="coupons-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Coupons</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">8</p>
+                        <p id="attended-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Attended</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">5</p>
-                        <p class="text-xs">Applied</p>
+                        <p id="applied-count" class="text-lg font-bold">0</p>
+                        <p class="text-xs">Check-ins</p>
                     </div>
+                </div>
+
+                <!-- Reward Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="font-semibold">Reward Progress</span>
+                        <span id="reward-progress-text">0%</span>
+                    </div>
+
+                    <div class="w-full bg-[#F1EFEC] rounded-full h-4 overflow-hidden">
+                        <div
+                            id="reward-progress"
+                            class="bg-green-500 h-4 rounded-full transition-all duration-500"
+                            style="width: 0%">
+                        </div>
+                    </div>
+
+                    <p id="reward-status" class="text-xs mt-2 text-center">
+                        100 more point(s) to unlock a reward
+                    </p>
                 </div>
 
                 <!-- Events Created -->

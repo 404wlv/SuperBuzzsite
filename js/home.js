@@ -44,6 +44,7 @@ testConnection();
 // Events are now intended to move from temporary hardcoded data
 // to database-controlled content through Supabase - Joshua
 let events = [];
+let selectedEventId = null;
 
 //category colors for events -Aafrin -> temporary solution
 function getCategoryColor(category) {
@@ -126,6 +127,8 @@ function renderEvents() {
 
 //opening event details modal -Aafrin
 function openEventModal(event) {
+    selectedEventId = event.id;
+
     const titleEl = document.getElementById("event-title");
     const catEl = document.getElementById("event-category");
     const descEl = document.getElementById("event-description");
@@ -297,6 +300,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (attendEventBtn) {
         attendEventBtn.addEventListener("click", () => {
+            if (!selectedEventId) {
+                alert("Please select an event first.");
+                return;
+            }
+
             const attendForm = document.getElementById("attend-form");
             if (attendForm) attendForm.classList.remove("hidden");
         });
@@ -312,7 +320,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     //Handle form submission
     const submitAttendBtn = document.getElementById("confirm-attend-btn");
     if (submitAttendBtn) {
-        submitAttendBtn.addEventListener("click", () => {
+        submitAttendBtn.addEventListener("click", async () => {
             const name = document.getElementById("attendee-name").value.trim();
             const email = document.getElementById("attendee-email").value.trim();
             const studentId = document.getElementById("attendee-student-id").value.trim();
@@ -329,7 +337,57 @@ document.addEventListener("DOMContentLoaded", async () => {
                 return;
             }
 
+            if (!selectedEventId) {
+                alert("No event selected.");
+                return;
+            }
+
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError || !userData.user) {
+                alert("You must be logged in to attend an event.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const user = userData.user;
+
+            const { error } = await supabase
+                .from("event_attendance")
+                .insert([
+                    {
+                        event_id: selectedEventId,
+                        user_id: user.id
+                    }
+                ]);
+
+            if (error) {
+                console.log("Error saving attendance:", error);
+
+                if (error.code === "23505") {
+                    alert("You have already registered for this event.");
+                    return;
+                }
+
+                alert("Failed to register attendance.");
+                return;
+            }
+
             alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
+
+            document.getElementById("attendee-name").value = "";
+            document.getElementById("attendee-email").value = "";
+            document.getElementById("attendee-student-id").value = "";
+            document.getElementById("attendee-course").value = "";
+            document.getElementById("attendee-allergens").value = "";
+            document.getElementById("attendee-disabilities").value = "";
+            document.getElementById("attendee-consent").checked = false;
+
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.add("hidden");
+
+            const eventModal = document.getElementById("event-modal");
+            if (eventModal) eventModal.classList.add("hidden");
         });
     }
 
