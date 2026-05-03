@@ -137,9 +137,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!allowed) return;
 
     const sidebar = document.getElementById("sidebar");
-    if (sidebar) {
-        sidebar.classList.remove("-translate-x-full");
-    }
+    const toggleBtn = document.getElementById("sidebar-toggle");
+
+    // Sidebar default OPEN
+    let isOpen = true;
+    if (toggleBtn) toggleBtn.textContent = "✕";
+
+    // Ensure visible on load
+    sidebar?.classList.remove("-translate-x-full");
 
     await loadFAQs();
     await loadEvents();
@@ -155,15 +160,18 @@ document.addEventListener("DOMContentLoaded", async () => {
         document.getElementById("chatbox")?.classList.toggle("hidden");
     });
 
-    // sidebar toggle
-    document.getElementById("sidebar-toggle")?.addEventListener("click", () => {
+    toggleBtn?.addEventListener("click", () => {
         closeAllModals();
-        document.getElementById("sidebar")?.classList.toggle("-translate-x-full");
-    });
 
-    // sidebar back
-    document.getElementById("sidebar-back")?.addEventListener("click", () => {
-        document.getElementById("sidebar")?.classList.add("-translate-x-full");
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            sidebar?.classList.remove("-translate-x-full");
+            toggleBtn.textContent = "✕";
+        } else {
+            sidebar?.classList.add("-translate-x-full");
+            toggleBtn.textContent = "☰";
+        }
     });
 
 });
