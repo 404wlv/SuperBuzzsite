@@ -1,5 +1,7 @@
--- WARNING: This schema is for context only on what is going on in Supabase and is not meant to be run.
--- Table order and constraints may not be valid for execution.
+-- WARNING: This schema reference is for documentation only.
+-- It reflects the current Supabase structure used by the SuperBuzzsite project.
+-- It is not intended to be executed directly, and table order / constraints may
+-- need adjustment if used in a live migration script.
 
 CREATE TABLE public.daily_checkins (
   id uuid NOT NULL DEFAULT gen_random_uuid(),
@@ -7,6 +9,7 @@ CREATE TABLE public.daily_checkins (
   last_checkin date,
   streak smallint,
   reward_claimed boolean,
+  total_checkins integer,
   CONSTRAINT daily_checkins_pkey PRIMARY KEY (id)
 );
 
@@ -18,7 +21,16 @@ CREATE TABLE public.events (
   location text NOT NULL,
   event_date timestamp with time zone NOT NULL,
   created_at timestamp with time zone NOT NULL DEFAULT now(),
+  created_by uuid,
   CONSTRAINT events_pkey PRIMARY KEY (id)
+);
+
+CREATE TABLE public.event_attendance (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  event_id uuid NOT NULL,
+  user_id uuid NOT NULL,
+  created_at timestamp with time zone NOT NULL DEFAULT now(),
+  CONSTRAINT event_attendance_pkey PRIMARY KEY (id)
 );
 
 CREATE TABLE public.faqs (
@@ -34,25 +46,43 @@ CREATE TABLE public.profiles (
   created_at timestamp with time zone NOT NULL DEFAULT now(),
   email text NOT NULL,
   display_name text,
+  profile_picture text,
   CONSTRAINT profiles_pkey PRIMARY KEY (id),
   CONSTRAINT profiles_id_fkey FOREIGN KEY (id) REFERENCES auth.users(id)
 );
 
- Schema Notes
+-- Relationship summary
+-- profiles.id -> auth.users.id
+-- events.created_by -> auth.users.id / user profile identity
+-- event_attendance.event_id -> events.id
+-- event_attendance.user_id -> auth.users.id / user profile identity
+-- daily_checkins.user_id -> auth.users.id / user profile identity
 
-This schema reference documents the current Supabase table structure used by the SuperBuzzsite project.
+-- Feature summary
+-- profiles:
+-- stores user identity details shown on the profile page
 
-## Tables currently included
-- `profiles`
-- `faqs`
-- `daily_checkins`
-- `events`
+-- faqs:
+-- stores chatbot FAQ responses and keyword matching content
 
-## Notes
-- `profiles` is linked to `auth.users.id`
-- `faqs` supports chatbot / FAQ responses
-- `daily_checkins` supports the daily streak feature
-- `events` supports database-backed event loading and creation in `home.js`
+-- events:
+-- stores event records displayed on the home page and supports user-created events
 
-This file is included as backend/database evidence and as a reference for current schema structure.
-About the convo with Danial
+-- event_attendance:
+-- links users to events they have registered for or attended
+
+-- daily_checkins:
+-- stores daily check-in progress, streak data, reward state, and total check-in count
+
+-- Reward / profile logic context
+-- The profile and reward system reads from multiple tables:
+-- 1. daily_checkins.total_checkins -> daily check-in activity
+-- 2. events.created_by -> number of events created by a user
+-- 3. event_attendance.user_id -> number of events attended by a user
+
+-- Current points formula used in the project logic:
+-- total_points = dcp + (ecp * 50) + (eap * 20)
+--
+-- dcp = daily check-in points
+-- ecp = events created count
+-- eap = events attended count
