@@ -518,8 +518,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    checkinbtn = document.getElementById("checkin-btn")
-    checkincard = document.getElementById("checkin-card")
+    let checkinbtn = document.getElementById("checkin-btn")
+    let checkincard = document.getElementById("checkin-card")
     if (checkinbtn) {
         checkinbtn.addEventListener("click", () => {
             alert("Check-in successful! Enjoy your day on campus.");
