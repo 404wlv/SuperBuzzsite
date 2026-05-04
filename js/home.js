@@ -5,8 +5,14 @@ import { supabase } from "./supabaseClient.js";
 async function protectHomePage() {
     const { data, error } = await supabase.auth.getSession();
 
-    if (error || !data.session) {
-        console.log("No session, redirecting...");
+    if (error) {
+        console.log("Session check error:", error);
+        window.location.href = "index.html";
+        return false;
+    }
+
+    if (!data.session) {
+        console.log("No active session, redirecting...");
         window.location.href = "index.html";
         return false;
     }
@@ -34,11 +40,12 @@ async function testConnection() {
 
 testConnection();
 
-// Events
+// Events are now intended to move from temporary hardcoded data
+// to database-controlled content through Supabase - Joshua
 let events = [];
 let selectedEventId = null;
 
-// category colors
+//category colors for events -Aafrin -> temporary solution
 function getCategoryColor(category) {
     switch (category) {
         case "social": return "bg-purple-200";
@@ -52,6 +59,7 @@ function getCategoryColor(category) {
 // FAQs
 let faqs = [];
 
+//fetch FAQs from Supabase
 async function loadFAQs() {
     const { data, error } = await supabase
         .from("faqs")
@@ -62,13 +70,15 @@ async function loadFAQs() {
         return;
     }
 
+    console.log("FAQs loaded from database:", data);
+
     faqs = (data || []).map(faq => ({
         answer: faq.answer || "",
         keywords: faq.keywords || ""
     }));
 }
 
-// Events
+//load events from Supabase - Joshua
 async function loadEvents() {
     const { data, error } = await supabase
         .from("events")
@@ -92,7 +102,7 @@ async function loadEvents() {
     renderEvents();
 }
 
-// render events
+//render events cards -Aafrin
 function renderEvents() {
     const container = document.getElementById("event");
     if (!container) return;
@@ -108,7 +118,7 @@ function renderEvents() {
             <p class="text-xs sm:text-sm">${event.category}</p>
             <div class="absolute hidden opacity-0 scale-90 
               group-hover:opacity-100 group-hover:scale-100
-              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200 z-10">
+              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200">
                 ${event.description}
             </div>
         `;
@@ -118,7 +128,7 @@ function renderEvents() {
     });
 }
 
-// open modal
+//opening event details modal -Aafrin
 function openEventModal(event) {
     selectedEventId = event.id;
 
@@ -127,231 +137,276 @@ function openEventModal(event) {
     const descEl = document.getElementById("event-description");
     const locEl = document.getElementById("event-location");
     const dateEl = document.getElementById("event-date");
-    const modal = document.getElementById("event-modal");
 
-    if (!titleEl || !catEl || !descEl || !locEl || !dateEl || !modal) return;
+    if (!titleEl || !catEl || !descEl || !locEl || !dateEl) return;
 
     titleEl.textContent = event.title;
     catEl.textContent = event.category;
     descEl.textContent = event.description;
     locEl.textContent = "Location: " + event.location;
-    dateEl.textContent = "Date: " + new Date(event.date).toLocaleString();
+    dateEl.textContent = "Date: " + event.date;
 
-    modal.classList.remove("hidden");
+    const modal = document.getElementById("event-modal");
+    if (modal) modal.classList.remove("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
     const allowed = await protectHomePage();
     if (!allowed) return;
 
-    const sidebar = document.getElementById("sidebar");
-    const toggleBtn = document.getElementById("sidebar-toggle");
+    function closeAllModals() {
+        document.addEventListener("click", (event) => {
+            const modals = document.querySelectorAll(".modal");
+            modals.forEach(modal => {
+                if (event.target === modal) {
+                    modal.classList.add("hidden");
+                }
+            });
+        });
+    }
 
-    let isOpen = true;
-    if (toggleBtn) toggleBtn.textContent = "✕";
-    sidebar?.classList.remove("-translate-x-full");
+    //close all modals when starting to load content
+    closeAllModals();
 
     await loadFAQs();
     await loadEvents();
 
-    // chat toggle
-    document.getElementById("chat-toggle")?.addEventListener("click", () => {
-        document.getElementById("chatbox")?.classList.toggle("hidden");
+    //chat, sidebar toggles -Aafrin.
+    const chatToggleBtn = document.getElementById("chat-toggle");
+    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
+        const chatModal = document.getElementById("chatbox");
+        if (chatModal) chatModal.classList.toggle("hidden");
     });
 
-    // sidebar toggle
-    toggleBtn?.addEventListener("click", () => {
-        isOpen = !isOpen;
-
-        if (isOpen) {
-            sidebar?.classList.remove("-translate-x-full");
-            toggleBtn.textContent = "✕";
-        } else {
-            sidebar?.classList.add("-translate-x-full");
-            toggleBtn.textContent = "☰";
-        }
+    const sidebarToggleBtn = document.getElementById("sidebar-toggle");
+    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
+        const sidebar = document.getElementById("sidebar");
+        if (sidebar) sidebar.classList.toggle("-translate-x-full");
     });
 
-    // sidebar buttons
-    document.getElementById("profile-button")?.addEventListener("click", () => {
-        window.location.href = "profile.html";
-    });
+    const sidebarBackBtn = document.getElementById("sidebar-back");
+    if (sidebarBackBtn) {
+        sidebarBackBtn.addEventListener("click", () => {
+            const sidebar = document.getElementById("sidebar");
+            if (sidebar) sidebar.classList.add("-translate-x-full");
+        });
+    }
 
-    document.getElementById("map-button")?.addEventListener("click", () => {
-        window.location.href = "map.html";
-    });
 
-    document.getElementById("bus-timings")?.addEventListener("click", () => {
-        document.getElementById("bus-modal")?.classList.remove("hidden");
+    //modal buttons -Aafrin
+    const busBtn = document.getElementById("bus-timings");
+    if (busBtn) busBtn.addEventListener("click", () => {
+        const busModal = document.getElementById("bus-modal");
+        if (busModal) busModal.classList.remove("hidden");
         loadTransport();
     });
 
-    document.getElementById("gym-timings")?.addEventListener("click", () => {
-        document.getElementById("gym-modal")?.classList.remove("hidden");
+    const gymBtn = document.getElementById("gym-timings");
+    if (gymBtn) gymBtn.addEventListener("click", () => {
+        const gymModal = document.getElementById("gym-modal");
+        if (gymModal) gymModal.classList.remove("hidden");
     });
 
-    document.getElementById("library-timings")?.addEventListener("click", () => {
-        document.getElementById("library-modal")?.classList.remove("hidden");
+    const libraryBtn = document.getElementById("library-timings");
+    if (libraryBtn) libraryBtn.addEventListener("click", () => {
+        const libraryModal = document.getElementById("library-modal");
+        if (libraryModal) libraryModal.classList.remove("hidden");
     });
 
-    // event modal close
-    document.getElementById("close-event-modal")?.addEventListener("click", () => {
-        document.getElementById("event-modal")?.classList.add("hidden");
+    const mapBtn = document.getElementById("map-button");
+    if (mapBtn) mapBtn.addEventListener("click", () => {
+        window.location.href = "map.html";
     });
 
-    // create event modal
+
+
+
+
+   
+
+    //add event button popup -Aafrin
     const addEventBtn = document.getElementById("add-event-button");
     const createEventModal = document.getElementById("create-event-modal");
     const closeCreateEventModal = document.getElementById("close-create-event-modal");
     const createEventSubmit = document.getElementById("create-event-btn");
 
-    addEventBtn?.addEventListener("click", () => {
-        createEventModal?.classList.remove("hidden");
-    });
+    if (addEventBtn && createEventModal) {
+        addEventBtn.addEventListener("click", () => {
+            createEventModal.classList.remove("hidden");
+        });
+    }
 
-    closeCreateEventModal?.addEventListener("click", () => {
-        createEventModal?.classList.add("hidden");
-    });
+    if (closeCreateEventModal) {
+        closeCreateEventModal.addEventListener("click", () => {
+            createEventModal.classList.add("hidden");
+        });
+    }
 
-    createEventSubmit?.addEventListener("click", async () => {
-        const title = document.getElementById("new-event-title")?.value.trim();
-        const category = document.getElementById("new-event-category")?.value;
-        const description = document.getElementById("new-event-description")?.value.trim();
-        const location = document.getElementById("new-event-location")?.value.trim();
-        const date = document.getElementById("new-event-date")?.value;
+    if (createEventSubmit) {
+        createEventSubmit.addEventListener("click", async () => {
+            const title = document.getElementById("new-event-title").value.trim();
+            const category = document.getElementById("new-event-category").value;
+            const description = document.getElementById("new-event-description").value.trim();
+            const location = document.getElementById("new-event-location").value.trim();
+            const date = document.getElementById("new-event-date").value;
 
-        if (!title || !category || !description || !location || !date) {
-            alert("Please fill all fields!");
-            return;
-        }
-
-        const { data: userData, error: userError } = await supabase.auth.getUser();
-
-        if (userError || !userData.user) {
-            alert("You must be logged in to create an event.");
-            window.location.href = "index.html";
-            return;
-        }
-
-        const { error } = await supabase
-            .from("events")
-            .insert([{
-                title,
-                category,
-                description,
-                location,
-                event_date: date,
-                created_by: userData.user.id
-            }]);
-
-        if (error) {
-            console.log("Error creating event:", error);
-            alert("Failed to create event.");
-            return;
-        }
-
-        alert("Event created successfully!");
-
-        document.getElementById("new-event-title").value = "";
-        document.getElementById("new-event-description").value = "";
-        document.getElementById("new-event-location").value = "";
-        document.getElementById("new-event-date").value = "";
-
-        createEventModal?.classList.add("hidden");
-        await loadEvents();
-    });
-
-    // attendance form
-    const attendEventBtn = document.getElementById("attend-btn");
-    const closeAttendFormBtn = document.getElementById("close-attend-form");
-    const submitAttendBtn = document.getElementById("confirm-attend-btn");
-
-    attendEventBtn?.addEventListener("click", () => {
-        if (!selectedEventId) {
-            alert("Please select an event first.");
-            return;
-        }
-
-        document.getElementById("attend-form")?.classList.remove("hidden");
-    });
-
-    closeAttendFormBtn?.addEventListener("click", () => {
-        document.getElementById("attend-form")?.classList.add("hidden");
-    });
-
-    submitAttendBtn?.addEventListener("click", async () => {
-        const name = document.getElementById("attendee-name")?.value.trim();
-        const email = document.getElementById("attendee-email")?.value.trim();
-        const studentId = document.getElementById("attendee-student-id")?.value.trim();
-        const course = document.getElementById("attendee-course")?.value.trim();
-        const consent = document.getElementById("attendee-consent")?.checked;
-
-        if (!name || !email || !studentId || !course) {
-            alert("Please fill all required fields!");
-            return;
-        }
-
-        if (!consent) {
-            alert("You must consent to data processing to attend the event.");
-            return;
-        }
-
-        if (!selectedEventId) {
-            alert("No event selected.");
-            return;
-        }
-
-        const { data: userData, error: userError } = await supabase.auth.getUser();
-
-        if (userError || !userData.user) {
-            alert("You must be logged in to attend an event.");
-            window.location.href = "index.html";
-            return;
-        }
-
-        const user = userData.user;
-
-        const { error } = await supabase
-            .from("event_attendance")
-            .insert([{
-                event_id: selectedEventId,
-                user_id: user.id
-            }]);
-
-        if (error) {
-            console.log("Error saving attendance:", error);
-
-            if (error.code === "23505") {
-                alert("You have already registered for this event.");
+            if (!title || !category || !description || !location || !date) {
+                alert("Please fill all fields!");
                 return;
             }
 
-            alert("Failed to register attendance.");
-            return;
-        }
+            const { data: userData, error: userError } = await supabase.auth.getUser();
 
-        alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
+            if (userError || !userData.user) {
+                alert("You must be logged in to create an event.");
+                window.location.href = "index.html";
+                return;
+            }
 
-        document.getElementById("attendee-name").value = "";
-        document.getElementById("attendee-email").value = "";
-        document.getElementById("attendee-student-id").value = "";
-        document.getElementById("attendee-course").value = "";
-        document.getElementById("attendee-allergens").value = "";
-        document.getElementById("attendee-disabilities").value = "";
-        document.getElementById("attendee-consent").checked = false;
+            const { error } = await supabase
+                .from("events")
+                .insert([
+                    {
+                        title,
+                        category,
+                        description,
+                        location,
+                        event_date: date,
+                        created_by: userData.user.id
+                    }
+                ]);
 
-        document.getElementById("attend-form")?.classList.add("hidden");
-        document.getElementById("event-modal")?.classList.add("hidden");
-    });
+            if (error) {
+                console.log("Error creating event:", error);
+                alert("Failed to create event.");
+                return;
+            }
 
-    // chatbot
+            alert("Event created successfully!");
+
+            document.getElementById("new-event-title").value = "";
+            document.getElementById("new-event-description").value = "";
+            document.getElementById("new-event-location").value = "";
+            document.getElementById("new-event-date").value = "";
+
+            createEventModal.classList.add("hidden");
+
+            await loadEvents();
+        });
+    }
+    const closeeventModalBtn = document.getElementById("close-event-modal");
+
+    if (closeeventModalBtn) {
+        closeeventModalBtn.addEventListener("click", () => {
+            const modal = document.getElementById("event-modal");
+            if (modal) modal.classList.add("hidden");
+        });
+    }
+
+    //event attendance form - Aafrin
+    const attendEventBtn = document.getElementById("attend-btn");
+    const closeAttendFormBtn = document.getElementById("close-attend-form");
+
+    if (attendEventBtn) {
+        attendEventBtn.addEventListener("click", () => {
+            if (!selectedEventId) {
+                alert("Please select an event first.");
+                return;
+            }
+
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.remove("hidden");
+        });
+    }
+
+    if (closeAttendFormBtn) {
+        closeAttendFormBtn.addEventListener("click", () => {
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.add("hidden");
+        });
+    }
+
+    //Handle form submission
+    const submitAttendBtn = document.getElementById("confirm-attend-btn");
+    if (submitAttendBtn) {
+        submitAttendBtn.addEventListener("click", async () => {
+            const name = document.getElementById("attendee-name").value.trim();
+            const email = document.getElementById("attendee-email").value.trim();
+            const studentId = document.getElementById("attendee-student-id").value.trim();
+            const course = document.getElementById("attendee-course").value.trim();
+            const consent = document.getElementById("attendee-consent").checked;
+
+            if (!name || !email || !studentId || !course) {
+                alert("Please fill all required fields!");
+                return;
+            }
+
+            if (!consent) {
+                alert("You must consent to data processing to attend the event.");
+                return;
+            }
+
+            if (!selectedEventId) {
+                alert("No event selected.");
+                return;
+            }
+
+            const { data: userData, error: userError } = await supabase.auth.getUser();
+
+            if (userError || !userData.user) {
+                alert("You must be logged in to attend an event.");
+                window.location.href = "index.html";
+                return;
+            }
+
+            const user = userData.user;
+
+            const { error } = await supabase
+                .from("event_attendance")
+                .insert([
+                    {
+                        event_id: selectedEventId,
+                        user_id: user.id
+                    }
+                ]);
+
+            if (error) {
+                console.log("Error saving attendance:", error);
+
+                if (error.code === "23505") {
+                    alert("You have already registered for this event.");
+                    return;
+                }
+
+                alert("Failed to register attendance.");
+                return;
+            }
+
+            alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
+
+            document.getElementById("attendee-name").value = "";
+            document.getElementById("attendee-email").value = "";
+            document.getElementById("attendee-student-id").value = "";
+            document.getElementById("attendee-course").value = "";
+            document.getElementById("attendee-allergens").value = "";
+            document.getElementById("attendee-disabilities").value = "";
+            document.getElementById("attendee-consent").checked = false;
+
+            const attendForm = document.getElementById("attend-form");
+            if (attendForm) attendForm.classList.add("hidden");
+
+            const eventModal = document.getElementById("event-modal");
+            if (eventModal) eventModal.classList.add("hidden");
+        });
+    }
+
+
+    //chatbot
     const chatInput = document.getElementById("chat-input");
     const chatSend = document.getElementById("chat-send");
     const chatMessages = document.getElementById("chat-messages");
 
     function addMessage(text, sender) {
-        if (!chatMessages) return;
-
         const msg = document.createElement("div");
         msg.className = sender === "user"
             ? "text-right bg-[#ACBAC4] text-[#E1D9BC] p-2 rounded my-1"
@@ -385,10 +440,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function sendMessage() {
-        const message = chatInput?.value.trim();
+        const message = chatInput.value.trim();
         if (!message) return;
 
         addMessage(message, "user");
+
+        console.log("User message:", message);
+        console.log("Current FAQs:", faqs);
 
         const reply = getBotReply(message);
 
@@ -399,17 +457,24 @@ document.addEventListener("DOMContentLoaded", async () => {
         chatInput.value = "";
     }
 
-    chatSend?.addEventListener("click", sendMessage);
+    if (chatSend) {
+        chatSend.addEventListener("click", sendMessage);
+    }
 
-    chatInput?.addEventListener("keydown", (e) => {
-        if (e.key === "Enter") sendMessage();
-    });
+    if (chatInput) {
+        chatInput.addEventListener("keydown", (e) => {
+            if (e.key === "Enter") sendMessage();
+        });
+    }
 
-    // bus timings
+    //bus timings -Aafrin
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) return;
+        if (!busList) {
+            console.log("failed");
+            return;
+        }
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
@@ -443,5 +508,13 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error(err);
             busList.innerHTML = "<li>Error loading transport data</li>";
         }
+    }
+
+    //profile
+    const profileBtn = document.getElementById("profile-button");
+    if (profileBtn) {
+        profileBtn.addEventListener("click", () => {
+            window.location.href = "profile.html";
+        });
     }
 });
