@@ -517,4 +517,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.location.href = "profile.html";
         });
     }
+
+    checkinbtn = document.getElementById("checkin-btn")
+    checkincard = document.getElementById("checkin-card")
+    if (checkinbtn) {
+        checkinbtn.addEventListener("click", () => {
+            alert("Check-in successful! Enjoy your day on campus.");
+            checkincard.classList.add("hidden");
+        });
+    }
+        
 });
