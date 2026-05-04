@@ -511,6 +511,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     //profile
+    
     const profileBtn = document.getElementById("profile-button");
     if (profileBtn) {
         profileBtn.addEventListener("click", () => {
@@ -520,12 +521,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     const checkinbtn = document.getElementById("checkin-btn")
     const checkincard = document.getElementById("checkin-card")
-    
+
     if (checkinbtn && checkincard) {
         checkinbtn.addEventListener("click", () => {
             alert("Check-in successful! Enjoy your day on campus.");
             checkincard.classList.add("hidden");
         });
     }
+
+
         
 });
