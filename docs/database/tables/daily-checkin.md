@@ -1,10 +1,9 @@
 # Daily Check-in System
 
 ## Purpose
+The `daily_checkins` feature is designed to increase student engagement within the platform by encouraging consistent daily interaction.
 
-The **daily_checkins** feature is designed to increase student engagement within the platform by encouraging consistent daily interaction.
-
-Users can check in once per day to build a streak. After reaching a defined milestone (e.g., 3 consecutive days), they unlock rewards such as discounts or free items.
+Users can check in once per day to build a streak. As they continue checking in, their activity is stored and reflected in the interface through a progress bar, streak count, and total number of check-ins. This also supports the wider reward system in the platform.
 
 ---
 
@@ -12,142 +11,117 @@ Users can check in once per day to build a streak. After reaching a defined mile
 
 ### Table: `daily_checkins`
 
-| Column Name  | Data Type | Description                                        |
-| ------------ | --------- | -------------------------------------------------- |
-| user_id      | uuid      | Unique identifier linked to authenticated user     |
-| last_checkin | date      | Stores the last date the user checked in           |
-| streak       | integer   | Number of consecutive days the user has checked in |
+| Column Name     | Data Type | Description |
+|----------------|-----------|-------------|
+| id             | uuid      | Unique identifier for each daily check-in record |
+| user_id        | uuid      | Unique identifier linked to the authenticated user |
+| last_checkin   | date      | Stores the last date the user checked in |
+| streak         | int2      | Number of consecutive days the user has checked in |
+| reward_claimed | bool      | Indicates whether the user has already claimed a reward |
+| total_checkins | int4      | Stores the total number of times the user has checked in |
 
 ### Key Notes
-
-- Each user has **one record only**
+- Each user should only have one main check-in record
 - `user_id` is linked to Supabase authentication
-- Streak resets if a day is missed
+- `streak` resets if a day is missed
+- `total_checkins` continues increasing even if the streak resets
+- `reward_claimed` can be used later for reward tracking
 
 ---
 
 ## How It Works (Workflow)
 
-1. User logs into the platform
-2. User clicks **"Check In"** button
+1. User logs into the platform  
+2. User clicks the **Check In** button  
 3. System verifies:
-   - If user is logged in
-   - If user already checked in today
-
+   - the user is logged in
+   - whether the user has already checked in today
 4. If valid:
-   - Update streak
-   - Save today's date
-
-5. UI updates:
-   - Progress bar increases
-   - Message updates
-
-6. If streak reaches target:
-   - Reward is unlocked 🎉
+   - the system updates the streak
+   - stores today’s date as `last_checkin`
+   - increases `total_checkins`
+5. The interface updates:
+   - progress bar changes
+   - streak value updates
+   - total check-ins message updates
+6. If the user has already checked in today:
+   - duplicate check-in is blocked
+   - the button is disabled
+   - the check-in card can be hidden from the page
 
 ---
 
 ## Logic Summary
 
-- If no previous record → create new entry (streak = 1)
-- If last check-in was **yesterday** → increment streak
-- If last check-in was **not yesterday** → reset streak to 1
+- If no previous record exists → create a new record with:
+  - `streak = 1`
+  - `total_checkins = 1`
+- If `last_checkin` was yesterday → increment streak
+- If `last_checkin` was not yesterday → reset streak to 1
 - If already checked in today → block duplicate action
+- `total_checkins` always increases with each successful daily check-in
 
 ---
 
-## Architecture Diagram
+## Architecture Flow
 
-```
-User (Browser)
-     │
-     ▼
-Frontend (home.html + dailyCheckin.js)
-     │
-     │ User clicks "Check In"
-     ▼
-Supabase Auth
-     │
-     │ Verify logged-in user
-     ▼
-Supabase Database (daily_checkins)
-     │
-     │ Fetch / Update streak data
-     ▼
-Frontend UI Update
-     │
-     ▼
-User sees updated progress & reward
-```
+User (Browser)  
+↓  
+Frontend (`home.html` + `dailyCheckin.js`)  
+↓  
+User clicks **Check In**  
+↓  
+Supabase Auth verifies logged-in user  
+↓  
+Supabase Database (`daily_checkins`) fetches or updates record  
+↓  
+Frontend updates streak, progress bar, and button state  
+↓  
+User sees updated check-in status
 
 ---
 
 ## Reward System
 
-- Example target: **3-day streak**
-- On completion:
-  - User receives reward message
-  - Example:
+Example target: **3-day streak**
 
-    ```
-    🎉 Congrats! Use code BROWNIE123 for a free brownie!
-    ```
+On completion:
+- user receives a reward message
+- future versions can connect this to discounts, free items, or loyalty rewards
 
-- Future rewards:
-  - 7 days → free coffee
-  - 14 days → meal discount
-  - 30 days → premium reward
+### Example
+`🎉 Congrats! Use code BROWNIE123 for a free brownie!`
 
----
-
-## Future Improvement: Location-Based Check-in
-
-To prevent misuse, location validation can be added.
-
-### Concept Flow
-
-```
-User clicks Check In
-        │
-        ▼
-Browser Geolocation API
-        │
-        ▼
-Check if user is inside campus radius
-        │
-   ┌────┴────┐
-   ▼         ▼
-Allowed     Blocked
-  ✅          ❌
-```
-
-### Implementation Idea
-
-- Use `navigator.geolocation` in frontend
-- Define campus coordinates (latitude & longitude)
-- Allow check-in only within defined radius (e.g., 500 meters)
+### Possible future rewards
+- 7 days → free coffee
+- 14 days → meal discount
+- 30 days → premium reward
 
 ---
 
 ## Security Considerations
 
-- Row Level Security (RLS) ensures:
-  - Users can only access their own data
+Row Level Security (RLS) should ensure that:
 
-- Policies required:
-  - SELECT (read own data)
-  - INSERT (create own record)
-  - UPDATE (update own record)
+- users can only access their own check-in data
+- users can only insert their own record
+- users can only update their own record
+
+Suggested policies:
+- `SELECT` → read own data
+- `INSERT` → create own record
+- `UPDATE` → update own record
 
 ---
 
-## Future Enhancements
+## Future Improvements
 
-- Leaderboard (top active students)
-- Streak freeze (skip one missed day)
-- Notifications/reminders
-- Reward redemption tracking
-- Admin dashboard for analytics
+- leaderboard for most active students
+- streak freeze for one missed day
+- reward redemption history
+- notifications and reminders
+- analytics dashboard for admins
+- location-based validation to confirm the student is on or near campus
 
 ---
 
@@ -155,11 +129,9 @@ Allowed     Blocked
 
 The Daily Check-in system is a lightweight engagement feature that:
 
-- Encourages daily platform usage
-- Tracks user consistency
-- Rewards active users
-- Scales easily with additional features
+- encourages daily platform use
+- tracks user consistency
+- stores both streak and total usage
+- supports future rewards and analytics
 
-It integrates seamlessly with Supabase authentication and database services, making it efficient, secure, and extensible for future development.
-
----
+It integrates with Supabase authentication and the `daily_checkins` table, making it secure, scalable, and suitable for future extension.
