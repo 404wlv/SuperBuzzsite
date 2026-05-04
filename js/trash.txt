@@ -114,14 +114,4 @@ const threeLayer = {
 
 
 ---------------------------------------------------
-if (error) {
-        console.log("Session check error:", error);
-        window.location.href = "index.html";
-        return false;
-    }
 
-    if (!data.session) {
-        console.log("No active session, redirecting...");
-        window.location.href = "index.html";
-        return false;
-    }
