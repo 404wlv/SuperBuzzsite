@@ -3,24 +3,22 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>profile</title>
+        <title>Profile</title>
         <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
-
         <script src="https://cdn.tailwindcss.com"></script>
     </head>
 
-    <body class="bg-[#ACBAC4] text-[#F0F0DB]">
-        <div class="p-6 max-w-3xl mx-auto ">
-            
-            <h1 class="text-3xl font-bold text-[#30364F] mb-6">
+    <body class="bg-[#123458] text-[#F1EFEC]">
+        <div class="p-6 max-w-3xl mx-auto">
+            <h1 class="text-3xl font-bold text-[#F1EFEC] mb-6">
                 My Profile
             </h1>
 
-            <div class="bg-[#E1D9BC] text-[#30364F] p-6 rounded-2xl shadow-lg">
+            <div class="bg-[#D4C9BE] text-[#030303] p-6 rounded-2xl shadow-2xl border border-[#334155]">
 
                 <!-- Profile Picture -->
                 <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center mb-4 shadow-md">
-                    <svg xlmns="http://ww.w3.org/2000/svg"
+                    <svg xmlns="http://www.w3.org/2000/svg"
                         class="w-12 h-12 text-gray-600" 
                         fill="currentColor"
                         viewBox="0 0 24 24">
@@ -49,35 +47,54 @@
 
                 <!-- Stats Section -->
                 <div class="grid grid-cols-2 gap-4 w-full text-center mb-6">
-                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">120</p>
+                    <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
+                        <p id="points-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Points</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">3</p>
+                        <p id="coupons-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Coupons</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">8</p>
+                        <p id="attended-count" class="text-lg font-bold">0</p>
                         <p class="text-xs">Attended</p>
                     </div>
 
                     <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p class="text-lg font-bold">5</p>
-                        <p class="text-xs">Applied</p>
+                        <p id="applied-count" class="text-lg font-bold">0</p>
+                        <p class="text-xs">Check-ins</p>
                     </div>
-
                 </div>
 
-                <!-- Admin Approval -->
+                <!-- Reward Progress -->
+                <div class="mb-6">
+                    <div class="flex justify-between text-sm mb-2">
+                        <span class="font-semibold">Reward Progress</span>
+                        <span id="reward-progress-text">0%</span>
+                    </div>
+
+                    <div class="w-full bg-[#F1EFEC] rounded-full h-4 overflow-hidden">
+                        <div
+                            id="reward-progress"
+                            class="bg-green-500 h-4 rounded-full transition-all duration-500"
+                            style="width: 0%">
+                        </div>
+                    </div>
+
+                    <p id="reward-status" class="text-xs mt-2 text-center">
+                        100 more point(s) to unlock a reward
+                    </p>
+                </div>
+
+                <!-- Events Created -->
                 <div class="mb-4 text-center">
                     <p class="text-sm mb-1">Events Created</p>
-                    <div class="w-16 h-16 rounded-full border-4 border-green-500 flex items-center justify-center mx-auto">
-                        ✔
+                    <div class="w-16 h-16 rounded-full border-4 border-green-500 flex items-center justify-center mx-auto text-lg font-bold">
+                        <span id="events-created-count">0</span>
                     </div>
-                    <p class="text-xs mt-1">Approved</p>
+                    <p class="text-xs mt-1">Created by you</p>
                 </div>
 
                 <!-- Help ID Status -->
@@ -88,20 +105,22 @@
 
                 <!-- Buttons -->
                 <div class="flex gap-3 mt-4">
-                    <button id="save-profile" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    <button id="save-profile" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition"px-4 py-2 rounded-xl hover:scale-105 transition">
                         Save
                     </button>
 
-                    <button id="logout-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    <button id="logout-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition"px-4 py-2 rounded-xl hover:scale-105 transition">
                         Logout
                     </button>
 
-                    <button id="back-home-btn" class="bg-[#30364F] text-[#F0F0DB] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    <button id="back-home-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition"px-4 py-2 rounded-xl hover:scale-105 transition">
                         Home
                     </button>
                 </div>
 
             </div>
-        
+        </div>
+
+        <script type="module" src="js/profile.js"></script>
     </body>
 </html>

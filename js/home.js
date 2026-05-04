@@ -1,20 +1,29 @@
 //imports
 import { supabase } from "./supabaseClient.js";
 
-//protecting sessions
-async function checkUser() {
-    const { data, error } = await supabase.auth.getUser();
-    if (!data.user) {
-        console.log("No user, redirecting...");
-        window.location.href = "home.html";
-    } else {
-        console.log("user is logged in");
+// protect session
+async function protectHomePage() {
+    const { data, error } = await supabase.auth.getSession();
+
+    if (error || !data.session) {
+        console.log("No session, redirecting...");
+        window.location.href = "index.html";
+        return false;
     }
+
+    return true;
 }
 
-//test connection to supabase
+// listen for logout/session changes
+supabase.auth.onAuthStateChange((event, session) => {
+    if (!session) {
+        window.location.href = "index.html";
+    }
+});
+
+// test connection to supabase
 async function testConnection() {
-    const { data, error } = await supabase.auth.getSession();
+    const { error } = await supabase.auth.getSession();
 
     if (error) {
         console.log("Error connecting:", error);
@@ -23,14 +32,13 @@ async function testConnection() {
     }
 }
 
-//run the connection test on page load
 testConnection();
 
-// Events are now intended to move from temporary hardcoded data
-// to database-controlled content through Supabase - Joshua
+// Events
 let events = [];
+let selectedEventId = null;
 
-//category colors for events -Aafrin -> temporary solution
+// category colors
 function getCategoryColor(category) {
     switch (category) {
         case "social": return "bg-purple-200";
@@ -41,22 +49,26 @@ function getCategoryColor(category) {
     }
 }
 
-//fetch FAQs from Supabase
+// FAQs
 let faqs = [];
+
 async function loadFAQs() {
-    const { data, error } = await supabase.from("faqs").select("*");
+    const { data, error } = await supabase
+        .from("faqs")
+        .select("answer, keywords");
+
     if (error) {
         console.log("FAQ fetch error:", error);
         return;
     }
 
-    faqs = data.map(faq => ({
-        answer: faq.answer,
+    faqs = (data || []).map(faq => ({
+        answer: faq.answer || "",
         keywords: faq.keywords || ""
     }));
 }
 
-//load events from Supabase - Joshua
+// Events
 async function loadEvents() {
     const { data, error } = await supabase
         .from("events")
@@ -80,7 +92,7 @@ async function loadEvents() {
     renderEvents();
 }
 
-//render events cards -Aafrin
+// render events
 function renderEvents() {
     const container = document.getElementById("event");
     if (!container) return;
@@ -90,232 +102,256 @@ function renderEvents() {
     events.forEach(event => {
         const card = document.createElement("div");
         card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`;
+
         card.innerHTML = `
             <h3 class="font-bold text-sm sm:text-base">${event.title}</h3>
             <p class="text-xs sm:text-sm">${event.category}</p>
             <div class="absolute hidden opacity-0 scale-90 
               group-hover:opacity-100 group-hover:scale-100
-              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200">
+              transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 sm:w-200 z-10">
                 ${event.description}
             </div>
         `;
+
         card.addEventListener("click", () => openEventModal(event));
         container.appendChild(card);
     });
 }
 
-//opening event details modal -Aafrin
+// open modal
 function openEventModal(event) {
+    selectedEventId = event.id;
+
     const titleEl = document.getElementById("event-title");
     const catEl = document.getElementById("event-category");
     const descEl = document.getElementById("event-description");
     const locEl = document.getElementById("event-location");
     const dateEl = document.getElementById("event-date");
+    const modal = document.getElementById("event-modal");
 
-    if (!titleEl || !catEl || !descEl || !locEl || !dateEl) return;
+    if (!titleEl || !catEl || !descEl || !locEl || !dateEl || !modal) return;
 
     titleEl.textContent = event.title;
     catEl.textContent = event.category;
     descEl.textContent = event.description;
     locEl.textContent = "Location: " + event.location;
-    dateEl.textContent = "Date: " + event.date;
+    dateEl.textContent = "Date: " + new Date(event.date).toLocaleString();
 
-    const modal = document.getElementById("event-modal");
-    if (modal) modal.classList.remove("hidden");
+    modal.classList.remove("hidden");
 }
 
 document.addEventListener("DOMContentLoaded", async () => {
+    const allowed = await protectHomePage();
+    if (!allowed) return;
 
-    //trying a different approach -Aafrin
-    function closeAllModals() {
-        document.addEventListener("click", (event) => {
-            const modals = document.querySelectorAll(".modal");
-            modals.forEach(modal => {
-                if (event.target === modal) {
-                    modal.classList.add("hidden");
-                }
-            });
-        });
-    }
+    const sidebar = document.getElementById("sidebar");
+    const toggleBtn = document.getElementById("sidebar-toggle");
 
-    //close all modals when starting to load content
-    closeAllModals();
+    let isOpen = true;
+    if (toggleBtn) toggleBtn.textContent = "✕";
+    sidebar?.classList.remove("-translate-x-full");
 
     await loadFAQs();
     await loadEvents();
 
-    //chat, sidebar toggles -Aafrin.
-    const chatToggleBtn = document.getElementById("chat-toggle");
-    if (chatToggleBtn) chatToggleBtn.addEventListener("click", () => {
-        closeAllModals();
-        const chatModal = document.getElementById("chatbox");
-        if (chatModal) chatModal.classList.toggle("hidden");
+    // chat toggle
+    document.getElementById("chat-toggle")?.addEventListener("click", () => {
+        document.getElementById("chatbox")?.classList.toggle("hidden");
     });
 
-    const sidebarToggleBtn = document.getElementById("sidebar-toggle");
-    if (sidebarToggleBtn) sidebarToggleBtn.addEventListener("click", () => {
-        closeAllModals();
-        const sidebar = document.getElementById("sidebar");
-        if (sidebar) sidebar.classList.toggle("-translate-x-full");
+    // sidebar toggle
+    toggleBtn?.addEventListener("click", () => {
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            sidebar?.classList.remove("-translate-x-full");
+            toggleBtn.textContent = "✕";
+        } else {
+            sidebar?.classList.add("-translate-x-full");
+            toggleBtn.textContent = "☰";
+        }
     });
 
-    const sidebarBackBtn = document.getElementById("sidebar-back");
-    if (sidebarBackBtn) {
-        sidebarBackBtn.addEventListener("click", () => {
-            closeAllModals();
-            const sidebar = document.getElementById("sidebar");
-            if (sidebar) sidebar.classList.add("-translate-x-full");
-        });
-    }
-
-    //modal buttons -Aafrin
-    const busBtn = document.getElementById("bus-timings");
-    if (busBtn) busBtn.addEventListener("click", () => {
-        closeAllModals();
-        const busModal = document.getElementById("bus-modal");
-        if (busModal) busModal.classList.remove("hidden");
-        loadTransport();
+    // sidebar buttons
+    document.getElementById("profile-button")?.addEventListener("click", () => {
+        window.location.href = "profile.html";
     });
 
-    const gymBtn = document.getElementById("gym-timings");
-    if (gymBtn) gymBtn.addEventListener("click", () => {
-        closeAllModals();
-        const gymModal = document.getElementById("gym-modal");
-        if (gymModal) gymModal.classList.remove("hidden");
-    });
-
-    const libraryBtn = document.getElementById("library-timings");
-    if (libraryBtn) libraryBtn.addEventListener("click", () => {
-        closeAllModals();
-        const libraryModal = document.getElementById("library-modal");
-        if (libraryModal) libraryModal.classList.remove("hidden");
-    });
-
-    const mapBtn = document.getElementById("map-button");
-    if (mapBtn) mapBtn.addEventListener("click", () => {
-        closeAllModals();
+    document.getElementById("map-button")?.addEventListener("click", () => {
         window.location.href = "map.html";
     });
 
-    //add event button popup -Aafrin
+    document.getElementById("bus-timings")?.addEventListener("click", () => {
+        document.getElementById("bus-modal")?.classList.remove("hidden");
+        loadTransport();
+    });
+
+    document.getElementById("gym-timings")?.addEventListener("click", () => {
+        document.getElementById("gym-modal")?.classList.remove("hidden");
+    });
+
+    document.getElementById("library-timings")?.addEventListener("click", () => {
+        document.getElementById("library-modal")?.classList.remove("hidden");
+    });
+
+    // event modal close
+    document.getElementById("close-event-modal")?.addEventListener("click", () => {
+        document.getElementById("event-modal")?.classList.add("hidden");
+    });
+
+    // create event modal
     const addEventBtn = document.getElementById("add-event-button");
     const createEventModal = document.getElementById("create-event-modal");
     const closeCreateEventModal = document.getElementById("close-create-event-modal");
     const createEventSubmit = document.getElementById("create-event-btn");
 
-    if (addEventBtn && createEventModal) {
-        addEventBtn.addEventListener("click", () => {
-            createEventModal.classList.remove("hidden");
-        });
-    }
+    addEventBtn?.addEventListener("click", () => {
+        createEventModal?.classList.remove("hidden");
+    });
 
-    if (closeCreateEventModal) {
-        closeCreateEventModal.addEventListener("click", () => {
-            createEventModal.classList.add("hidden");
-        });
-    }
+    closeCreateEventModal?.addEventListener("click", () => {
+        createEventModal?.classList.add("hidden");
+    });
 
-    if (createEventSubmit) {
-        createEventSubmit.addEventListener("click", async () => {
-            const title = document.getElementById("new-event-title").value.trim();
-            const category = document.getElementById("new-event-category").value;
-            const description = document.getElementById("new-event-description").value.trim();
-            const location = document.getElementById("new-event-location").value.trim();
-            const date = document.getElementById("new-event-date").value;
+    createEventSubmit?.addEventListener("click", async () => {
+        const title = document.getElementById("new-event-title")?.value.trim();
+        const category = document.getElementById("new-event-category")?.value;
+        const description = document.getElementById("new-event-description")?.value.trim();
+        const location = document.getElementById("new-event-location")?.value.trim();
+        const date = document.getElementById("new-event-date")?.value;
 
-            if (!title || !category || !description || !location || !date) {
-                alert("Please fill all fields!");
-                return;
-            }
+        if (!title || !category || !description || !location || !date) {
+            alert("Please fill all fields!");
+            return;
+        }
 
-            const { error } = await supabase
-                .from("events")
-                .insert([
-                    {
-                        title,
-                        category,
-                        description,
-                        location,
-                        event_date: date
-                    }
-                ]);
+        const { data: userData, error: userError } = await supabase.auth.getUser();
 
-            if (error) {
-                console.log("Error creating event:", error);
-                alert("Failed to create event.");
-                return;
-            }
+        if (userError || !userData.user) {
+            alert("You must be logged in to create an event.");
+            window.location.href = "index.html";
+            return;
+        }
 
-            alert("Event created successfully!");
+        const { error } = await supabase
+            .from("events")
+            .insert([{
+                title,
+                category,
+                description,
+                location,
+                event_date: date,
+                created_by: userData.user.id
+            }]);
 
-            document.getElementById("new-event-title").value = "";
-            document.getElementById("new-event-description").value = "";
-            document.getElementById("new-event-location").value = "";
-            document.getElementById("new-event-date").value = "";
+        if (error) {
+            console.log("Error creating event:", error);
+            alert("Failed to create event.");
+            return;
+        }
 
-            createEventModal.classList.add("hidden");
+        alert("Event created successfully!");
 
-            await loadEvents();
-        });
-    }
+        document.getElementById("new-event-title").value = "";
+        document.getElementById("new-event-description").value = "";
+        document.getElementById("new-event-location").value = "";
+        document.getElementById("new-event-date").value = "";
 
-    const closeeventModalBtn = document.getElementById("close-event-modal");
+        createEventModal?.classList.add("hidden");
+        await loadEvents();
+    });
 
-    if (closeeventModalBtn) {
-        closeeventModalBtn.addEventListener("click", () => {
-            closeAllModals();
-        });
-    }
-
-    //event attendance form - Aafrin
+    // attendance form
     const attendEventBtn = document.getElementById("attend-btn");
     const closeAttendFormBtn = document.getElementById("close-attend-form");
-
-    if (attendEventBtn) {
-        attendEventBtn.addEventListener("click", () => {
-            const attendForm = document.getElementById("attend-form");
-            if (attendForm) attendForm.classList.remove("hidden");
-        });
-    }
-
-    if (closeAttendFormBtn) {
-        closeAttendFormBtn.addEventListener("click", () => {
-            closeAllModals();
-        });
-    }
-
-    //Handle form submission
     const submitAttendBtn = document.getElementById("confirm-attend-btn");
-    if (submitAttendBtn) {
-        submitAttendBtn.addEventListener("click", () => {
-            const name = document.getElementById("attendee-name").value.trim();
-            const email = document.getElementById("attendee-email").value.trim();
-            const studentId = document.getElementById("attendee-student-id").value.trim();
-            const course = document.getElementById("attendee-course").value.trim();
-            const allergens = document.getElementById("attendee-allergens").value.trim();
-            const disabilities = document.getElementById("attendee-disabilities").value.trim();
-            const consent = document.getElementById("attendee-consent").checked;
 
-            if (!name || !email || !studentId || !course) {
-                alert("Please fill all required fields!");
+    attendEventBtn?.addEventListener("click", () => {
+        if (!selectedEventId) {
+            alert("Please select an event first.");
+            return;
+        }
+
+        document.getElementById("attend-form")?.classList.remove("hidden");
+    });
+
+    closeAttendFormBtn?.addEventListener("click", () => {
+        document.getElementById("attend-form")?.classList.add("hidden");
+    });
+
+    submitAttendBtn?.addEventListener("click", async () => {
+        const name = document.getElementById("attendee-name")?.value.trim();
+        const email = document.getElementById("attendee-email")?.value.trim();
+        const studentId = document.getElementById("attendee-student-id")?.value.trim();
+        const course = document.getElementById("attendee-course")?.value.trim();
+        const consent = document.getElementById("attendee-consent")?.checked;
+
+        if (!name || !email || !studentId || !course) {
+            alert("Please fill all required fields!");
+            return;
+        }
+
+        if (!consent) {
+            alert("You must consent to data processing to attend the event.");
+            return;
+        }
+
+        if (!selectedEventId) {
+            alert("No event selected.");
+            return;
+        }
+
+        const { data: userData, error: userError } = await supabase.auth.getUser();
+
+        if (userError || !userData.user) {
+            alert("You must be logged in to attend an event.");
+            window.location.href = "index.html";
+            return;
+        }
+
+        const user = userData.user;
+
+        const { error } = await supabase
+            .from("event_attendance")
+            .insert([{
+                event_id: selectedEventId,
+                user_id: user.id
+            }]);
+
+        if (error) {
+            console.log("Error saving attendance:", error);
+
+            if (error.code === "23505") {
+                alert("You have already registered for this event.");
                 return;
             }
-            if (!consent) {
-                alert("You must consent to data processing to attend the event.");
-                return;
-            }
 
-            //send data to backend later
-            alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
-        });
-    }
+            alert("Failed to register attendance.");
+            return;
+        }
 
-    //chatbot
+        alert(`Thank you for registering, ${name}! We look forward to seeing you at the event.`);
+
+        document.getElementById("attendee-name").value = "";
+        document.getElementById("attendee-email").value = "";
+        document.getElementById("attendee-student-id").value = "";
+        document.getElementById("attendee-course").value = "";
+        document.getElementById("attendee-allergens").value = "";
+        document.getElementById("attendee-disabilities").value = "";
+        document.getElementById("attendee-consent").checked = false;
+
+        document.getElementById("attend-form")?.classList.add("hidden");
+        document.getElementById("event-modal")?.classList.add("hidden");
+    });
+
+    // chatbot
     const chatInput = document.getElementById("chat-input");
     const chatSend = document.getElementById("chat-send");
     const chatMessages = document.getElementById("chat-messages");
 
     function addMessage(text, sender) {
+        if (!chatMessages) return;
+
         const msg = document.createElement("div");
         msg.className = sender === "user"
             ? "text-right bg-[#ACBAC4] text-[#E1D9BC] p-2 rounded my-1"
@@ -326,52 +362,58 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
 
     function getBotReply(message) {
-        const text = message.toLowerCase();
+        const text = message.toLowerCase().trim();
+
+        if (!faqs.length) {
+            return "I’m sorry, the FAQ data is not available right now.";
+        }
+
         for (const faq of faqs) {
-            if (faq.keywords) {
-                const keywords = faq.keywords.split(",");
-                for (const word of keywords) {
-                    if (text.includes(word.trim().toLowerCase())) return faq.answer;
+            const keywordList = faq.keywords
+                .split(",")
+                .map(word => word.trim().toLowerCase())
+                .filter(Boolean);
+
+            for (const word of keywordList) {
+                if (text.includes(word) || word.includes(text)) {
+                    return faq.answer;
                 }
             }
         }
+
         return "I'm sorry, I couldn't find that information. Please contact support or check the FAQ section for more details.";
     }
 
     function sendMessage() {
-        const message = chatInput.value.trim();
+        const message = chatInput?.value.trim();
         if (!message) return;
+
         addMessage(message, "user");
+
         const reply = getBotReply(message);
+
         setTimeout(() => {
             addMessage(reply, "bot");
         }, 500);
+
         chatInput.value = "";
     }
 
-    if (chatSend) {
-        chatSend.addEventListener("click", sendMessage);
-    }
+    chatSend?.addEventListener("click", sendMessage);
 
-    if (chatInput) {
-        chatInput.addEventListener("keydown", (e) => {
-            if (e.key === "Enter") sendMessage();
-        });
-    }
+    chatInput?.addEventListener("keydown", (e) => {
+        if (e.key === "Enter") sendMessage();
+    });
 
-    //bus timings -Aafrin
+    // bus timings
     async function loadTransport() {
         const appKey = "bat_5de26858af3ec1f5769df8dccf071920";
         const busList = document.getElementById("bus-list");
-        if (!busList) {
-            console.log("failed");
-            return;
-        }
+        if (!busList) return;
 
         busList.innerHTML = "<li>Loading transport data...</li>";
 
         try {
-            //using the atco_code instead of the stop id try: https://api.busesandtrains.co.uk/v1/stops?q=Wolverhampton&app_key=bat_5de26858af3ec1f5769df8dccf071920 for data
             const stops = { "43000700503": "Stop AB", "43000700504": "Stop AC" };
             let output = "";
 
@@ -401,13 +443,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error(err);
             busList.innerHTML = "<li>Error loading transport data</li>";
         }
-    }
-
-    //profile
-    const profileBtn = document.getElementById("profile-button");
-    if (profileBtn) {
-        profileBtn.addEventListener("click", () => {
-            window.location.href = "profile.html";
-        });
     }
 });
