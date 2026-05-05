@@ -490,4 +490,14 @@ document.addEventListener("DOMContentLoaded", async () => {
             sendMessage()
         }
     })
+
+    //if help submit clicked, 
+    // alert user check email
+    // send user email with help token
+    // update help token in profile
+
+    // take user to homepage
+
+    //send user email with help answer later? how?
+
 })
