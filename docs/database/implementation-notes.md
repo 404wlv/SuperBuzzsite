@@ -275,6 +275,39 @@ This supports more secure and sensible interaction with the database and helps k
 
 To improve security during authentication, Google reCAPTCHA has been integrated into the login flow. This ensures that only verified human users can access the login functionality.
 
+The implementation works by:
+
+1. loading the reCAPTCHA widget on the login page
+2. requiring the user to complete the verification challenge
+3. storing the verification response token
+4. blocking the login process if verification is not completed
+5. allowing login only after successful human verification
+
+This adds an additional validation layer before authentication requests are sent to Supabase.
+
+### Why this matters
+
+This improves system security by reducing the risk of:
+
+- automated bot login attempts
+- brute force attacks
+- spam account access attempts
+
+It ensures that backend authentication is not exposed directly to unverified traffic, making the platform more robust and secure.
+
+### Future improvements
+
+The current implementation focuses on client-side verification. This can be extended further by:
+
+- validating the reCAPTCHA token on a secure backend server
+- using reCAPTCHA v3 for invisible risk-based scoring
+- combining reCAPTCHA with rate limiting or login attempt tracking
+- adding multi-factor authentication (MFA) for higher security levels
+
+These improvements would strengthen protection against more advanced automated or malicious activity.
+
+---
+
 ## Summary
 
 The database has been implemented across key parts of SuperBuzz, including profiles, events, attendance, FAQs, and daily check-ins. These implementations support both the technical structure of the platform and the experience of students interacting with it.
