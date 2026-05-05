@@ -150,6 +150,27 @@ async function handleCheckin() {
         alert("User not logged in ❌")
         return
     }
+    ///location check
+    try {
+        const userLocation = await getUserLocation()
+
+        const distance = getDistanceInMeters(
+            userLocation.lat,
+            userLocation.lng,
+            UNIVERSITY_LOCATION.lat,
+            UNIVERSITY_LOCATION.lng
+        )
+        console.log("Distance from university: ", distance)
+
+        if (distance > MAX_DISTANCE_METERS) {
+            alert("📍 You must be on campus to check in and earn rewards!")
+            return
+        }
+
+    } catch (err) {
+        alert("Location access is required for check-in ❌")
+        return
+    }
 
     const today = new Date().toISOString().split("T")[0]
 
@@ -215,28 +236,8 @@ async function handleCheckin() {
         return
     }
 
-    updateUI(newStreak, newTotalCheckins, true)
-    ///location check
-    try {
-        const userLocation = await getUserLocation()
+    //(newStreak, newTotalCheckins, true)
 
-        const distance = getDistanceInMeters(
-            userLocation.lat,
-            userLocation.lng,
-            UNIVERSITY_LOCATION.lat,
-            UNIVERSITY_LOCATION.lng
-        )
-        console.log("Distance from university: ", distance)
-
-        if (distance > MAX_DISTANCE_METERS) {
-            alert("📍 You must be on campus to check in and earn rewards!")
-            return
-        }
-
-    } catch (err) {
-        alert("Location access is required for check-in ❌")
-        return
-    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
