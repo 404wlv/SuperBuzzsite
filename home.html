@@ -26,6 +26,22 @@
       class="ml-4 md:ml-72 md:mr-72 grid gap-6 p-6 mt-10 md:mt-20 overflow-y-auto w-full h-screen"
     ></div>
 
+    
+    <!-- floating checkin mascot -->
+    
+    <div id="checkin-trigger" class="fixed bottom-24 right-6 z-50 cursor-pointer group">
+      <div class="relative">
+        <!-- glow effetc -->
+        <div class="absolute inset-0 rounded-full bg-fuchsia-500 blur-xl opacity-50 group-hover:opacity-80 transition"></div>
+        <!-- main bubble -->
+        <div class="w-16 h-16 bg-fuchsia-600 rounded-full flex items-center justify-center shadow-2xl animate-bounce">🎯</div>
+        <!-- tooltip -->
+        <div class="absolute right-20 top-1/2 -translate-y-1/2 bg-white text-black text-xs px-3 py-1 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Check in today!
+        </div>
+      </div>
+      
+    </div>
+    
     <!-- Daily Check-in Card -->
     <div
       id="checkin-card"

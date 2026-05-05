@@ -20,7 +20,7 @@ function hideCheckinCard() {
 }
 
 function showCheckinCard() {
-    const { card } = getCheckinElement()
+    const { card } = getCheckinElements()
     if (card) {
         card.classList.remove("hidden")
     }
