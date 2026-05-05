@@ -1,5 +1,17 @@
 import { supabase } from "./supabaseClient.js"
 
+
+function getCheckinElements() {
+    return {
+        card: document.getElementById("checkin-card"),
+        progress: document.getElementById("checkin-progress"),
+        message: document.getElementById("checkin-message"),
+        streakText: document.getElementById("checkin-streak"),
+        btn: document.getElementById("checkin-btn")
+
+    }
+}
+
 function updateUI(streak, totalCheckins, checkedToday) {
     const progress = document.getElementById("checkin-progress")
     const message = document.getElementById("checkin-message")
