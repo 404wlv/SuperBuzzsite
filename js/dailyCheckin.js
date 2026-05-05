@@ -12,6 +12,13 @@ function getCheckinElements() {
     }
 }
 
+function hideCheckinCard() {
+    const { card } = getCheckinElements()
+    if (card) {
+        card.classList.add("hidden")
+    }
+}
+
 function updateUI(streak, totalCheckins, checkedToday) {
     const progress = document.getElementById("checkin-progress")
     const message = document.getElementById("checkin-message")
