@@ -27,31 +27,37 @@ function showCheckinCard() {
 }
 
 function updateUI(streak, totalCheckins, checkedToday) {
-    const progress = document.getElementById("checkin-progress")
-    const message = document.getElementById("checkin-message")
-    const streakText = document.getElementById("checkin-streak")
-    const btn = document.getElementById("checkin-btn")
+    const { progress, message, streakText, btn } = getCheckinElements()
+
+    // if (!progress || !message || !streakText || !btn) return
+
+    // const progress = document.getElementById("checkin-progress")
+    // const message = document.getElementById("checkin-message")
+    // const streakText = document.getElementById("checkin-streak")
+    // const btn = document.getElementById("checkin-btn")
 
     if (!progress || !message || !streakText || !btn) return
 
     const percent = Math.min((streak / 7) * 100, 100)
-    progress.style.width = percent + "%"
+    progress.style.width = `${percent}%`
 
     streakText.textContent = `Streak: ${streak} day${streak !== 1 ? "s" : ""}`
+    message.textContent = `Total check-ins: ${totalCheckins}`
 
     if (checkedToday) {
         btn.textContent = "Checked In ✅"
         btn.classList.remove("bg-fuchsia-800")
         btn.classList.add("bg-green-600")
         btn.disabled = true
+        hideCheckinCard()
     } else {
         btn.textContent = "Check In"
         btn.classList.remove("bg-green-600")
         btn.classList.add("bg-fuchsia-800")
         btn.disabled = false
+        showCheckinCard()
     }
 
-    message.textContent = `Total check-ins: ${totalCheckins}`
 }
 
 async function loadCheckinStatus() {
