@@ -28,27 +28,23 @@ The database is currently implemented across the following main feature areas:
 ## 1. Profile Implementation
 
 ### Related table
-
 - `profiles`
 
 ### Related logic
-
 - `profile.js`
 
 ### Implementation summary
-
 The profile feature uses authenticated user data together with the `profiles` table to display and update user-linked information. This includes values such as display name, email-linked profile data, and activity-related summary information shown on the profile page.
 
 The implementation works by:
 
-1. checking the active session
-2. retrieving the current authenticated user
-3. using the user ID to fetch matching profile data
-4. displaying that information on the profile page
-5. allowing the display name to be updated and written back to the database
+- checking the active session
+- retrieving the current authenticated user
+- using the user ID to fetch matching profile data
+- displaying that information on the profile page
+- allowing the display name to be updated and written back to the database
 
 ### Why this matters
-
 This improves the student experience by making the application feel personalised rather than generic. It also demonstrates that the platform is capable of managing user-linked data in a structured way.
 
 ---
@@ -56,24 +52,21 @@ This improves the student experience by making the application feel personalised
 ## 2. Event Display and Retrieval
 
 ### Related table
-
 - `events`
 
 ### Related logic
-
 - `home.js`
 
 ### Implementation summary
-
 Events are loaded dynamically from the `events` table and displayed on the homepage. Rather than hardcoding event cards directly into the interface, the frontend retrieves event records from Supabase and renders them into the page.
 
 The implementation works by:
 
-1. querying the `events` table
-2. ordering events by `event_date`
-3. mapping event records into JavaScript objects
-4. rendering cards into the event grid
-5. opening a modal with more detail when an event is selected
+- querying the `events` table
+- ordering events by `event_date`
+- mapping event records into JavaScript objects
+- rendering cards into the event grid
+- opening a modal with more detail when an event is selected
 
 The event modal displays:
 
@@ -84,7 +77,6 @@ The event modal displays:
 - date and time
 
 ### Why this matters
-
 This improves student experience because event information can be managed and updated more easily, while students see content that is structured and current. It also makes the application feel more realistic, since event listings are coming from stored backend records rather than temporary static content.
 
 ---
@@ -92,28 +84,24 @@ This improves student experience because event information can be managed and up
 ## 3. Event Creation
 
 ### Related table
-
 - `events`
 
 ### Related logic
-
 - `home.js`
 
 ### Implementation summary
-
 The event creation flow allows a logged-in user to submit a new event through a modal form. When the form is completed, the application inserts a new record into the `events` table and links it to the current authenticated user through the `created_by` field.
 
 The implementation works by:
 
-1. checking the user is logged in
-2. validating the form inputs
-3. collecting title, category, description, location, and event date
-4. inserting the event into Supabase
-5. storing the creator’s user ID in `created_by`
-6. refreshing the event list after successful insertion
+- checking the user is logged in
+- validating the form inputs
+- collecting title, category, description, location, and event date
+- inserting the event into Supabase
+- storing the creator’s user ID in `created_by`
+- refreshing the event list after successful insertion
 
 ### Why this matters
-
 This improves the student experience by making the platform more interactive and community-driven. Instead of only consuming information, users can contribute content.
 
 ---
@@ -121,25 +109,22 @@ This improves the student experience by making the platform more interactive and
 ## 4. Event Attendance Registration
 
 ### Related table
-
 - `event_attendance`
 
 ### Related logic
-
 - `home.js`
 
 ### Implementation summary
-
 The event attendance flow allows a logged-in user to register for an event through a form. The system then inserts a record into the `event_attendance` table linking the selected event and the authenticated user.
 
 The implementation works by:
 
-1. opening the selected event modal
-2. allowing the user to choose to attend the event
-3. validating the attendance form inputs
-4. checking the user is logged in
-5. inserting an attendance record into `event_attendance`
-6. blocking duplicate registrations where applicable
+- opening the selected event modal
+- allowing the user to choose to attend the event
+- validating the attendance form inputs
+- checking the user is logged in
+- inserting an attendance record into `event_attendance`
+- blocking duplicate registrations where applicable
 
 The table structure supports clean separation between:
 
@@ -148,7 +133,6 @@ The table structure supports clean separation between:
 - attendance records
 
 ### Why this matters
-
 This improves student experience by turning the event feature into something interactive and useful. It also creates the basis for future analytics, attendance tracking, and engagement measurement.
 
 ---
@@ -156,34 +140,30 @@ This improves student experience by turning the event feature into something int
 ## 5. Daily Check-in and Engagement Tracking
 
 ### Related table
-
 - `daily_checkins`
 
 ### Related logic
-
 - `dailyCheckin.js`
 - profile summary logic in `profile.js`
 
 ### Implementation summary
-
 The daily check-in feature tracks student engagement over time. It stores the user’s last check-in date, current streak, total number of check-ins, and reward-related progress state.
 
 The implementation works by:
 
-1. retrieving the logged-in user
-2. checking whether the user already has a `daily_checkins` record
-3. comparing today’s date with the stored `last_checkin`
-4. deciding whether to:
-   - create a new record
-   - increment the streak
-   - reset the streak
-   - block duplicate same-day check-ins
-5. updating the UI using saved database values
+- retrieving the logged-in user
+- checking whether the user already has a `daily_checkins` record
+- comparing today’s date with the stored `last_checkin`
+- deciding whether to:
+  - create a new record
+  - increment the streak
+  - reset the streak
+  - block duplicate same-day check-ins
+- updating the UI using saved database values
 
 An important part of this implementation is that the check-in state is controlled from saved Supabase data rather than only from temporary frontend behaviour. This makes the feature more reliable and persistent.
 
 ### Why this matters
-
 This improves student experience by rewarding regular engagement and making the platform feel more interactive. It also gives the app a feature that supports repeat usage rather than one-time visits.
 
 ---
@@ -191,26 +171,22 @@ This improves student experience by rewarding regular engagement and making the 
 ## 6. FAQ and Chatbot Support
 
 ### Related table
-
 - `faqs`
 
 ### Related logic
-
 - `home.js`
 
 ### Implementation summary
-
 The chatbot uses data from the `faqs` table rather than relying only on fixed hardcoded responses. FAQ records are loaded from Supabase and matched against user input using stored keywords.
 
 The implementation works by:
 
-1. querying the `faqs` table
-2. storing answers and keywords in the frontend
-3. comparing user chat input against those keywords
-4. returning the most relevant answer
+- querying the `faqs` table
+- storing answers and keywords in the frontend
+- comparing user chat input against those keywords
+- returning the most relevant answer
 
 ### Why this matters
-
 This improves student experience by giving the platform a simple support feature that can answer common questions without needing direct manual intervention.
 
 ---
@@ -218,18 +194,15 @@ This improves student experience by giving the platform a simple support feature
 ## 7. Profile Reward Summary and Cross-Feature Use of Data
 
 ### Related tables
-
 - `profiles`
 - `events`
 - `event_attendance`
 - `daily_checkins`
 
 ### Related logic
-
 - `profile.js`
 
 ### Implementation summary
-
 The profile view is not limited to basic user data. It also combines information from several database-backed features to give the user a summary of their activity.
 
 This includes values such as:
@@ -243,7 +216,6 @@ This includes values such as:
 This is important because it shows that the database is not only being used in isolated features. Multiple tables contribute to a wider user view.
 
 ### Why this matters
-
 This improves student experience by making the platform feel joined-up and personalised. Instead of separate disconnected features, users see their overall engagement reflected back to them.
 
 ---
@@ -262,49 +234,8 @@ Examples include:
 
 This supports more secure and sensible interaction with the database and helps keep user-linked records tied to the right person.
 
----
-
-## 9. Login Security with reCAPTCHA
-
-## Related logic
-
-- `logon.html`
-- `logon.js`
-
-### Implementation summary
-
-To improve security during authentication, Google reCAPTCHA has been integrated into the login flow. This ensures that only verified human users can access the login functionality.
-
-The implementation works by:
-
-1. loading the reCAPTCHA widget on the login page
-2. requiring the user to complete the verification challenge
-3. storing the verification response token
-4. blocking the login process if verification is not completed
-5. allowing login only after successful human verification
-
-This adds an additional validation layer before authentication requests are sent to Supabase.
-
-### Why this matters
-
-This improves system security by reducing the risk of:
-
-- automated bot login attempts
-- brute force attacks
-- spam account access attempts
-
-It ensures that backend authentication is not exposed directly to unverified traffic, making the platform more robust and secure.
-
-### Future improvements
-
-The current implementation focuses on client-side verification. This can be extended further by:
-
-- validating the reCAPTCHA token on a secure backend server
-- using reCAPTCHA v3 for invisible risk-based scoring
-- combining reCAPTCHA with rate limiting or login attempt tracking
-- adding multi-factor authentication (MFA) for higher security levels
-
-These improvements would strengthen protection against more advanced automated or malicious activity.
+### Security note
+There has also been discussion around extra login protection such as CAPTCHA on the authentication side. That sits more within wider application security and frontend/auth flow than the core database implementation itself, but it may support the system further if completed fully.
 
 ---
 

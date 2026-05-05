@@ -2,12 +2,13 @@ import { supabase } from "./supabaseClient.js"
 
 const UNIVERSITY_LOCATION = {
     lat: 52.58809208543186,
-    lng: -2.1273305597251020,
+    lng: -2.1273305597251020
 }
+
 const MAX_DISTANCE_METERS = 300
 
 function getDistanceInMeters(lat1, lon1, lat2, lon2) {
-    const R = 6371e3 // Earth radius in meters
+    const R = 6371e3
     const φ1 = lat1 * Math.PI / 180
     const φ2 = lat2 * Math.PI / 180
     const Δφ = (lat2 - lat1) * Math.PI / 180
@@ -26,15 +27,16 @@ function getDistanceInMeters(lat1, lon1, lat2, lon2) {
 function getUserLocation() {
     return new Promise((resolve, reject) => {
         if (!navigator.geolocation) {
-            reject("Geolocation no supported")
+            reject("Geolocation not supported")
+            return
         }
+
         navigator.geolocation.getCurrentPosition(
             (position) => {
                 resolve({
                     lat: position.coords.latitude,
                     lng: position.coords.longitude
                 })
-
             },
             (error) => {
                 reject(error.message)
@@ -43,15 +45,15 @@ function getUserLocation() {
     })
 }
 
-
 function getCheckinElements() {
     return {
         card: document.getElementById("checkin-card"),
         progress: document.getElementById("checkin-progress"),
         message: document.getElementById("checkin-message"),
         streakText: document.getElementById("checkin-streak"),
-        btn: document.getElementById("checkin-btn")
-
+        btn: document.getElementById("checkin-btn"),
+        trigger: document.getElementById("checkin-trigger"),
+        closeBtn: document.getElementById("close-checkin")
     }
 }
 
@@ -72,13 +74,6 @@ function showCheckinCard() {
 function updateUI(streak, totalCheckins, checkedToday) {
     const { progress, message, streakText, btn } = getCheckinElements()
 
-    // if (!progress || !message || !streakText || !btn) return
-
-    // const progress = document.getElementById("checkin-progress")
-    // const message = document.getElementById("checkin-message")
-    // const streakText = document.getElementById("checkin-streak")
-    // const btn = document.getElementById("checkin-btn")
-
     if (!progress || !message || !streakText || !btn) return
 
     const percent = Math.min((streak / 7) * 100, 100)
@@ -98,9 +93,7 @@ function updateUI(streak, totalCheckins, checkedToday) {
         btn.classList.remove("bg-green-600")
         btn.classList.add("bg-fuchsia-800")
         btn.disabled = false
-        showCheckinCard()
     }
-
 }
 
 async function loadCheckinStatus() {
@@ -150,7 +143,7 @@ async function handleCheckin() {
         alert("User not logged in ❌")
         return
     }
-    ///location check
+
     try {
         const userLocation = await getUserLocation()
 
@@ -160,13 +153,13 @@ async function handleCheckin() {
             UNIVERSITY_LOCATION.lat,
             UNIVERSITY_LOCATION.lng
         )
-        console.log("Distance from university: ", distance)
+
+        console.log("Distance from university:", distance)
 
         if (distance > MAX_DISTANCE_METERS) {
             alert("📍 You must be on campus to check in and earn rewards!")
             return
         }
-
     } catch (err) {
         alert("Location access is required for check-in ❌")
         return
@@ -236,20 +229,17 @@ async function handleCheckin() {
         return
     }
 
-    //(newStreak, newTotalCheckins, true)
-
+    updateUI(newStreak, newTotalCheckins, true)
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     loadCheckinStatus()
 
-    const btn = document.getElementById("checkin-btn")
+    const { btn, trigger, card, closeBtn } = getCheckinElements()
+
     if (btn) {
         btn.addEventListener("click", handleCheckin)
     }
-    const trigger = document.getElementById("checkin-trigger")
-    const card = document.getElementById("checkin-card")
-    const closeBtn = document.getElementById("close-checkin")
 
     if (trigger && card) {
         trigger.addEventListener("click", () => {
