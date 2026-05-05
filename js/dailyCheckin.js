@@ -1,5 +1,12 @@
 import { supabase } from "./supabaseClient.js"
 
+const UNIVERSITY_LOCATION = {
+    lat: 52.58809208543186,
+    lng: -2.1273305597251020,
+}
+const MAX_DISTANCE_METERS = 300
+
+
 
 function getCheckinElements() {
     return {
