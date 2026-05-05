@@ -23,6 +23,27 @@ function getDistanceInMeters(lat1, lon1, lat2, lon2) {
     return R * c
 }
 
+function getUserLocation() {
+    return new Promise((resolve, reject) => {
+        if (!navigator.geolocation) {
+            reject("Geolocation no supported")
+        }
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                resolve({
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                })
+
+            },
+            (error) => {
+                reject(error.message)
+            }
+        )
+    })
+}
+
+
 function getCheckinElements() {
     return {
         card: document.getElementById("checkin-card"),
@@ -195,6 +216,27 @@ async function handleCheckin() {
     }
 
     updateUI(newStreak, newTotalCheckins, true)
+    ///location check
+    try {
+        const userLocation = await getUserLocation()
+
+        const distance = getDistanceInMeters(
+            userLocation.lat,
+            userLocation.lng,
+            UNIVERSITY_LOCATION.lat,
+            UNIVERSITY_LOCATION.lng
+        )
+        console.log("Distance from university: ", distance)
+
+        if (distance > MAX_DISTANCE_METERS) {
+            alert("📍 You must be on campus to check in and earn rewards!")
+            return
+        }
+
+    } catch (err) {
+        alert("Location access is required for check-in ❌")
+        return
+    }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
