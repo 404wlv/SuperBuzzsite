@@ -6,6 +6,7 @@
   <title>Login | SuperBuzz</title>
   <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
   <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 
 <body class="bg-[#F0F0DB] text-white">
@@ -31,6 +32,13 @@
           placeholder="Password"
           class="bg-[#F0F0DB] text-[#30364F] placeholder-gray-400 p-3 sm:p-4 rounded-2xl border border-[#334155] focus:outline-none focus:ring-2 focus:ring-[#ACBAC4] w-full"
         >
+
+        <!-- recaptcha -danial -->
+        <div class="flex justify-center">
+          <div class="g-recaptcha" data-sitekey="6LePytksAAAAAOmrffuLzvpsDidPUrI_wBclA11M">
+
+          </div>
+        </div>
 
         <button
           id="login-submit"

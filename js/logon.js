@@ -30,7 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 alert("Please enter your password.");
                 return;
             }
-
+            const captchaResponse = grecaptcha.getResponse();
+            if (!captchaResponse) {
+                alert("Please complete the captcha");
+                return;
+            }
             const success = await login(email, password);
             if (success) {
                 hide("login-modal");

@@ -1,63 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8"/>
+  <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
-  <script src="https://cdn.tailwindcss.com"></script>
   <title>Home | SuperBuzz</title>
+  <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg" />
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
 <body class="bg-[#123458] text-[#F1EFEC]">
 
-  <!-- HomePage -->
   <div id="main-app" class="flex flex-col md:flex-row h-screen">
 
     <!-- Sidebar Toggle -->
-    <button id="sidebar-toggle"
-      class="fixed top-6 left-6 z-50 bg-white text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-200">
+    <button
+      id="sidebar-toggle"
+      class="fixed top-6 left-6 z-50 bg-white text-black w-10 h-10 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform duration-200"
+    >
       ✕
     </button>
 
     <!-- Event Grid -->
-    <div id="event"
-      class="ml-4 md:ml-72 md:mr-72 grid gap-6 p-6 mt-10 md:mt-20 overflow-y-auto w-full h-screen">
-    </div>
+    <div
+      id="event"
+      class="ml-4 md:ml-72 md:mr-72 grid gap-6 p-6 mt-10 md:mt-20 overflow-y-auto w-full h-screen"
+    ></div>
 
     
-      <!-- checkin button --testing danial -->
-       <div id="checkin-card" class="fixed top-6 right-6 w-72 bg-[#123458] text-[#F1EFEC] p-5 rounded-2xl shadow-2xl border border-[#334155] z-50">
-          <h3 class="text-lg font-bold mb-2">
-            🎓 Daily Check-in
-          </h3>
+    <!-- floating checkin mascot -->
+    
+    <div id="checkin-trigger" class="fixed bottom-24 right-6 z-50 cursor-pointer group">
+      <div class="relative">
+        <!-- glow effetc -->
+        <div class="absolute inset-0 rounded-full bg-fuchsia-500 blur-xl opacity-50 group-hover:opacity-80 transition"></div>
+        <!-- main bubble -->
+        <div class="w-16 h-16 bg-fuchsia-600 rounded-full flex items-center justify-center shadow-2xl animate-bounce">🎯</div>
+        <!-- tooltip -->
+        <div class="absolute right-20 top-1/2 -translate-y-1/2 bg-white text-black text-xs px-3 py-1 rounded-xl shadow-lg opacity-0 group-hover:opacity-100 transition whitespace-nowrap">Check in today!
+        </div>
+      </div>
+      
+    </div>
 
-          <p id="checkin-message" class="text-sm mb-3">Click below to mark your day at university!</p>
-          <!-- progress bar (i hate this) -->
-            <div class="w-full bg-gray-300 rounded-full h-3 mb-3">
+    <!-- Daily Check-in Card -->
+    <div
+      id="checkin-card"
+      class="hidden fixed bottom-24 right-6 w-80 max-w-[90%] bg-gradient-to-br from-fuchsia-200 to-pink-100 text-fuchsia-900 p-5 rounded-3xl shadow-2xl border border-white/40 z-50 backdrop-blur-md transition-all duration-300"
+    >
+      <div class="flex items-center justify-between mb-3">
+    <h3 class="text-lg font-bold">🎓 Daily Check-in</h3>
+    <button id="close-checkin" class="text-sm hover:scale-110">✕</button>
+  </div>
 
-              <div id="checkin-progress"
-                class="bg-[#F1EFEC] h-3 rounded-full transition-all duration-500"
-                style="width: 0%">
-              </div>
+  <p id="checkin-message" class="text-sm mb-3 opacity-80"></p>
 
-              <p id="checkin-streak" class="text-xs mb-3">
-              Streak: 0 days
-              </p>
+      <div class="w-full bg-white/50 rounded-full h-3 mb-3 overflow-hidden">
+        <div
+          id="checkin-progress"
+          class="bg-gradient-to-r from-fuchsia-500 to-pink-500 h-3 rounded-full transition-all duration-700"
+          style="width: 0%"
+        ></div>
+      </div>
 
-            <button id="checkin-btn"
-              class="w-full bg-[#F1EFEC] text-[#030303] py-2 rounded-xl hover:scale-105 transition">
-              Check In
-            </button>
+      <p id="checkin-streak" class="text-xs mb-4 font-medium"></p>
 
-          </div>
-       </div>
-       
-      <!-- <button id="daily-checkin"
-      class="fixed top-6 right-6 bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl shadow-xl hover:scale-105 transition z-50">Day at University </button> -->
-
+      <button
+        id="checkin-btn"
+        class="w-full bg-fuchsia-700 text-white py-2 rounded-2xl hover:scale-105 active:scale-95 transition font-semibold shadow-lg"
+      >
+        Check In
+      </button>
+    </div>
 
     <!-- Event Modal -->
-    <div id="event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50">
+    <div id="event-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
       <div class="bg-white text-[#030303] p-4 sm:p-6 rounded-2xl w-full max-w-full sm:max-w-md relative">
         <button id="close-event-modal" class="absolute top-3 right-3 text-xl font-bold">✕</button>
         <h2 id="event-title" class="text-xl sm:text-2xl font-bold mb-2"></h2>
@@ -80,7 +96,7 @@
       <h2 class="text-2xl font-bold mb-4 text-center">Create Event</h2>
 
       <label class="block mb-2 text-sm">Title</label>
-      <input id="new-event-title" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
+      <input id="new-event-title" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
 
       <label class="block mb-2 text-sm">Category</label>
       <select id="new-event-category" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
@@ -94,47 +110,55 @@
       <textarea id="new-event-description" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]"></textarea>
 
       <label class="block mb-2 text-sm">Location</label>
-      <input id="new-event-location" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
+      <input id="new-event-location" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
 
       <label class="block mb-2 text-sm">Date & Time</label>
-      <input id="new-event-date" type="datetime-local" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
+      <input id="new-event-date" type="datetime-local" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
 
-      <button id="create-event-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">Create Event</button>
+      <button id="create-event-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">
+        Create Event
+      </button>
     </div>
   </div>
 
-  <!-- Attend Event form -->
-    <div id="attend-form" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
-      <div class="bg-white text-[#030303] p-6 rounded-2xl w-full max-w-md relative">
-        <button id="close-attend-form" class="absolute top-3 right-3 text-xl font-bold">✕</button>
-        <h2 class="text-2xl font-bold mb-4 text-center">Form</h2>
-        <label class="block mb-2 text-sm">Your Name</label>
-        <input id="attendee-name" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Your Email</label>
-        <input id="attendee-email" type="email" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Your Student ID</label>
-        <input id="attendee-student-id" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Your Course</label>
-        <input id="attendee-course" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Allergens/food requirements</label>
-        <input id="attendee-allergens" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Any help with disabilities</label>
-        <input id="attendee-disabilities" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]">
-        <label class="block mb-2 text-sm">Consent to be recorded during the event:</label>
-        <label class="mb-4 flex">
-          <input id="attendee-consent" type="checkbox" style="display:block; width:20px; height:20px; opacity:1;">
-          <span class="text-sm">I consent</span>
-        </label>
-        
-        <button id="confirm-attend-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">Submit Form</button>
-      </div>
+  <!-- Attend Event Form -->
+  <div id="attend-form" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
+    <div class="bg-white text-[#030303] p-6 rounded-2xl w-full max-w-md relative">
+      <button id="close-attend-form" class="absolute top-3 right-3 text-xl font-bold">✕</button>
+      <h2 class="text-2xl font-bold mb-4 text-center">Form</h2>
+
+      <label class="block mb-2 text-sm">Your Name</label>
+      <input id="attendee-name" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="block mb-2 text-sm">Your Email</label>
+      <input id="attendee-email" type="email" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="block mb-2 text-sm">Your Student ID</label>
+      <input id="attendee-student-id" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="block mb-2 text-sm">Your Course</label>
+      <input id="attendee-course" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="block mb-2 text-sm">Allergens/food requirements</label>
+      <input id="attendee-allergens" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="block mb-2 text-sm">Any help with disabilities</label>
+      <input id="attendee-disabilities" type="text" class="w-full p-2 mb-4 rounded border border-gray-300 text-[#030303]" />
+
+      <label class="flex items-center gap-2 mb-4 text-sm text-[#030303]">
+        <input id="attendee-consent" type="checkbox" class="accent-[#030303]" />
+        <span>I consent to be recorded during the event</span>
+      </label>
+
+      <button id="confirm-attend-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl w-full">
+        Submit Form
+      </button>
     </div>
+  </div>
 
   <!-- Gym Modal -->
   <div id="gym-modal" class="modal hidden fixed inset-0 flex items-center justify-center bg-black/50 z-50">
     <div class="bg-[#D4C9BE] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
-       <!-- Saud please don't add these close buttons, I appreciate your efforts but please don't. Thank you.-->
-
       <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Gym Timings</h2>
       <h3 class="mb-2 text-gray-500">GYM OPENING TIMINGS [City Campus Gym]:</h3>
 
@@ -185,9 +209,7 @@
     <div class="bg-[#D4C9BE] w-full max-w-full sm:max-w-md p-6 sm:p-8 rounded-2xl shadow-2xl border border-[#334155] relative">
       <h2 class="text-xl sm:text-2xl font-bold mb-4 text-center text-[#030303]">Bus Timings</h2>
       <h3 class="mb-2 text-gray-500">Next Bus Departures:</h3>
-
-      <ul id="bus-list" class="list-disc list-inside text-[#030303]">
-      </ul>
+      <ul id="bus-list" class="list-disc list-inside text-[#030303]"></ul>
     </div>
   </div>
 
@@ -195,8 +217,10 @@
   <div id="chatbox" class="fixed right-2 sm:right-6 bottom-20 bg-[#D4C9BE] w-[90%] sm:w-full max-w-md p-4 sm:p-6 rounded-2xl shadow-2xl border border-[#334155] flex flex-col gap-3 hidden z-50">
     <h3 class="text-xl sm:text-2xl font-bold text-[#030303]">ChatBox</h3>
     <div id="chat-messages" class="flex-1 bg-[#F1EFEC] rounded-xl p-3 overflow-y-auto text-[#030303] min-h-[200px] max-h-80"></div>
-    <input id="chat-input" type="text" placeholder="Type a message..." class="p-2 sm:p-3 rounded-xl border border-[#334155] bg-[#F1EFEC] text-[#030303] focus:outline-none focus:ring-2 focus:ring-[#123458] w-full">
-    <button id="chat-send" class="bg-[#030303] text-[#F1EFEC] px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">Send</button>
+    <input id="chat-input" type="text" placeholder="Type a message..." class="p-2 sm:p-3 rounded-xl border border-[#334155] bg-[#F1EFEC] text-[#030303] focus:outline-none focus:ring-2 focus:ring-[#123458] w-full" />
+    <button id="chat-send" class="bg-[#030303] text-[#F1EFEC] px-3 py-1 rounded-xl mt-2 w-full sm:w-auto">
+      Send
+    </button>
   </div>
 
   <!-- Sidebar -->

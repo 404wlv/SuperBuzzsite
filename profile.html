@@ -1,21 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>SuperBuzz</title>
-        <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg">
-        <script src="https://cdn.tailwindcss.com"></script>
-    </head>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile | SuperBuzz</title>
+    <link rel="icon" href="https://404wlv.github.io/SuperBuzzsite/stuff/404icon.jpeg" />
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
 
-    <body class="bg-[#123458] text-[#F1EFEC]">
-        <div class="p-6 max-w-3xl mx-auto">
-            <h1 class="text-3xl font-bold text-[#F1EFEC] mb-6">
-                My Profile
-            </h1>
+<body class="bg-[#123458] text-[#F1EFEC]">
+    <div class="p-6 max-w-3xl mx-auto">
+        <h1 class="text-3xl font-bold text-[#F1EFEC] mb-6">
+            My Profile
+        </h1>
 
-            <div class="bg-[#D4C9BE] text-[#030303] p-6 rounded-2xl shadow-2xl border border-[#334155]">
+        <div class="bg-[#D4C9BE] text-[#030303] p-6 rounded-2xl shadow-2xl border border-[#334155]">
 
+            <!-- Profile Picture -->
+            <div class="w-24 h-24 rounded-full bg-gray-300 flex items-center justify-center mb-4 shadow-md">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="w-12 h-12 text-gray-600"
+                    fill="currentColor"
+                    viewBox="0 0 24 24"
+                >
+                    <path d="M12 12c2.7 0 5-2.3 5-5s-2.3-5-5-5-5 2.3-5 5 2.3 5 5 5zm0 2c-3.3 0-10 1.7-10 5v3h20v-3c0-3.3-6.7-5-10-5z" />
+                </svg>
+            </div>
                 <!-- Buttons -->
                 <div class="flex top-left gap-3 mt-4">
                     <button id="save-profile" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition"px-4 py-2 rounded-xl hover:scale-105 transition">
@@ -41,88 +52,102 @@
                     </svg>
                 </div>
 
-                <!-- Name -->
-                <input
-                    id="display-name"
-                    type="text"
-                    placeholder="Your Name"
-                    class="text-center text-xl font-semibold bg-transparent border-b border-[#30364F] mb-4 outline-none"
-                />
+            <!-- Name -->
+            <input
+                id="display-name"
+                type="text"
+                placeholder="Your Name"
+                class="text-center text-xl font-semibold bg-transparent border-b border-[#30364F] mb-4 outline-none"
+            />
 
-                <!-- Email + ID -->
-                <p class="text-sm mb-1">
-                    <strong>Email:</strong>
-                    <span id="profile-email"></span>
+            <!-- Email + ID -->
+            <p class="text-sm mb-1">
+                <strong>Email:</strong>
+                <span id="profile-email"></span>
+            </p>
+
+            <p class="text-sm mb-4">
+                <strong>User ID:</strong>
+                <span id="profile-id"></span>
+            </p>
+
+            <!-- Stats Section -->
+            <div class="grid grid-cols-2 gap-4 w-full text-center mb-6">
+                <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
+                    <p id="points-count" class="text-lg font-bold">0</p>
+                    <p class="text-xs">Points</p>
+                </div>
+
+                <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
+                    <p id="coupons-count" class="text-lg font-bold">0</p>
+                    <p class="text-xs">Coupons</p>
+                </div>
+
+                <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
+                    <p id="attended-count" class="text-lg font-bold">0</p>
+                    <p class="text-xs">Attended</p>
+                </div>
+
+                <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
+                    <p id="applied-count" class="text-lg font-bold">0</p>
+                    <p class="text-xs">Check-ins</p>
+                </div>
+            </div>
+
+            <!-- Reward Progress -->
+            <div class="mb-6">
+                <div class="flex justify-between text-sm mb-2">
+                    <span class="font-semibold">Reward Progress</span>
+                    <span id="reward-progress-text">0%</span>
+                </div>
+
+                <div class="w-full bg-[#F1EFEC] rounded-full h-4 overflow-hidden">
+                    <div
+                        id="reward-progress"
+                        class="bg-green-500 h-4 rounded-full transition-all duration-500"
+                        style="width: 0%"
+                    ></div>
+                </div>
+
+                <p id="reward-status" class="text-xs mt-2 text-center">
+                    100 more point(s) to unlock a reward
                 </p>
+            </div>
 
-                <p class="text-sm mb-4">
-                    <strong>User ID:</strong>
-                    <span id="profile-id"></span>
-                </p>
-
-                <!-- Stats Section -->
-                <div class="grid grid-cols-2 gap-4 w-full text-center mb-6">
-                    <div class="bg-[#F1EFEC] text-[#030303] p-3 rounded-xl">
-                        <p id="points-count" class="text-lg font-bold">0</p>
-                        <p class="text-xs">Points</p>
-                    </div>
-
-                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p id="coupons-count" class="text-lg font-bold">0</p>
-                        <p class="text-xs">Coupons</p>
-                    </div>
-
-                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p id="attended-count" class="text-lg font-bold">0</p>
-                        <p class="text-xs">Attended</p>
-                    </div>
-
-                    <div class="bg-[#F1EFEC] p-3 rounded-xl">
-                        <p id="applied-count" class="text-lg font-bold">0</p>
-                        <p class="text-xs">Check-ins</p>
-                    </div>
+            <!-- Events Created -->
+            <div class="mb-4 text-center">
+                <p class="text-sm mb-1">Events Created</p>
+                <div class="w-16 h-16 rounded-full border-4 border-green-500 flex items-center justify-center mx-auto text-lg font-bold">
+                    <span id="events-created-count">0</span>
                 </div>
+                <p class="text-xs mt-1">Created by you</p>
+            </div>
 
-                <!-- Reward Progress -->
-                <div class="mb-6">
-                    <div class="flex justify-between text-sm mb-2">
-                        <span class="font-semibold">Reward Progress</span>
-                        <span id="reward-progress-text">0%</span>
-                    </div>
+            <!-- Help ID Status -->
+            <div class="mb-4 text-center">
+                <p class="text-sm">Help ID Status:</p>
+                <span class="text-green-600 font-semibold">Completed</span>
+            </div>
 
-                    <div class="w-full bg-[#F1EFEC] rounded-full h-4 overflow-hidden">
-                        <div
-                            id="reward-progress"
-                            class="bg-green-500 h-4 rounded-full transition-all duration-500"
-                            style="width: 0%">
-                        </div>
-                    </div>
+            <!-- Buttons -->
+            <div class="flex gap-3 mt-4">
+                <button id="save-profile" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    Save
+                </button>
 
-                    <p id="reward-status" class="text-xs mt-2 text-center">
-                        100 more point(s) to unlock a reward
-                    </p>
-                </div>
+                <button id="logout-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    Logout
+                </button>
 
-                <!-- Events Created -->
-                <div class="mb-4 text-center">
-                    <p class="text-sm mb-1">Events Created</p>
-                    <div class="w-16 h-16 rounded-full border-4 border-green-500 flex items-center justify-center mx-auto text-lg font-bold">
-                        <span id="events-created-count">0</span>
-                    </div>
-                    <p class="text-xs mt-1">Created by you</p>
-                </div>
-
-                <!-- Help ID Status -->
-                <div class="mb-4 text-center">
-                    <p class="text-sm">Help ID Status:</p>
-                    <span class="text-green-600 font-semibold">Completed</span>
-                </div>
-
+                <button id="back-home-btn" class="bg-[#030303] text-[#F1EFEC] px-4 py-2 rounded-xl hover:scale-105 transition">
+                    Home
+                </button>
+            </div>
                 
 
-            </div>
         </div>
+    </div>
 
-        <script type="module" src="js/profile.js"></script>
-    </body>
+    <script type="module" src="js/profile.js"></script>
+</body>
 </html>
