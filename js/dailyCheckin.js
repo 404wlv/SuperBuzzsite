@@ -182,4 +182,19 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btn) {
         btn.addEventListener("click", handleCheckin)
     }
+    const trigger = document.getElementById("checkin-trigger")
+    const card = document.getElementById("checkin-card")
+    const closeBtn = document.getElementById("close-checkin")
+
+    if (trigger && card) {
+        trigger.addEventListener("click", () => {
+            card.classList.remove("hidden")
+        })
+    }
+
+    if (closeBtn && card) {
+        closeBtn.addEventListener("click", () => {
+            card.classList.add("hidden")
+        })
+    }
 })
