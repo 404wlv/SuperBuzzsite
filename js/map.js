@@ -284,7 +284,7 @@ function init() {
             type: "fill-extrusion",
             source: "buildings",
             paint: {
-                "fill-extrusion-color": "#001a76",
+                "fill-extrusion-color": "#123458",
                 "fill-extrusion-height": 20,
                 "fill-extrusion-base": 0,
                 "fill-extrusion-opacity": 0.8
