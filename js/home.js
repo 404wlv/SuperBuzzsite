@@ -125,6 +125,30 @@ function renderEvents() {
     })
 }
 
+function renderFilteredEvents(list) {
+    const container = document.getElementById("event")
+    if (!container) return
+
+    container.innerHTML = ""
+
+    list.forEach((event) => {
+        const card = document.createElement("div")
+
+        card.className = `group relative p-4 rounded-xl shadow cursor-pointer text-fuchsia-800 ${getCategoryColor(event.category)}`
+
+        card.innerHTML = `
+            <h3 class="font-bold text-sm sm:text-base">${event.title}</h3>
+            <p class="text-xs sm:text-sm capitalize">${event.category}</p>
+            <div class="absolute hidden opacity-0 scale-90 group-hover:opacity-100 group-hover:scale-100 transform transition-all duration-200 bg-black text-white text-xs p-2 rounded bottom-full mb-2 w-48 z-10">
+                ${event.description}
+            </div>
+        `
+
+        card.addEventListener("click", () => openEventModal(event))
+        container.appendChild(card)
+    })
+}
+
 function openEventModal(event) {
     selectedEventId = event.id
 
@@ -492,6 +516,26 @@ document.addEventListener("DOMContentLoaded", async () => {
             sendMessage()
         }
     })
+
+
+    //filtering events
+
+    //search events
+    const searchInput = document.getElementById("search-input")
+
+    searchInput?.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase().trim()
+
+    const filtered = events.filter(event =>
+            event.title.toLowerCase().includes(query) ||
+            event.category.toLowerCase().includes(query) ||
+            event.description.toLowerCase().includes(query) ||
+            event.location.toLowerCase().includes(query)
+    )
+
+        renderFilteredEvents(filtered)
+    })
+
 
     //if help submit clicked, 
     // alert user check email
