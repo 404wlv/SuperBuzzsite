@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     const sidebar = document.getElementById("sidebar")
     const sidebarToggleBtn = document.getElementById("sidebar-toggle")
     const eventGrid = document.getElementById("event")
-    let isSidebarOpen = true
+    let isSidebarOpen = false
 
     if (sidebarToggleBtn) {
 
