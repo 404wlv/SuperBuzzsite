@@ -32,7 +32,7 @@ function init() {
     {
         return new maplibregl.Map({
             container: "map",
-            style: "https://tiles.openfreemap.org/styles/liberty", //https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vLh5
+            style: "https://basemaps.cartocdn.com/gl/dark-matter-gl-style/style.json", //https://api.maptiler.com/maps/streets/style.json?key=get_your_own_OpIi9ZULNHzrESv6T2vLh5
             center: [-2.128, 52.586], // Longitude, Latitude  
             zoom: 15,
             pitch: 60, //Tilt the map for a pseudo-3D effect
