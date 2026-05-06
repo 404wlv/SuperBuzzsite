@@ -275,7 +275,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     let isSidebarOpen = true
 
     if (sidebarToggleBtn) {
-        sidebarToggleBtn.textContent = "✕"
 
         sidebarToggleBtn.addEventListener("click", () => {
             isSidebarOpen = !isSidebarOpen
@@ -283,11 +282,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             if (isSidebarOpen) {
                 sidebar?.classList.remove("-translate-x-full")
                 eventGrid.classList.toggle("md:ml-72");
-                sidebarToggleBtn.textContent = "✕"
             } else {
                 sidebar?.classList.add("-translate-x-full")
                 eventGrid.classList.toggle("md:ml-72");
-                sidebarToggleBtn.textContent = "☰"
             }
         })
     }
