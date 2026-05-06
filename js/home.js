@@ -281,12 +281,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
             if (isSidebarOpen) {
                 sidebar.classList.add("-translate-x-full")
-                
-                eventGrid.classList.add("md:ml-72")
+                eventGrid.classList.remove("md:ml-72")
                 
             } else {
             sidebar.classList.remove("-translate-x-full")
-            eventGrid.classList.remove("md:ml-72")
+            eventGrid.classList.add("md:ml-72")
+            
         }
         })
     }
