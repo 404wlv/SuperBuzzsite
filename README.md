@@ -32,23 +32,26 @@ It includes:
 ---
 
 ## 🧱 Project Structure
+
+```text
 /js
-├── home.js # Main dashboard logic (events, chat, UI, transport)
-├── dailyCheckin.js # Daily streak system
-├── profile.js # User profile system
-├── map.js # Campus 3D map system
-├── logon.js # Authentication system
-├── auth.js # Supabase auth wrapper
-├── supabaseClient.js # Supabase connection
+├── home.js            # Main dashboard logic (events, chat, UI, transport)
+├── dailyCheckin.js    # Daily streak system
+├── profile.js         # User profile system
+├── map.js             # Campus 3D map system
+├── logon.js           # Authentication system
+├── auth.js            # Supabase auth wrapper
+├── supabaseClient.js  # Supabase connection
 
-/stuff # Images and assets
+/stuff                 # Images and assets
 
-/home.html # Main dashboard
-/map.html # Campus map view
-/logon.html # Login / Signup system
-/profile.html # User profile page
-/404.html # Developer documentation page
-/index.html # Entry page
+home.html              # Main dashboard
+map.html               # Campus map view
+logon.html             # Login / Signup system
+profile.html           # User profile page
+404.html               # Developer documentation page
+index.html             # Entry page
+```
 
 ---
 
