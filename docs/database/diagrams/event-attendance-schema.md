@@ -1,10 +1,16 @@
-# Daily Check-in System Flow Diagram
+
+---
+
+## `event-attendance-schema.md`
+
+```md
+# Event Attendance System Flow Diagram
 
 ## Purpose
 
-This diagram shows how the daily check-in feature works across the SuperBuzz platform, linking the frontend, authentication layer, database table, and user interface updates.
+This diagram shows how the event attendance feature works across the SuperBuzz platform, linking selected events, authenticated users, and attendance records in the database.
 
-It reflects the implemented logic where the check-in state is stored in Supabase and then used to decide how the interface should appear, including after page refresh.
+It reflects the implemented logic where attendance is stored as a linking record between a user and an event.
 
 ---
 
@@ -20,10 +26,10 @@ It reflects the implemented logic where the check-in state is stored in Supabase
 +-------------------------------+
 | Frontend (HTML + JS Modules)  |
 | - home.html                   |
-| - dailyCheckin.js             |
+| - home.js                     |
 +---------------+---------------+
                 |
-                | User clicks "Check In"
+                | User selects event / submits attendance form
                 v
 +-------------------------------+
 |     Supabase Auth Service     |
@@ -34,32 +40,27 @@ It reflects the implemented logic where the check-in state is stored in Supabase
                 v
 +-------------------------------+
 |     Supabase Database         |
-|     Table: daily_checkins     |
+|     Table: event_attendance   |
 |                               |
 | Fields used:                  |
 | - id                          |
+| - event_id                    |
 | - user_id                     |
-| - last_checkin                |
-| - streak                      |
-| - total_checkins              |
-| - reward_claimed              |
+| - created_at                  |
 +---------------+---------------+
                 |
-                | read / insert / update
+                | insert attendance record
                 v
 +-------------------------------+
 | Frontend UI Update            |
-| - progress bar updates        |
-| - streak text updates         |
-| - total check-ins updates     |
-| - button state changes        |
-| - card visibility controlled  |
+| - attendance confirmed        |
+| - form closes                 |
+| - duplicate blocked if needed |
 +---------------+---------------+
                 |
                 v
 +-------------------------------+
 | User Feedback                 |
-| - "Checked In ✅"             |
-| - duplicate blocked           |
-| - reward-ready progress shown |
+| - registration success        |
+| - duplicate warning shown     |
 +-------------------------------+
